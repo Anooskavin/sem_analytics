@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Login </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/>
+<style>
+  body{
+
+  background-image:  url('/static/img/background1.gif');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-size: cover;
+
+  }
+</style>
+
+  </head>
+  <body>
+  <div class="container" id="container">
+
+
+
+
+
+      <div class="form-container sign-in-container">
+        <form method="post" id="admin_form">
+          <h1>SEM Analytics</h1>
+
+          <span>Students analytics </span>
+          <input type="email" placeholder="Email" name="admin" id="admin"  required/>
+          <input type="password" placeholder="Password" name="pwd" id="pwd" required/>
+          <a href="#">Forgot your password?</a>
+          <button>Sign In</button>
+
+           <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Hello User!</h1>
+            <p>Please login with your personal info</p>
+            <button class="ghost" id="signIn">Admin</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Welcome !!</h1>
+            <p>Students class and response maintained here</p>
+           <!--<button class="ghost" id="signUp">User</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+   <script src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+          crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).on('submit','#admin_form',function(e)
+                   {
+      console.log('hello');
+      e.preventDefault();
+      $.ajax({
+        type:'POST',
+        url:'/',
+        data:{
+          admin:$("#admin").val(),
+          pwd:$("#pwd").val()
+        }
+      })
+
+      .done(function(data) {
+
+
+			if (data.success) {
+                  window.location.href = "admin";
+			      }
+			else if(data.success1){
+			      window.location.href = "user";
+			     }
+			else {
+			      $('#errorAlert').text(data.error).show();
+
+			      }
+		});
+
+    });
+
+
+
+
+
+
+
+  </script>
+ <script src=" {{url_for('static', filename='js/main.js')}}"></script>
+  </body>
+</html>
