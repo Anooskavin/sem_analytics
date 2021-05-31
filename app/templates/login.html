@@ -31,9 +31,9 @@
           <h1>SEM Analytics</h1>
 
           <span>Students analytics </span>
-          <input type="email" placeholder="Email" name="admin" id="admin"  required/>
+          <input type="text" placeholder="Username" name="admin" id="admin"  required/>
           <input type="password" placeholder="Password" name="pwd" id="pwd" required/>
-          <a href="#">Forgot your password?</a>
+       <!--   <a href="#">Forgot your password?</a>-->
           <button>Sign In</button>
 
            <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
@@ -76,7 +76,7 @@
 
 
 			if (data.success) {
-                  window.location.href = "admin";
+                  window.location.href = "data_entry/home";
 			      }
 			else if(data.success1){
 			      window.location.href = "user";
