@@ -6,145 +6,144 @@
 
     <!-- Page Wrapper -->
 
-        <!-- End of Sidebar -->
+    <!-- End of Sidebar -->
+<script>
+    function validateForm() {
 
-      
+        
+                    var txt;
+                    if (confirm("Press a button!")) {
+                        txt = "You pressed OK!";
+                    } else {
+                        return false;
+                    }
+                    
+                }
+</script>
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Session Table</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Session Table
-							
-							<div class="my-2" style="float:right;">
-                                    <button href="#" class="btn btn-info btn-icon-split"  data-toggle="modal" data-target="#add_data_Modal">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <span class="text">Add</span>
-                                    </button>
-                                    </div></h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>S no</th>
-                                            <th>Course Name</th>
-											<th>Session Name</th>
-                                            <th>Session Description</th>
-											<th>Session Date</th>
-                                            <th>Session Start Time</th>
-											<th>Session End Time</th>
-											<th>Faculty Name</th>
-											<th>Session Status</th>
-											<th>Feedback</th>
-											<th>Options</th>
-											<th>Edit</th>
-											<th>Delete</th>
-											
-                                           
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>S no</th>
-                                            <th>Course Name</th>
-											<th>Session Name</th>
-                                            <th>Session Description</th>
-											<th>Session Date</th>
-                                            <th>Session Start Time</th>
-											<th>Session End Time</th>
-											<th>Faculty Name</th>
-											<th>Session Status</th>
-											<th>Feedback</th>
-											<th>Options</th>
-											<th>Edit</th>
-											<th>Delete</th>
-											
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    {% for row in session %}
-                                        <tr>
-                                            <td>{{loop.index}}</td>
-                                            <td>{{row.course_name}}</td>
-											<td>{{row.session_name}}</th>
-                                            <td>{{row.session_discription}}</td>
-											<td>{{row.session_date}}</td>
-                                            <td>{{row.session_starttime}}</th>
-											<td>{{row.session_endtime}}</td>
-											<td>{{row.faculty_name}}</td>
-                                            <td>{{row.session_status}}</th>
-											<td>
-											<a href="#" class="btn btn-warning ">
-                                                       <i class="fas fa-copy"></i>
-                                            </a>
-											
-											
-											</td>
-											<td>
-											 <button href="#" class="btn btn-primary ">
-                                                       Close
-                                            </button>
-											
-											
-											</td>
-											
-											<td>
-											
-											
-											<button  class="btn btn-success "  data-toggle="modal" data-target="#dataModal">
-											<i class="fas fa-pencil-alt"></i>
-                                                 
-                                            </button>
-											
-											</td>
-											<td>
-											<button   class="btn btn-danger ">
-                                              <i class="fas fa-trash"></i> 
-                                            </button>
-											
-											</td>
-											
-											
-                                          
-                                        </tr>
-                                    {% endfor %}
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Session Table</h1>
+        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+            For more information about DataTables, please visit the <a target="_blank"
+                href="https://datatables.net">official DataTables documentation</a>.</p>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Session Table
+
+                    <div class="my-2" style="float:right;">
+                        <button href="#" class="btn btn-info btn-icon-split" data-toggle="modal"
+                            data-target="#add_data_Modal">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text">Add</span>
+                        </button>
                     </div>
-
-                </div>
-                <!-- /.container-fluid -->
-
+                </h6>
             </div>
-            <!-- End of Main Content -->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <form method="post"  action="/data_entry/session/update" >
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>S no</th>
+                                    <th>Course Name</th>
+                                    <th>Session Name</th>
+                                    <th>Session Description</th>
+                                    <th>Session Date</th>
+                                    <th>Session Start Time</th>
+                                    <th>Session End Time</th>
+                                    <th>Faculty Name</th>
+                                    <th>Session Status</th>
+                                    <th>Feedback Link</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+
+
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>S no</th>
+                                    <th>Course Name</th>
+                                    <th>Session Name</th>
+                                    <th>Session Description</th>
+                                    <th>Session Date</th>
+                                    <th>Session Start Time</th>
+                                    <th>Session End Time</th>
+                                    <th>Faculty Name</th>
+                                    <th>Session Status</th>
+                                    <th>Feedback Link</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                {% for row in session %}
+                                <tr>
+                                    <td>{{loop.index}}</td>
+                                    <td>{{row.course_name}}</td>
+                                    <td>{{row.session_name}}</th>
+                                    <td>{{row.session_discription}}</td>
+                                    <td>{{row.session_date}}</td>
+                                    <td>{{row.session_starttime}}</th>
+                                    <td>{{row.session_endtime}}</td>
+                                    <td>{{row.faculty_name}}</td>
+                                    <td>{{row.session_status}}</th>
+                                    <td>
+                                        <a href="/feedback?id={{row.session_id}}" class="btn btn-warning "><i
+                                                class="fas fa-copy"></i></a>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-success " data-toggle="modal" data-target="#dataModal">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-danger " value="{{row.session_id}}"
+                                            name="delete" id='deletecheck' onclick="return validateForm()"><i
+                                                class="fas fa-trash"></i></button>
+                                    </td>
+
+
+
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
-            </footer>
-            <!-- End of Footer -->
-
+            </div>
         </div>
-        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Your Website 2020</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
@@ -154,154 +153,227 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-  
-	
-	
-	<!-- Add Modal-->
-<div id="add_data_Modal" class="modal fade">
- <div class="modal-dialog">
-  <div class="modal-content">
-   <div class="modal-header">
-    <h4 class="modal-title">Insert Course Session</h4>
-    <button type="button" class="close" data-dismiss="modal">×</button>
-   
-   </div>
-   <div class="modal-body">
-    <form method="post" id="insert_form">
-	 <label>Enter Course Name</label>
-     <select name="cname" id="status" class="form-control">
-        {% for rows in course %}
-        <option value="{{rows.course_id}}">{{rows.course_name}} - {{row.course_grade}} - {{row.subject_name}}</option>
-        {% endfor %}
 
-    </select></td>
-	 <br />
-	
-     <label>Enter Session Name</label>
-     <input type="text" name="cname" id="name" class="form-control" />
-     <br />
-	 
-	 <label>Enter Session Description</label>
-      <textarea name="address" id="address" class="form-control"></textarea>
-     <br />
-     
-	 <label>Enter Session Date</label> 
-     <input type="date" name="duration" id="name" class="form-control"/>
-     <br />
-	 
-	 <label>Enter Session Start Time</label> 
-     <input type="time" name="duration" id="name" class="form-control"/>
-     <br />
-	 
-	 <label>Enter Session End Time</label> 
-     <input type="time" name="duration" id="name" class="form-control"/>
-     <br />
-     
-	  <label>Enter Faculty Name</label> 
-     <input type="text" name="session" id="name" class="form-control" />
-     <br />
-	 
-	 <label>Status</label> 
+
+
+    <!-- Add Modal-->
+    <div id="add_data_Modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Insert Course Session</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="insert_form">
+                        <label>Enter Course Name</label>
+                        <select name="cname" id="status" class="form-control">
+                            {% for row in course %}
+                            <option value="{{row.course_id}}">{{row.course_name}} - {{row.course_grade}} -
+                                {{row.subject_name}}</option>
+                            {% endfor %}
+
+                        </select></td>
+                        <br />
+                        <label>Enter session Duration</label>
+                        <input type="number" name="sduration" id="name" class="form-control" />
+                        <br />
+                        <label>Enter Session Name</label>
+                        <input type="text" name="sname" id="name" class="form-control" />
+                        <br />
+
+                        <label>Enter Session Description</label>
+                        <textarea name="desc" id="address" class="form-control"></textarea>
+                        <br />
+
+                        <label>Enter Session Date</label>
+                        <input type="date" name="sdate" id="name" class="form-control" />
+                        <br />
+
+                        <label>Enter Session Start Time</label>
+                        <input type="time" name="stime" id="name" class="form-control" />
+                        <br />
+
+                        <label>Enter Session End Time</label>
+                        <input type="time" name="etime" id="name" class="form-control" />
+                        <br />
+
+                        <label>Enter Faculty Name</label>
+                        <select name="fid" id="status" class="form-control">
+                            {% for rows in faculty %}
+                            <option value="{{rows.faculty_id}}">{{rows.faculty_name}}</option>
+                            {% endfor %}
+
+                        </select></td>
+                        <br />
+
+                        <!-- <label>Status</label> 
                             <select name="status" id="status" class="form-control">
 								<option value="Opened">Opened</option>
 								<option value="closed">Closed</option>
 							</select></td> 
-     <br />
-	 
-     
-   </div>
-
-   <div class="modal-footer">
-   <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	 </form>
-   </div>
-  </div>
- </div>
-</div>
+     <br /> -->
 
 
-   <!--Update table modal-->
-	
-	<div id="dataModal" class="modal fade">
- <div class="modal-dialog">
-  <div class="modal-content">
-   <div class="modal-header">
-   <h4 class="modal-title">Course Session Details</h4>
-    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Update table modal-->
+
+    <div id="dataModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Course Session Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <form method="post" id="insert_form">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td width="30%"><label>Course Name</label>
+                                    <td width="70%"><input type="text" class="form-control" id="view_name"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label> Session Name</label>
+                                    <td width="70%"><input type="text" class="form-control" id="view_address"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label> Session Description</label>
+                                    <td width="70%"><textarea type="text" class="form-control" id="view_age"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label> Session Date</label>
+                                    <td width="70%"><input type="date" class="form-control" id="view_designation"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"> <label> Session Start Time</label>
+                                    <td width="70%"><input type="time" class="form-control" id="view_age"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label> <label> Session End Time</label> </label></td>
+                                    <td width="70%"><input type="time" class="form-control" id="view_age"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label> <label>Faculty Name</label> </label></td>
+                                    <td width="70%"><input type="text" class="form-control" id="view_age"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label>Status</label></td>
+                                    <td width="70%"><select name="status" id="status" class="form-control">
+                                            <option value="Opened">Opened</option>
+                                            <option value="closed">Closed</option>
+                                        </select></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label>Course Description</label></td>
+                                    <td width="70%"><textarea type="text" class="form-control" id="view_age"></textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="modal-footer">
+                                <input type="submit" name="insert" id="insert" value="Update" class="btn btn-success" />
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+            <script>
+                $(document).ready(function () {
+                    $('#insert_form').on("submit", function (event) {
+                        event.preventDefault();
+
+                        $.ajax({
+                            url: "/data_entry/session",
+                            method: "POST",
+                            data: $('#insert_form').serialize(),
+                            beforeSend: function () {
+                                $('#insert').val("Inserting");
+                            },
+                            success: function (data) {
+                                $('#add_data_Modal').modal('hide');
+                                if (data == 'success') {
+                                    swal("Data is submitted successfully!",
+                                        "New session is Created", "success");
+
+                                    var delayInMilliseconds = 6500; //1 second
+
+                                    setTimeout(function () {
+                                        window.location.href =
+                                            "/data_entry/session";
+                                    }, delayInMilliseconds);
+
+                                }
+                                if (data == 'error') {
+                                    console.log('error')
+                                    swal("Data is not Submitted!",
+                                        "Error in submitting Data",
+                                        "error");
+                                    window.location.href = "/data_entry/course";
+                                }
+                            }
+                        });
+
+                    });
+
+                    $(document).on('click', '.view_data', function () {
+                        var employee_id = $(this).attr("id");
+                        $.ajax({
+                            url: "/select",
+                            method: "POST",
+                            data: {
+                                employee_id: employee_id
+                            },
+                            success: function (data) {
+                                $('#dataModal').modal('show');
+                                var data_rs = JSON.parse(data);
+                                $('#view_name').val(data_rs[0]['emp_name']);
+                                $('#view_address').val(data_rs[0]['address']);
+                                $('#view_gender').val(data_rs[0]['gender']);
+                                $('#view_designation').val(data_rs[0]['designation']);
+                                $('#view_age').val(data_rs[0]['age']);
+                            }
+                        });
+                    });
+
+
+
+                });
+
+
+
+                
+            </script>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  <script>
     
-   </div>
-   <div class="modal-body">
-      <div class="table-responsive">  
-	  <form method="post" id="insert_form">
-        <table class="table table-bordered">
-        <tr>  
-            <td width="30%"><label>Course Name</label>
-            <td width="70%"><input type="text" class="form-control" id="view_name"></td>  
-        </tr>
-        <tr>  
-            <td width="30%"><label> Session Name</label>  
-            <td width="70%"><input type="text" class="form-control" id="view_address"></td>  
-        </tr>
-        <tr>  
-            <td width="30%"><label> Session Description</label> 
-            <td width="70%"><textarea type="text" class="form-control" id="view_age"></textarea></td>    
-        </tr>
-        <tr>  
-            <td width="30%"><label> Session Date</label>   
-            <td width="70%"><input type="date" class="form-control" id="view_designation"></td>  
-        </tr>
-        <tr>  
-            <td width="30%"> <label> Session Start Time</label> 
-            <td width="70%"><input type="time" class="form-control" id="view_age"></td>  
-        </tr>
-		  <tr>  
-            <td width="30%"><label> <label> Session End Time</label> </label></td>  
-            <td width="70%"><input type="time" class="form-control" id="view_age"></td>  
-        </tr>
-		<tr>  
-            <td width="30%"><label> <label>Faculty Name</label> </label></td>  
-            <td width="70%"><input type="text" class="form-control" id="view_age"></td>  
-        </tr>
-		<tr>  
-            <td width="30%"><label>Status</label></td>  
-            <td width="70%"><select name="status" id="status" class="form-control">
-								<option value="Opened">Opened</option>
-								<option value="closed">Closed</option>
-							</select></td>  
-        </tr>
-		<tr>  
-            <td width="30%"><label>Course Description</label></td>  
-            <td width="70%"><textarea type="text" class="form-control" id="view_age"></textarea></td>  
-        </tr>
-    </table>
-	 <div class="modal-footer">
-   <input type="submit" name="insert" id="insert" value="Update" class="btn btn-success" />
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	 </form>
-   </div>
-	
-	</div>
-   </div>
-	
-	
+    swal("{{message}}", "Session Deleted Successfully !", "success");
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</script>
+  {% endfor %}
+  {% endif %}
+  {% endwith %} 
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 
