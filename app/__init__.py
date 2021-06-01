@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session,Response,flash,jsonify
+from flask import Flask,flash, render_template, request, redirect, url_for, session,Response,flash,jsonify
 import MySQLdb.cursors
 import re
 from flask_mysqldb import MySQL

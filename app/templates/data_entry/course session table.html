@@ -169,7 +169,12 @@
    <div class="modal-body">
     <form method="post" id="insert_form">
 	 <label>Enter Course Name</label>
-     <input type="text" name="sname" id="name" class="form-control" />
+     <select name="cname" id="status" class="form-control">
+        {% for rows in course %}
+        <option value="{{rows.course_id}}">{{rows.course_name}} - {{row.course_grade}} - {{row.subject_name}}</option>
+        {% endfor %}
+
+    </select></td>
 	 <br />
 	
      <label>Enter Session Name</label>

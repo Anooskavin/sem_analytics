@@ -1,3 +1,4 @@
+from re import sub
 from app import *
 @app.route("/data_entry/home", methods=["POST", "GET"])
 def data_entry_home():
@@ -8,23 +9,72 @@ def data_entry_home():
 
 @app.route("/data_entry/subject", methods=["POST", "GET"])
 def data_entry_subject():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        if request.method == 'POST':
+            name = request.form['name']
+            description = request.form['descr']                   
+            try:
+                cursor.execute("INSERT INTO subject (subject_name, subject_description) VALUES (%s, %s)",[name, description])
+                mysql.connection.commit()
+                return jsonify('success')
+            except Exception as Ex:
+                return jsonify('error')
+        
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
         return render_template('data_entry/subject.html',subject=subject)
     else:
         return redirect(url_for('login'))
 
+
+
+
 @app.route("/data_entry/course", methods=["POST", "GET"])
 def data_entry_course():
-    if 'id' in session and session.get("user_type") == 'data_entry':
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'data_entry':        
+        if request.method == 'POST':      
+            adminid=session.get('id')
+            subjectid = request.form['subjectid']
+            cname = request.form['cname']
+            grade = request.form['grade']
+            cduration = request.form['duration']
+            nosession = request.form['session']
+            description = request.form['coursedes']                   
+            try:
+                cursor.execute("INSERT INTO course_details (subject_id, course_grade,course_name,course_description,course_duration,no_of_session,admin_id) VALUES (%s, %s, %s, %s, %s, %s, %s)",[subjectid, grade,cname,description,cduration,nosession,adminid])
+                mysql.connection.commit()
+                return jsonify('success')
+            except Exception as Ex:
+                return jsonify('error')
+        
         cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
         course = cursor.fetchall()
-        return render_template('data_entry/course.html',course=course)
+        cursor.execute('SELECT * FROM subject')
+        subject = cursor.fetchall()
+        return render_template('data_entry/course.html',course=course,subject=subject)
     else:
         return redirect(url_for('login'))
+
+
+
+@app.route("/data_entry/course/update", methods=["POST", "GET"])
+def data_entry_course_update():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'data_entry':     
+        if request.method == "POST":
+
+            if request.form.get("delete"):
+                result = request.form 
+                id = result["delete"]
+                cursor.execute('delete from course_details where course_id=%s;', [id])
+                mysql.connection.commit()
+                flash("Deleted ♥️")                
+                return redirect(url_for('data_entry_course'))
+    else:
+        return redirect(url_for('login'))
+
 
 
 
@@ -33,8 +83,8 @@ def data_entry_session():
     if 'id' in session and session.get("user_type") == 'data_entry':
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id')
-        session = cursor.fetchall()
-        return render_template('data_entry/course session table.html',session=session)
+        sess = cursor.fetchall()
+        return render_template('data_entry/course session table.html',session=sess)
     else:
         return redirect(url_for('login'))
 
