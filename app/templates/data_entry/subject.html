@@ -6,116 +6,119 @@
 
     <!-- Page Wrapper -->
 
-        <!-- End of Sidebar -->
+    <!-- End of Sidebar -->
 
-       
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Subject Table</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Subject Table
-							
-							<div class="my-2" style="float:right;">
-                                    <button class="btn btn-info btn-icon-split" data-toggle="modal" data-target="#add_data_Modal">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <span class="text">Add</span>
-                                    </button>
-                                    </div></h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Subject Table</h1>
+        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+            For more information about DataTables, please visit the <a target="_blank"
+                href="https://datatables.net">official DataTables documentation</a>.</p>
 
-                                        <tr>
-                                            <th>S no</th>
-                                            <th>Subject Name</th>
-                                            <th>Suject Description</th>
-                                           
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>S no</th>
-                                            <th>Subject Name</th>
-                                            <th>Suject Description</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    {% for row in subject %}
-                                        <tr>
-                                            <td>{{loop.index}}</td>
-                                            <td>{{row.subject_name}}</td>
-                                            <td>{{row.subject_description}}</td>
-                                           
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Subject Table
+
+                    <div class="my-2" style="float:right;">
+                        <button class="btn btn-info btn-icon-split" data-toggle="modal" data-target="#add_data_Modal">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text">Add</span>
+                        </button>
                     </div>
-
-                </div>
-                <!-- /.container-fluid -->
-
+                </h6>
             </div>
-            <!-- End of Main Content -->
-			
-			
-			<div id="add_data_Modal" class="modal fade">
- <div class="modal-dialog">
-  <div class="modal-content">
-   <div class="modal-header">
-    <h4 class="modal-title">Insert Subject</h4>
-    <button type="button" class="close" data-dismiss="modal">×</button>
-   
-   </div>
-   <div class="modal-body">
-    <form method="post" id="insert_form">
-     <label>Enter Subject Name</label>
-     <input type="text" name="name" id="name" class="form-control" />
-     <br />
-     
-     <label>Enter Subject Description</label>
-     <textarea name="address" id="address" class="form-control"></textarea>
-     <br />
-     
- 
-   
-   </div>
-   <div class="modal-footer">
-   <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	 </form>
-   </div>
-  </div>
- </div>
-</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
+                            <tr>
+                                <th>S no</th>
+                                <th>Subject Name</th>
+                                <th>Suject Description</th>
+
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>S no</th>
+                                <th>Subject Name</th>
+                                <th>Suject Description</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for row in subject %}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{row.subject_name}}</td>
+                                <td>{{row.subject_description}}</td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-            </footer>
-            <!-- End of Footer -->
-
+            </div>
         </div>
-        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Modal for adding details -->
+    <div id="add_data_Modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Insert Subject</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="insert_form">
+                        <label>Enter Subject Name</label>
+                        <input type="text" name="name" id="name" class="form-control" required />
+                        <br />
+
+                        <label>Enter Subject Description</label>
+                        <textarea name="descr" id="descr" class="form-control" required></textarea>
+                        <br />
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end of modal -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Your Website 2020</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
@@ -125,110 +128,113 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-	
-	
-	
-	
-	<!--Update table modal-->
-	
-	<div id="dataModal" class="modal fade">
- <div class="modal-dialog">
-  <div class="modal-content">
-   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">×</button>
-    <h4 class="modal-title">Employee Details</h4>
-   </div>
-   <div class="modal-body">
-      <div class="table-responsive">  
-        <table class="table table-bordered">
-        <tr>  
-            <td width="30%"><label>Name</label></td>  
-            <td width="70%"><input type="text" class="form-control" id="view_name"></td>  
-        </tr>
-        <tr>  
-            <td width="30%"><label>Address</label></td>  
-            <td width="70%"><input type="text" class="form-control" id="view_address"></td>  
-        </tr>
-        <tr>  
-            <td width="30%"><label>Gender</label></td>  
-            <td width="70%"><input type="text" class="form-control" id="view_gender"></td>  
-        </tr>
-        <tr>  
-            <td width="30%"><label>Designation</label></td>  
-            <td width="70%"><input type="text" class="form-control" id="view_designation"></td>  
-        </tr>
-        <tr>  
-            <td width="30%"><label>Age</label></td>  
-            <td width="70%"><input type="text" class="form-control" id="view_age"></td>  
-        </tr>
-    </table></div>
-   </div>
-   <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-   </div>
-  </div>
- </div>
-</div>
-	
-	
 
 
-	
-	<script>  
-$(document).ready(function(){
- $('#insert_form').on("submit", function(event){  
-  event.preventDefault();  
-  if($('#name').val() == "")  
-  {  
-   alert("Name is required");  
-  }  
-  else if($('#address').val() == '')  
-  {  
-   alert("Address is required");  
-  }  
-  else if($('#designation').val() == '')
-  {  
-   alert("Designation is required");  
-  }
-    
-  else 
-  {  
-   $.ajax({  
-    url:"/insert",  
-    method:"POST",  
-    data:$('#insert_form').serialize(),  
-    beforeSend:function(){  
-     $('#insert').val("Inserting");  
-    },  
-    success:function(data){  
-     $('#add_data_Modal').modal('hide'); 
-      if (data=='success')  {
-       window.location.href = "/";   
-     }
-    }  
-   });  
-  }  
- });
- 
- $(document).on('click', '.view_data', function(){
-  var employee_id = $(this).attr("id");
-  $.ajax({
-   url:"/select",
-   method:"POST",
-   data:{employee_id:employee_id},
-   success:function(data){
-    $('#dataModal').modal('show');
-    var data_rs = JSON.parse(data);
-    $('#view_name').val(data_rs[0]['emp_name']);
-    $('#view_address').val(data_rs[0]['address']);
-    $('#view_gender').val(data_rs[0]['gender']);
-    $('#view_designation').val(data_rs[0]['designation']);
-    $('#view_age').val(data_rs[0]['age']);
-   }
-  });
- });
-});  
- </script>  
+
+
+    <!--Update table modal-->
+
+    <div id="dataModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td width="30%"><label>Name</label></td>
+                                <td width="70%"><input type="text" class="form-control" id="view_name"></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>Address</label></td>
+                                <td width="70%"><input type="text" class="form-control" id="view_address"></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>Gender</label></td>
+                                <td width="70%"><input type="text" class="form-control" id="view_gender"></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>Designation</label></td>
+                                <td width="70%"><input type="text" class="form-control" id="view_designation"></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>Age</label></td>
+                                <td width="70%"><input type="text" class="form-control" id="view_age"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#insert_form').on("submit", function (event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: "/data_entry/subject",
+                    method: "POST",
+                    data: $('#insert_form').serialize(),
+                    beforeSend: function () {
+                        $('#insert').val("Inserting");
+                    },
+                    success: function (data) {
+                        $('#add_data_Modal').modal('hide');
+                        if (data == 'success') {
+                            swal("Data is submitted successfully!",
+                                "New Subject is Created", "success");
+                                window.location.href = "/data_entry/subject";
+                            var delayInMilliseconds = 6500; //1 second
+
+                            setTimeout(function () {
+                                
+                            }, delayInMilliseconds);
+                            
+                        }
+                        if (data == 'error') {
+                            console.log('error')
+                            swal("Data is not Submitted!", "Error in submitting Data",
+                                "error");
+                            window.location.href = "/data_entry/subject";
+                        }
+                    }
+                });
+
+            });
+
+            $(document).on('click', '.view_data', function () {
+                var employee_id = $(this).attr("id");
+                $.ajax({
+                    url: "/select",
+                    method: "POST",
+                    data: {
+                        employee_id: employee_id
+                    },
+                    success: function (data) {
+                        $('#dataModal').modal('show');
+                        var data_rs = JSON.parse(data);
+                        $('#view_name').val(data_rs[0]['emp_name']);
+                        $('#view_address').val(data_rs[0]['address']);
+                        $('#view_gender').val(data_rs[0]['gender']);
+                        $('#view_designation').val(data_rs[0]['designation']);
+                        $('#view_age').val(data_rs[0]['age']);
+                    }
+                });
+            });
+        });
+    </script>
 
 
 
