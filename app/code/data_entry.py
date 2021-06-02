@@ -27,6 +27,39 @@ def data_entry_subject():
     else:
         return redirect(url_for('login'))
 
+@app.route('/data_entry/subject/select', methods=['GET', 'POST'])
+def admin_adminuser_select():   
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST': 
+        subject = request.form['subject']
+        print(subject)      
+        result = cur.execute("SELECT * FROM subject WHERE subject_id = %s", [subject])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                    'subject_id': rs['subject_id'],
+                    'subject_name': rs['subject_name'],
+                    'subject_description': rs['subject_description']}
+            employeearray.append(employee_dict)
+        return json.dumps(employeearray)
+
+
+
+@app.route("/data_entry/subject/update", methods=["POST", "GET"])
+def data_entry_subject_update():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":
+        subject_id = request.form['subject_id']
+        print("sub"+subject_id)            
+    return jsonify('success')   
+
+
+  # subject_name = request.form['subject_name']
+            # subject_description = request.form['subject_description']    
+                # cursor.execute('update subject set subject_name=%s, subject_description = %s where subject_id=%s', [subject_name,subject_description,subject_id])
+                # mysql.connection.commit()
+                # flash("Document Updated ♥️")          
 
 
 
@@ -128,13 +161,46 @@ def data_entry_session_update():
 
 @app.route("/data_entry/faculty", methods=["POST", "GET"])
 def data_entry_faculty():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        if request.method == 'POST':      
+            adminid=session.get('id')
+            fname = request.form['fname']
+            email = request.form['email']
+            contact = request.form['contact']              
+         
+            try:
+                cursor.execute("INSERT INTO faculty_details (faculty_name, faculty_email ,faculty_contact) VALUES (%s, %s, %s)",[fname,email,contact])
+                mysql.connection.commit()
+                return jsonify('success')
+            except Exception as Ex:
+                return jsonify('error')
         cursor.execute('SELECT * FROM faculty_details')
         faculty = cursor.fetchall()
         return render_template('data_entry/Faculty table.html',faculty=faculty)
     else:
         return redirect(url_for('login'))
+
+
+@app.route("/data_entry/faculty/update", methods=["POST", "GET"])
+def data_entry_faculty_update():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'data_entry':     
+        if request.method == "POST":
+            if request.form.get("delete"):
+                result = request.form 
+                id = result["delete"]
+                cursor.execute('delete from faculty_details where faculty_id=%s;', [id])
+                mysql.connection.commit()
+                flash("Deleted ♥️")                                         
+                return redirect(url_for('data_entry_faculty'))
+    else:
+        return redirect(url_for('login'))
+
+
+
+
+
 
 @app.route("/data_entry/student", methods=["POST", "GET"])
 def data_entry_student():

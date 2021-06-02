@@ -43,6 +43,7 @@
                                 <th>S no</th>
                                 <th>Subject Name</th>
                                 <th>Suject Description</th>
+                                <th>update</th>
 
                             </tr>
                         </thead>
@@ -51,6 +52,7 @@
                                 <th>S no</th>
                                 <th>Subject Name</th>
                                 <th>Suject Description</th>
+                                <th>update</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -59,7 +61,12 @@
                                 <td>{{loop.index}}</td>
                                 <td>{{row.subject_name}}</td>
                                 <td>{{row.subject_description}}</td>
+                                <td><a type="button" name="view" id="{{row.subject_id}}"
+                                        class="btn btn-success btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>
+                                </td>
 
+
+                                </button></td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -102,20 +109,14 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- end of modal -->
-
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
+        </div>value="view"
         <div class="container my-auto">
             <div class="copyright text-center my-auto">
                 <span>Copyright &copy; Your Website 2020</span>
             </div>
         </div>
-    </footer>
-    <!-- End of Footer -->
+        </footer>
+        <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->
@@ -135,42 +136,52 @@
     <!--Update table modal-->
 
     <div id="dataModal" class="modal fade">
+
         <div class="modal-dialog">
+            <form method="post" action="/data_entry/subject/update"></form>
             <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="modal-title">Update Subject</h4>
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h4 class="modal-title">Employee Details</h4>
                 </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <tr>
-                                <td width="30%"><label>Name</label></td>
-                                <td width="70%"><input type="text" class="form-control" id="view_name"></td>
-                            </tr>
-                            <tr>
-                                <td width="30%"><label>Address</label></td>
-                                <td width="70%"><input type="text" class="form-control" id="view_address"></td>
-                            </tr>
-                            <tr>
-                                <td width="30%"><label>Gender</label></td>
-                                <td width="70%"><input type="text" class="form-control" id="view_gender"></td>
-                            </tr>
-                            <tr>
-                                <td width="30%"><label>Designation</label></td>
-                                <td width="70%"><input type="text" class="form-control" id="view_designation"></td>
-                            </tr>
-                            <tr>
-                                <td width="30%"><label>Age</label></td>
-                                <td width="70%"><input type="text" class="form-control" id="view_age"></td>
-                            </tr>
-                        </table>
+                <form method="post" id="update_form">
+
+                    <div class="modal-body">
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered">
+
+                                <tr>
+                                    <td width="30%"><label>ID</label></td>
+                                    <td width="70%"><input type="text" name="subject_id" class="form-control"
+                                            id="subject_id" disabled></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label>subject_name</label></td>
+                                    <td width="70%"><input type="text" name="subject_name" class="form-control"
+                                            id="subject_name"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label>subject_description</label></td>
+                                    <td width="70%"><input type="text" name="subject_description" class="form-control"
+                                            id="subject_description"></td>
+                                </tr>
+
+
+                            </table>
+
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+                    <div class="modal-footer">
+
+                        <input type="submit" name="update" value="update" class="btn btn-success" />
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+
             </div>
+
         </div>
     </div>
 
@@ -195,13 +206,13 @@
                         if (data == 'success') {
                             swal("Data is submitted successfully!",
                                 "New Subject is Created", "success");
-                                window.location.href = "/data_entry/subject";
+                            window.location.href = "/data_entry/subject";
                             var delayInMilliseconds = 6500; //1 second
 
                             setTimeout(function () {
-                                
+
                             }, delayInMilliseconds);
-                            
+
                         }
                         if (data == 'error') {
                             console.log('error')
@@ -214,22 +225,42 @@
 
             });
 
-            $(document).on('click', '.view_data', function () {
-                var employee_id = $(this).attr("id");
+            $('#update_form').on("submit", function (event) {
+                event.preventDefault();
+
                 $.ajax({
-                    url: "/select",
+                    url: "/data_entry/subject/update",
+                    method: "POST",
+                    data: $('#update_form').serialize(),
+                    beforeSend: function () {
+                        $('#update').val("Updating");
+                    },
+                    success: function (data) {
+                        $('#dataModal').modal('hide');
+                        if (data == 'success') {
+                            window.location.href = "/data_entry/subject";
+                        }
+                    }
+                });
+
+            });
+
+
+            $(document).on('click', '.view_data', function () {
+                var subject = $(this).attr("id");
+                $.ajax({
+                    url: "/data_entry/subject/select",
                     method: "POST",
                     data: {
-                        employee_id: employee_id
+                        subject: subject
                     },
                     success: function (data) {
                         $('#dataModal').modal('show');
                         var data_rs = JSON.parse(data);
-                        $('#view_name').val(data_rs[0]['emp_name']);
-                        $('#view_address').val(data_rs[0]['address']);
-                        $('#view_gender').val(data_rs[0]['gender']);
-                        $('#view_designation').val(data_rs[0]['designation']);
-                        $('#view_age').val(data_rs[0]['age']);
+                        $('#subject_id').val(data_rs[0]['subject_id']);
+                        $('#subject_name').val(data_rs[0]['subject_name']);
+                        $('#subject_description').val(data_rs[0]['subject_description']);
+
                     }
                 });
             });
