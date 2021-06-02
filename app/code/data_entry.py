@@ -7,6 +7,12 @@ def data_entry_home():
     else:
         return redirect(url_for('login'))
 
+
+
+
+
+########################################### subject table ##########################################
+
 @app.route("/data_entry/subject", methods=["POST", "GET"])
 def data_entry_subject():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -33,7 +39,7 @@ def admin_adminuser_select():
     if request.method == 'POST': 
         subject = request.form['subject']
         print(subject)      
-        result = cur.execute("SELECT * FROM subject WHERE subject_id = %s", [subject])
+        cur.execute("SELECT * FROM subject WHERE subject_id = %s", [subject])
         rsemployee = cur.fetchall()
         employeearray = []
         for rs in rsemployee:
@@ -51,16 +57,16 @@ def data_entry_subject_update():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method == "POST":
         subject_id = request.form['subject_id']
-        print("sub"+subject_id)            
+        subject_name = request.form['subject_name']
+        subject_description = request.form['subject_description']    
+        cursor.execute('update subject set subject_name=%s, subject_description = %s where subject_id=%s', [subject_name,subject_description,subject_id])
+        mysql.connection.commit()
     return jsonify('success')   
 
+####################################### subject table end ############################################
 
-  # subject_name = request.form['subject_name']
-            # subject_description = request.form['subject_description']    
-                # cursor.execute('update subject set subject_name=%s, subject_description = %s where subject_id=%s', [subject_name,subject_description,subject_id])
-                # mysql.connection.commit()
-                # flash("Document Updated ♥️")          
 
+#########################################  Course Table ###############################################
 
 
 @app.route("/data_entry/course", methods=["POST", "GET"])
@@ -108,7 +114,27 @@ def data_entry_course_update():
     else:
         return redirect(url_for('login'))
 
-
+@app.route('/data_entry/course/select', methods=['GET', 'POST'])
+def data_entry_course_select():   
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST': 
+        course_id = request.form['course_id']
+        print(course_id)      
+        cur.execute("SELECT * FROM course_details,subject WHERE course_details.subject_id=subject.subject_id and course_id = %s", [course_id])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                    'course_id': rs['course_id'],
+                    'subject_name': rs['subject_name'],
+                    'course_name': rs['course_name'],
+                    'course_grade': rs['course_grade'],
+                    'course_duration': rs['course_duration'],
+                    'no_of_session': rs['no_of_session'],
+                    'status': rs['course_status'],
+                    'course_description': rs['course_description']}
+            employeearray.append(employee_dict)
+        return json.dumps(employeearray)
 
 
 @app.route("/data_entry/session", methods=["POST", "GET"])

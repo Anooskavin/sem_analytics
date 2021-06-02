@@ -40,8 +40,8 @@
                 <div class="table-responsive">
                     <form method="post" action="/data_entry/course/update">
 
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
                             <thead>
                                 <tr>
                                     <th>S no</th>
@@ -72,9 +72,9 @@
                                 </tr>
                             </tfoot>
                             <tbody>
-                                    {% for row in course %}
+                                {% for row in course %}
                                 <tr>
-                                    
+
                                     <td>{{loop.index}}</td>
                                     <td>{{row.subject_name}}</td>
                                     <td>{{row.course_name}}</td>
@@ -82,18 +82,22 @@
                                     <td>{{row.course_description}}</td>
                                     <td>{{row.course_duration}}</td>
                                     <td>{{row.no_of_session}}</th>
-                                    {% if row.course_status == "open" %}<td><span class="badge badge-primary">{{row.course_status}}</span></td>{% endif %}
-                                    {% if row.course_status == "close" %}<td><span class="badge badge-success">{{row.course_status}}</span></td>{% endif %}
-                                    <td><button class="btn btn-success " data-toggle="modal" data-target="#dataModal"><i class="fas fa-pencil-alt"></button></td>
-                                    <td><button type="submit" name="delete" value="{{row.course_id}}" class="btn btn-danger "> <i class="fas fa-trash"></i> </button></td>
-                                   
+                                        {% if row.course_status == "open" %}
+                                    <td><span class="badge badge-primary">{{row.course_status}}</span></td>{% endif %}
+                                    {% if row.course_status == "close" %}<td><span
+                                            class="badge badge-success">{{row.course_status}}</span></td>{% endif %}
+                                    <td><a type="button" name="view" value="view" id="{{row.course_id}}" class="btn btn-success btn-xs view_data"><i class="fas fa-pencil-alt"></i></a></td>
+                                    <td><button type="submit" name="delete" value="{{row.course_id}}"
+                                            onclick="return validateForm()" class="btn btn-danger "> <i
+                                                class="fas fa-trash"></i> </button></td>
+
                                 </tr>
                                 {% endfor %}
-                           
+
                             </tbody>
-                       
-                    </table>
-                </form>
+
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -104,15 +108,7 @@
     </div>
     <!-- End of Main Content -->
 
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Your Website 2020</span>
-            </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
+
 
     </div>
     <!-- End of Content Wrapper -->
@@ -214,37 +210,38 @@
                     <div class="table-responsive">
                         <form method="post" id="insert_form">
                             <table class="table table-bordered">
+                                <input type="hidden" class="form-control" id="course_id" name="course_id">>
                                 <tr>
                                     <td width="30%"><label>Subject Name</label></td>
-                                    <td width="70%"><input type="text" class="form-control" id="view_name"></td>
+                                    <td width="70%"><input type="text" class="form-control" id="subject_name" disabled></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Course Name</label></td>
-                                    <td width="70%"><input type="text" class="form-control" id="view_address"></td>
+                                    <td width="70%"><input type="text" class="form-control" id="course_name"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Course Grade</label></td>
-                                    <td width="70%"><input type="number" class="form-control" id="view_gender"></td>
+                                    <td width="70%"><input type="number" class="form-control" id="course_grade" disabled></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Course Duration</label></td>
-                                    <td width="70%"><input type="number" class="form-control" id="view_designation">
+                                    <td width="70%"><input type="number" class="form-control" id="course_duration">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>No of Sessions</label></td>
-                                    <td width="70%"><input type="number" class="form-control" id="view_age"></td>
+                                    <td width="70%"><input type="number" class="form-control" id="no_of_session"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Status</label></td>
-                                    <td width="70%"><select name="status" id="status" class="form-control">
-                                            <option value="Opened">Opened</option>
-                                            <option value="closed">Closed</option>
+                                    <td width="70%"><select name="status" id="mySelect" class="form-control">
+                                            <option value="open">Opened</option>
+                                            <option value="close">Closed</option>
                                         </select></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Course Description</label></td>
-                                    <td width="70%"><textarea type="text" class="form-control" id="view_age"></textarea>
+                                    <td width="70%"><textarea type="text" class="form-control" id="course_description"></textarea>
                                     </td>
                                 </tr>
                             </table>
@@ -260,13 +257,11 @@
             {% if messages %}
             {% for message in messages %}
             <script>
-              
-              swal("{{message}}", "Course Deleted Successfully !", "success");
-          
-          </script>
+                swal("{{message}}", "Course Deleted Successfully !", "success");
+            </script>
             {% endfor %}
             {% endif %}
-            {% endwith %} 
+            {% endwith %}
 
             <script>
                 $(document).ready(function () {
@@ -305,22 +300,48 @@
 
                     });
 
-                    $(document).on('click', '.view_data', function () {
-                        var employee_id = $(this).attr("id");
+                    $('#update_form').on("submit", function (event) {
+                        event.preventDefault();
+
                         $.ajax({
-                            url: "/select",
+                            url: "/data_entry/subject/update",
+                            method: "POST",
+                            data: $('#update_form').serialize(),
+                            beforeSend: function () {
+                                $('#update').val("Updating");
+                            },
+                            success: function (data) {
+                                $('#add_data_Modal').modal('hide');
+                                if (data == 'success') {
+                                    console.log('success')
+                                    window.location.href = "/data_entry/subject";
+                                }
+                            }
+                        });
+
+                    });
+
+
+                    $(document).on('click', '.view_data', function () {
+                        var course_id = $(this).attr("id");
+                        $.ajax({
+                            url: "/data_entry/course/select",
                             method: "POST",
                             data: {
-                                employee_id: employee_id
+                                course_id: course_id
                             },
                             success: function (data) {
                                 $('#dataModal').modal('show');
                                 var data_rs = JSON.parse(data);
-                                $('#view_name').val(data_rs[0]['emp_name']);
-                                $('#view_address').val(data_rs[0]['address']);
-                                $('#view_gender').val(data_rs[0]['gender']);
-                                $('#view_designation').val(data_rs[0]['designation']);
-                                $('#view_age').val(data_rs[0]['age']);
+                                $('#subject_name').val(data_rs[0]['subject_name']);
+                                $('#course_name').val(data_rs[0]['course_name']);
+                                $('#course_grade').val(data_rs[0]['course_grade']);
+                                $('#course_duration').val(data_rs[0]['course_duration']);
+                                $('#no_of_session').val(data_rs[0]['no_of_session']);
+                                document.getElementById("mySelect").value = data_rs[0]['status'];
+                                // $('#status').val(data_rs[0]['status']);
+                                $('#course_description').val(data_rs[0]['course_description']);
+                                    
                             }
                         });
                     });

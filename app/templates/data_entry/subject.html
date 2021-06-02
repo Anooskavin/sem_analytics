@@ -61,11 +61,11 @@
                                 <td>{{loop.index}}</td>
                                 <td>{{row.subject_name}}</td>
                                 <td>{{row.subject_description}}</td>
-                                <td><a type="button" name="view" id="{{row.subject_id}}"
+                                <!-- <td><a type="button" name="view" id="{{row.subject_id}}"
                                         class="btn btn-success btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>
-                                </td>
+                                </td> -->
 
-
+                                <td><a type="button" name="view" value="view" id="{{row.subject_id}}" class="btn btn-success btn-xs view_data" ><i class="fas fa-pencil-alt"></i></a></td>
                                 </button></td>
                             </tr>
                             {% endfor %}
@@ -109,7 +109,7 @@
                     </form>
                 </div>
             </div>
-        </div>value="view"
+        </div>
         <div class="container my-auto">
             <div class="copyright text-center my-auto">
                 <span>Copyright &copy; Your Website 2020</span>
@@ -136,55 +136,50 @@
     <!--Update table modal-->
 
     <div id="dataModal" class="modal fade">
-
         <div class="modal-dialog">
-            <form method="post" action="/data_entry/subject/update"></form>
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Update Subject</h4>
+                    <h4 class="modal-title">Subject Details</h4>
+
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
                 <form method="post" id="update_form">
-
+    
                     <div class="modal-body">
                         <div class="table-responsive">
-
                             <table class="table table-bordered">
-
-                                <tr>
+                                <!-- <tr>
                                     <td width="30%"><label>ID</label></td>
-                                    <td width="70%"><input type="text" name="subject_id" class="form-control"
-                                            id="subject_id" disabled></td>
-                                </tr>
+                                    <td width="70%"></td>
+                                </tr> -->
+    
                                 <tr>
+                                    <input type="hidden" name='subject_id' class="form-control" id="subject_id" >
                                     <td width="30%"><label>subject_name</label></td>
-                                    <td width="70%"><input type="text" name="subject_name" class="form-control"
-                                            id="subject_name"></td>
+                                    <td width="70%"><input type="text" name='subject_name' class="form-control" id="subject_name"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>subject_description</label></td>
-                                    <td width="70%"><input type="text" name="subject_description" class="form-control"
-                                            id="subject_description"></td>
+                                    <td width="70%"><input type="text" name='subject_description' class="form-control" id="subject_description">
+                                    </td>
                                 </tr>
-
-
+                           
+                                
+    
                             </table>
-
                         </div>
                     </div>
                     <div class="modal-footer">
-
-                        <input type="submit" name="update" value="update" class="btn btn-success" />
-
+                        <input type="submit" name="update"  value="update" class="btn btn-success" />
+    
+    
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>
-
+    
             </div>
-
         </div>
     </div>
-
 
 
 
@@ -226,8 +221,8 @@
             });
 
             $('#update_form').on("submit", function (event) {
-                event.preventDefault();
-
+            event.preventDefault();
+         
                 $.ajax({
                     url: "/data_entry/subject/update",
                     method: "POST",
@@ -236,15 +231,15 @@
                         $('#update').val("Updating");
                     },
                     success: function (data) {
-                        $('#dataModal').modal('hide');
+                        $('#add_data_Modal').modal('hide');
                         if (data == 'success') {
+                            console.log('success')
                             window.location.href = "/data_entry/subject";
                         }
                     }
                 });
-
-            });
-
+            
+        });
 
             $(document).on('click', '.view_data', function () {
                 var subject = $(this).attr("id");
