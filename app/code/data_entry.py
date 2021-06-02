@@ -33,7 +33,7 @@ def admin_adminuser_select():
     if request.method == 'POST': 
         subject = request.form['subject']
         print(subject)      
-        result = cur.execute("SELECT * FROM subject WHERE subject_id = %s", [subject])
+        cur.execute("SELECT * FROM subject WHERE subject_id = %s", [subject])
         rsemployee = cur.fetchall()
         employeearray = []
         for rs in rsemployee:
@@ -51,15 +51,12 @@ def data_entry_subject_update():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method == "POST":
         subject_id = request.form['subject_id']
-        print("sub"+subject_id)            
+        subject_name = request.form['subject_name']
+        subject_description = request.form['subject_description']    
+        cursor.execute('update subject set subject_name=%s, subject_description = %s where subject_id=%s', [subject_name,subject_description,subject_id])
+        mysql.connection.commit()
     return jsonify('success')   
 
-
-  # subject_name = request.form['subject_name']
-            # subject_description = request.form['subject_description']    
-                # cursor.execute('update subject set subject_name=%s, subject_description = %s where subject_id=%s', [subject_name,subject_description,subject_id])
-                # mysql.connection.commit()
-                # flash("Document Updated ♥️")          
 
 
 
