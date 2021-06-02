@@ -7,6 +7,12 @@ def data_entry_home():
     else:
         return redirect(url_for('login'))
 
+
+
+
+
+########################################### subject table ##########################################
+
 @app.route("/data_entry/subject", methods=["POST", "GET"])
 def data_entry_subject():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -57,7 +63,10 @@ def data_entry_subject_update():
         mysql.connection.commit()
     return jsonify('success')   
 
+####################################### subject table end ############################################
 
+
+#########################################  Course Table ###############################################
 
 
 @app.route("/data_entry/course", methods=["POST", "GET"])
@@ -105,7 +114,27 @@ def data_entry_course_update():
     else:
         return redirect(url_for('login'))
 
-
+@app.route('/data_entry/course/select', methods=['GET', 'POST'])
+def data_entry_course_select():   
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST': 
+        course_id = request.form['course_id']
+        print(course_id)      
+        cur.execute("SELECT * FROM course_details,subject WHERE course_details.subject_id=subject.subject_id and course_id = %s", [course_id])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                    'course_id': rs['course_id'],
+                    'subject_name': rs['subject_name'],
+                    'course_name': rs['course_name'],
+                    'course_grade': rs['course_grade'],
+                    'course_duration': rs['course_duration'],
+                    'no_of_session': rs['no_of_session'],
+                    'status': rs['course_status'],
+                    'course_description': rs['course_description']}
+            employeearray.append(employee_dict)
+        return json.dumps(employeearray)
 
 
 @app.route("/data_entry/session", methods=["POST", "GET"])
