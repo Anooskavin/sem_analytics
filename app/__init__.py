@@ -1,12 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for, session,Response,flash,jsonify
+from flask import Flask,flash, render_template, request, redirect, url_for, session,Response,flash,jsonify,json
 import MySQLdb.cursors
 import re
 from flask_mysqldb import MySQL
+import array as arr
+
 import mysql.connector
 from mysql import connector
 
 app = Flask(__name__)
-
+app.secret_key = 'your secret key'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'barathg'
@@ -14,4 +16,4 @@ app.config['MYSQL_DB'] = 'school_management'
 
 mysql = MySQL(app)
 
-from app.code import login,data_entry
+from app.code import login,data_entry,feedback

@@ -34,7 +34,7 @@
           <input type="text" placeholder="Username" name="admin" id="admin"  required/>
           <input type="password" placeholder="Password" name="pwd" id="pwd" required/>
        <!--   <a href="#">Forgot your password?</a>-->
-          <button>Sign In</button>
+          <button type="submit">Sign In</button>
 
            <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
         </form>
@@ -74,8 +74,11 @@
 
       .done(function(data) {
 
+        if (data.success='admin') {
+                  window.location.href = "data_entry/home";
+			      }
 
-			if (data.success) {
+			if (data.success='data_entry') {
                   window.location.href = "data_entry/home";
 			      }
 			else if(data.success1){

@@ -2,27 +2,41 @@ from app import *
 
 @app.route("/", methods=["POST", "GET"])
 def login():
-    msg=''
     if request.method == 'POST' and 'admin' in request.form and 'pwd' in request.form:
         user = request.form['admin']
         pwd = request.form['pwd']
-        print(user)
-        print(pwd)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM admin WHERE admin_username = %s AND admin_password= %s',(user,pwd))
-        admin_l = cursor.fetchone()
+        user = cursor.fetchone()
+        if user['admin_usertype']=='data_entry':
+
+            session['user_type'] = 'data_entry'
+            session['id'] = user['admin_id']
+            session['name'] = user['admin_name']
+
+            #return redirect(url_for('data_entry_home'))
+            return jsonify({'success' : 'data_entry'})
+
+        elif user['admin_usertype']=='admin':
+            print('admin')
+            session['user_type'] = 'admin'
+            session['id'] = user['admin_id']
+            session['name'] = user['admin_name']
+            return jsonify({'success' : 'admin'})
+            #return jsonify({'error' : 'Incorrect email/password'})
+
+    if(not session.get("id") is None):
+        if(session.get("user_type") == 'data_entry'):
+            return redirect(url_for('data_entry_home'))
 
 
-        if admin_l:
-            return jsonify({'success' : 'Account found'})
-
-        else :
-            return jsonify({'error' : 'Incorrect email/password'})
+    return render_template('login.html')
 
 
-
-    return render_template('login.html',msg=msg)
-
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
 
 
@@ -30,5 +44,3 @@ def login():
 def user():
     return render_template('upload.html')
 
-if __name__ == '__main__':
-   app.run(debug=True)
