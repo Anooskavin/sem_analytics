@@ -3,12 +3,7 @@ from app import *
 def data_entry_home():
     return render_template('data_entry/index.html')
 
-@app.route("/data_entry/subject", methods=["POST", "GET"])
-def data_entry_subject():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT * FROM subject')
-    subject = cursor.fetchall()
-    return render_template('data_entry/subject.html',subject=subject)
+
 
 @app.route("/data_entry/course", methods=["POST", "GET"])
 def data_entry_course():
@@ -39,3 +34,23 @@ def data_entry_student():
     cursor.execute('SELECT * FROM student_details')
     student = cursor.fetchall()
     return render_template('data_entry/student details table.html',student=student)
+
+
+@app.route("/data_entry/subject", methods=["POST", "GET"])
+def data_entry_subject():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['descr']
+        try:
+            cursor.execute("INSERT INTO subject (subject_name, subject_description) VALUES (%s, %s)",
+                               [name, description])
+            mysql.connection.commit()
+            return jsonify('success')
+        except Exception as Ex:
+            return jsonify('error')
+
+    cursor.execute('SELECT * FROM subject')
+    subject = cursor.fetchall()
+    return render_template('data_entry/subject.html', subject=subject)
