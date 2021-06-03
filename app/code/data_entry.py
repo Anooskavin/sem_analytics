@@ -3,7 +3,8 @@ from app import *
 @app.route("/data_entry/home", methods=["POST", "GET"])
 def data_entry_home():
     if 'id' in session and session.get("user_type") == 'data_entry':
-        return render_template('data_entry/index.html')
+        admin_name=session.get('name')
+        return render_template('data_entry/index.html',admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 
@@ -17,6 +18,7 @@ def data_entry_home():
 def data_entry_subject():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
+        admin_name=session.get('name')
         if request.method == 'POST':
             name = request.form['name']
             description = request.form['descr']                   
@@ -29,7 +31,7 @@ def data_entry_subject():
         
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
-        return render_template('data_entry/subject.html',subject=subject)
+        return render_template('data_entry/subject.html',subject=subject,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 
@@ -72,7 +74,8 @@ def data_entry_subject_update():
 @app.route("/data_entry/course", methods=["POST", "GET"])
 def data_entry_course():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    if 'id' in session and session.get("user_type") == 'data_entry':        
+    if 'id' in session and session.get("user_type") == 'data_entry':  
+        admin_name=session.get('name')      
         if request.method == 'POST':      
             adminid=session.get('id')
             subjectid = request.form['subjectid']
@@ -92,7 +95,7 @@ def data_entry_course():
         course = cursor.fetchall()
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
-        return render_template('data_entry/course.html',course=course,subject=subject)
+        return render_template('data_entry/course.html',course=course,subject=subject,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 
@@ -161,6 +164,7 @@ def data_entry_course_change():
 def data_entry_session():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
+        admin_name=session.get('name')
         if request.method == 'POST':      
             adminid=session.get('id')
             cname = request.form['cname']
@@ -186,7 +190,7 @@ def data_entry_session():
         faculty = cursor.fetchall()
         cursor.execute('SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id')
         sess = cursor.fetchall()
-        return render_template('data_entry/course session table.html',session=sess,course=course,faculty=faculty)
+        return render_template('data_entry/course session table.html',session=sess,course=course,faculty=faculty,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 
@@ -261,6 +265,7 @@ def data_entry_session_change():
 def data_entry_faculty():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
+        admin_name=session.get('name')
         if request.method == 'POST':      
             adminid=session.get('id')
             fname = request.form['fname']
@@ -274,7 +279,7 @@ def data_entry_faculty():
                 return jsonify('error')
         cursor.execute('SELECT * FROM faculty_details')
         faculty = cursor.fetchall()
-        return render_template('data_entry/Faculty table.html',faculty=faculty)
+        return render_template('data_entry/Faculty table.html',faculty=faculty,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 
@@ -345,9 +350,65 @@ def data_entry_faculty_change():
 @app.route("/data_entry/student", methods=["POST", "GET"])
 def data_entry_student():
     if 'id' in session and session.get("user_type") == 'data_entry':
+        admin_name=session.get('name')
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM student_details')
         student = cursor.fetchall()
-        return render_template('data_entry/student details table.html',student=student)
+        return render_template('data_entry/student details table.html',student=student,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
+
+
+
+
+@app.route('/data_entry/student/select', methods=['GET', 'POST'])
+def data_entry_student_select():   
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST': 
+        student_id = request.form['student_id']
+        print(student_id)      
+        cur.execute("SELECT * FROM student_details where student_id = %s", [student_id])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                    'student_id': rs['student_id'],
+                    'student_name': rs['student_name'],
+                    'student_contact': rs['student_contact'],
+                    'student_email': rs['student_email'],
+                    'student_grade': rs['school_grade'],
+                    'school_name': rs['school_name'],
+                    'school_state': rs['school_state'],
+                    'school_district': rs['school_district'],
+                    'student_whatsapp': rs['student_whatsapp'],
+                    'school_board': rs['school_board'],
+                    'school_pincode': rs['school_pincode']}
+            employeearray.append(employee_dict)
+        return json.dumps(employeearray)
+
+@app.route("/data_entry/student/change", methods=["POST", "GET"])
+def data_entry_student_change():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":        
+        student_id = request.form['student_id']
+        print("session"+ student_id)
+        student_name = request.form['student_name']
+        student_contact = request.form['student_contact']
+        student_email = request.form['student_email']
+        student_grade = request.form['student_grade']
+        school_name = request.form['school_name']
+        school_state = request.form['school_state']
+        school_district = request.form['school_district']
+        school_pincode = request.form['school_pincode']
+        school_board = request.form['school_board']
+       
+        cursor.execute('update student_details set student_name=%s, student_contact = %s ,student_email=%s , school_grade=%s ,school_name=%s ,school_state = %s,school_district=%s,school_pincode=%s,school_board=%s where student_id=%s',
+        [student_name,student_contact,student_email,student_grade,school_name,school_state,school_district,school_pincode,school_board,student_id])
+        mysql.connection.commit()
+    return jsonify('success')   
+
+####################################### Student table end ############################################
+
+
+#########################################   ###############################################
+
