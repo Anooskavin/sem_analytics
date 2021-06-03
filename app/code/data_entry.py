@@ -1,10 +1,23 @@
 from re import sub
+
+from MySQLdb.cursors import Cursor
 from app import *
 @app.route("/data_entry/home", methods=["POST", "GET"])
 def data_entry_home():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
+        home = arr.array('i', [0, 0, 0, 0])
+
         admin_name=session.get('name')
-        return render_template('data_entry/index.html',admin_name=admin_name)
+        cursor.execute('SELECT * FROM course_session_details')
+        home[0] = len(cursor.fetchall())
+        cursor.execute('SELECT * FROM student_details')
+        home[1] = len(cursor.fetchall())
+        cursor.execute('SELECT * FROM course_details')
+        home[2] = len(cursor.fetchall())
+        cursor.execute('SELECT * FROM faculty_details')
+        home[3] = len(cursor.fetchall())
+        return render_template('data_entry/index.html',admin_name=admin_name,count=home)
     else:
         return redirect(url_for('login'))
 
