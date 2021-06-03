@@ -248,7 +248,10 @@ def data_entry_session_change():
 
 
 
+####################################### Session table end ############################################
 
+
+#########################################  Faculty Table ###############################################
 
 
 
@@ -263,7 +266,6 @@ def data_entry_faculty():
             fname = request.form['fname']
             email = request.form['email']
             contact = request.form['contact']              
-         
             try:
                 cursor.execute("INSERT INTO faculty_details (faculty_name, faculty_email ,faculty_contact) VALUES (%s, %s, %s)",[fname,email,contact])
                 mysql.connection.commit()
@@ -291,6 +293,49 @@ def data_entry_faculty_update():
                 return redirect(url_for('data_entry_faculty'))
     else:
         return redirect(url_for('login'))
+
+
+
+
+@app.route('/data_entry/faculty/select', methods=['GET', 'POST'])
+def data_entry_faculty_select():   
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST': 
+        faculty_id = request.form['faculty_id']
+        print(faculty_id)      
+        cur.execute("SELECT * FROM faculty_details where faculty_id = %s", [faculty_id])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                    'faculty_id': rs['faculty_id'],
+                    'faculty_name': rs['faculty_name'],
+                    'faculty_email': rs['faculty_email'],
+                    'faculty_contact': rs['faculty_contact']}
+            employeearray.append(employee_dict)
+        return json.dumps(employeearray)
+
+@app.route("/data_entry/faculty/change", methods=["POST", "GET"])
+def data_entry_faculty_change():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":        
+        faculty_id = request.form['faculty_id']
+        print("faculty_id"+ faculty_id)
+        faculty_name = request.form['faculty_name']
+        faculty_email = request.form['faculty_email']
+        faculty_contact = request.form['faculty_contact']
+
+        cursor.execute('update faculty_details set faculty_name=%s, faculty_email = %s ,faculty_contact=%s where faculty_id=%s', [faculty_name,faculty_email,faculty_contact,faculty_id])
+        mysql.connection.commit()
+    return jsonify('success')   
+
+
+
+
+####################################### Faculty table end ############################################
+
+
+#########################################  Student Table ###############################################
 
 
 

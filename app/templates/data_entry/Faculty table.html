@@ -72,8 +72,7 @@
 											<td>
 											
 											
-											<button  class="btn btn-success " data-toggle="modal" data-target="#dataModal">
-											<i class="fas fa-pencil-alt"></i>
+                                                <a type="button" name="view" value="view" id="{{row.faculty_id}}" class="btn btn-success btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>
                                                  
                                             </button>
 											
@@ -176,24 +175,26 @@
    </div>
    <div class="modal-body">
       <div class="table-responsive">  
-	  <form method="post" id="insert_form">
+	  <form method="post" id="update_form">
         <table class="table table-bordered">
+            <input type="hidden" class="form-control" name="faculty_id" id="faculty_id">
+
         <tr>  
             <td width="30%"><label>Faculty Name</label>
-            <td width="70%"><input type="text" class="form-control" id="view_name"></td>  
+            <td width="70%"><input type="text" name="faculty_name" class="form-control" id="faculty_name"></td>  
         </tr>
         <tr>  
             <td width="30%"><label>Faculty Email</label> 
-            <td width="70%"><input type="mail" class="form-control" id="view_address"></td>  
+            <td width="70%"><input type="mail" name="faculty_email" class="form-control" id="faculty_email"></td>  
         </tr>
         <tr>  
             <td width="30%"><label>Faculty conatact</label> 
-            <td width="70%"><input type="number" class="form-control" id="view_age"/></td>    
+            <td width="70%"><input type="number" name="faculty_contact" class="form-control" id="faculty_contact"/></td>    
         </tr>
        
     </table>
 	 <div class="modal-footer">
-   <input type="submit" name="insert" id="insert" value="Update" class="btn btn-success" />
+   <input type="submit" name="update" id="update" value="Update" class="btn btn-success" />
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	 </form>
    </div>
@@ -241,22 +242,46 @@
 
         });
 
+
+
+        $('#update_form').on("submit", function (event) {
+            event.preventDefault();
+         
+                $.ajax({
+                    url: "/data_entry/faculty/change",
+                    method: "POST",
+                    data: $('#update_form').serialize(),
+                    beforeSend: function () {
+                        $('#update').val("Updating");
+                    },
+                    success: function (data) {
+                        $('#add_data_Modal').modal('hide');
+                        if (data == 'success') {
+                            console.log('success')
+                            window.location.href = "/data_entry/faculty";
+                        }
+                    }
+                });
+            
+        });
+
+
         $(document).on('click', '.view_data', function () {
-            var employee_id = $(this).attr("id");
+            var faculty_id = $(this).attr("id");
             $.ajax({
-                url: "/select",
+                url: "/data_entry/faculty/select",
                 method: "POST",
                 data: {
-                    employee_id: employee_id
+                    faculty_id: faculty_id
                 },
                 success: function (data) {
                     $('#dataModal').modal('show');
                     var data_rs = JSON.parse(data);
-                    $('#view_name').val(data_rs[0]['emp_name']);
-                    $('#view_address').val(data_rs[0]['address']);
-                    $('#view_gender').val(data_rs[0]['gender']);
-                    $('#view_designation').val(data_rs[0]['designation']);
-                    $('#view_age').val(data_rs[0]['age']);
+                    $('#faculty_id').val(data_rs[0]['faculty_id']);
+                    $('#faculty_name').val(data_rs[0]['faculty_name']);
+                    $('#faculty_email').val(data_rs[0]['faculty_email']);
+                    $('#faculty_contact').val(data_rs[0]['faculty_contact']);
+                   
                 }
             });
         });
