@@ -208,16 +208,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive">
-                        <form method="post" id="insert_form">
+                        <form method="post" id="update_form">
                             <table class="table table-bordered">
                                 <input type="hidden" class="form-control" id="course_id" name="course_id">>
                                 <tr>
                                     <td width="30%"><label>Subject Name</label></td>
-                                    <td width="70%"><input type="text" class="form-control" id="subject_name" disabled></td>
+                                    <td width="70%"><input type="text" class="form-control"  id="subject_name" disabled></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Course Name</label></td>
-                                    <td width="70%"><input type="text" class="form-control" id="course_name"></td>
+                                    <td width="70%"><input type="text" class="form-control" name="course_name" id="course_name"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Course Grade</label></td>
@@ -225,12 +225,12 @@
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Course Duration</label></td>
-                                    <td width="70%"><input type="number" class="form-control" id="course_duration">
+                                    <td width="70%"><input type="number" class="form-control" name="course_duration" id="course_duration">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>No of Sessions</label></td>
-                                    <td width="70%"><input type="number" class="form-control" id="no_of_session"></td>
+                                    <td width="70%"><input type="number" class="form-control" name="no_of_session" id="no_of_session"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Status</label></td>
@@ -241,12 +241,12 @@
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Course Description</label></td>
-                                    <td width="70%"><textarea type="text" class="form-control" id="course_description"></textarea>
+                                    <td width="70%"><textarea type="text" class="form-control" name="course_description" id="course_description"></textarea>
                                     </td>
                                 </tr>
                             </table>
                             <div class="modal-footer">
-                                <input type="submit" name="insert" id="insert" value="Update" class="btn btn-success" />
+                                <input type="submit" name="update" id="update" value="Update" class="btn btn-success" />
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </form>
                     </div>
@@ -304,7 +304,7 @@
                         event.preventDefault();
 
                         $.ajax({
-                            url: "/data_entry/subject/update",
+                            url: "/data_entry/course/change",
                             method: "POST",
                             data: $('#update_form').serialize(),
                             beforeSend: function () {
@@ -314,7 +314,7 @@
                                 $('#add_data_Modal').modal('hide');
                                 if (data == 'success') {
                                     console.log('success')
-                                    window.location.href = "/data_entry/subject";
+                                    window.location.href = "/data_entry/course";
                                 }
                             }
                         });
@@ -333,6 +333,8 @@
                             success: function (data) {
                                 $('#dataModal').modal('show');
                                 var data_rs = JSON.parse(data);
+                                $('#course_id').val(data_rs[0]['course_id']);
+
                                 $('#subject_name').val(data_rs[0]['subject_name']);
                                 $('#course_name').val(data_rs[0]['course_name']);
                                 $('#course_grade').val(data_rs[0]['course_grade']);

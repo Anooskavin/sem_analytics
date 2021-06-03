@@ -136,6 +136,21 @@ def data_entry_course_select():
             employeearray.append(employee_dict)
         return json.dumps(employeearray)
 
+@app.route("/data_entry/course/change", methods=["POST", "GET"])
+def data_entry_course_change():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":        
+        course_id = request.form['course_id']
+        course_name = request.form['course_name']
+        course_duration = request.form['course_duration']
+        no_of_session = request.form['no_of_session']
+        status = request.form['status']
+        course_description = request.form['course_description']
+        cursor.execute('update course_details set course_name=%s, course_duration = %s ,no_of_session=%s , course_status=%s ,course_description=%s where course_id=%s', [course_name,course_duration,no_of_session,status,course_description,course_id])
+        mysql.connection.commit()
+    return jsonify('success')   
+
+
 
 @app.route("/data_entry/session", methods=["POST", "GET"])
 def data_entry_session():

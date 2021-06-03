@@ -90,9 +90,7 @@
                                                 class="fas fa-copy"></i></a>
                                     </td>
                                     <td>
-                                        <button class="btn btn-success " data-toggle="modal" data-target="#dataModal">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </button>
+                                        <a type="button" name="view" value="view" id="{{row.session_id}}" class="btn btn-success btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>
                                     </td>
                                     <td>
                                         <button type="submit" class="btn btn-danger " value="{{row.session_id}}"
@@ -229,44 +227,45 @@
                         <form method="post" id="insert_form">
                             <table class="table table-bordered">
                                 <tr>
+                                    <input type="hidden" name="session_id" class="form-control" id="sessio_id">
                                     <td width="30%"><label>Course Name</label>
-                                    <td width="70%"><input type="text" class="form-control" id="view_name"></td>
+                                    <td width="70%"><input type="text" name="course_name" class="form-control" id="course_name"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label> Session Name</label>
-                                    <td width="70%"><input type="text" class="form-control" id="view_address"></td>
+                                    <td width="70%"><input type="text" name="session_name" class="form-control" id="session_name"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label> Session Description</label>
-                                    <td width="70%"><textarea type="text" class="form-control" id="view_age"></textarea>
+                                    <td width="70%"><textarea type="text" name="session_discription" class="form-control" id="session_discription"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label> Session Date</label>
-                                    <td width="70%"><input type="date" class="form-control" id="view_designation"></td>
+                                    <td width="70%"><input type="date" name="session_date" class="form-control" id="session_date"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"> <label> Session Start Time</label>
-                                    <td width="70%"><input type="time" class="form-control" id="view_age"></td>
+                                    <td width="70%"><input type="time" name="session_starttime" class="form-control" id="session_starttime"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label> <label> Session End Time</label> </label></td>
-                                    <td width="70%"><input type="time" class="form-control" id="view_age"></td>
+                                    <td width="70%"><input type="time" name="session_endtime" class="form-control" id="session_endtime"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label> <label>Faculty Name</label> </label></td>
-                                    <td width="70%"><input type="text" class="form-control" id="view_age"></td>
+                                    <td width="70%"><input type="text" name="faculty_name" class="form-control" id="faculty_name"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Status</label></td>
-                                    <td width="70%"><select name="status" id="status" class="form-control">
-                                            <option value="Opened">Opened</option>
-                                            <option value="closed">Closed</option>
+                                    <td width="70%"><select name="status" id="mySelect" class="form-control">
+                                            <option value="open">Opened</option>
+                                            <option value="close">Closed</option>
                                         </select></td>
                                 </tr>
                                 <tr>
-                                    <td width="30%"><label>Course Description</label></td>
-                                    <td width="70%"><textarea type="text" class="form-control" id="view_age"></textarea>
+                                    <td width="30%"><label>session Description</label></td>
+                                    <td width="70%"><textarea type="text" name="session_discription" class="form-control" id="session_discription"></textarea>
                                     </td>
                                 </tr>
                             </table>
@@ -331,11 +330,18 @@
                             success: function (data) {
                                 $('#dataModal').modal('show');
                                 var data_rs = JSON.parse(data);
-                                $('#view_name').val(data_rs[0]['emp_name']);
-                                $('#view_address').val(data_rs[0]['address']);
-                                $('#view_gender').val(data_rs[0]['gender']);
-                                $('#view_designation').val(data_rs[0]['designation']);
-                                $('#view_age').val(data_rs[0]['age']);
+                                $('#sessio_id').val(data_rs[0]['sessio_id']);
+                                $('#course_name').val(data_rs[0]['course_name']);
+                                $('#session_name').val(data_rs[0]['session_name']);
+                                $('#session_discription').val(data_rs[0]['session_discription']);
+                                $('#session_date').val(data_rs[0]['session_date']);
+                                $('#session_starttime').val(data_rs[0]['session_starttime']);
+                                $('#session_endtime').val(data_rs[0]['session_endtime']);
+                                document.getElementById("mySelect").value = data_rs[0]['status'];
+                                $('#faculty_name').val(data_rs[0]['faculty_name']);
+                                $('#session_discription').val(data_rs[0]['session_discription']);
+
+
                             }
                         });
                     });
