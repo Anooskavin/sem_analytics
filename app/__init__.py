@@ -2,6 +2,8 @@ from flask import Flask,flash, render_template, request, redirect, url_for, sess
 import MySQLdb.cursors
 import re
 from flask_mysqldb import MySQL
+import array as arr
+
 import mysql.connector
 from mysql import connector
 

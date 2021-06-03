@@ -70,11 +70,7 @@
 											
 											<td>
 											
-											
-											<button  class="btn btn-success " data-toggle="modal" data-target="#dataModal">
-											view
-                                                 
-                                            </button>
+                                                <a type="button" name="view" value="view" id="{{row.student_id}}" class="btn btn-success btn-xs view_data">View </a>
 											
 											</td>
 											
@@ -183,58 +179,153 @@
    </div>
    <div class="modal-body">
       <div class="table-responsive">  
-	  <form method="post" id="insert_form">
+	  <form method="post" id="update_form">
         <table class="table table-bordered">
+            <input type="hidden" name="student_id" class="form-control" id="student_id">
+
         <tr>  
             <td width="30%"><label>Student Name</label></td>  
-            <td width="70%"><input type="text" class="form-control" id="view_name"></td>  
+            <td width="70%"><input type="text" name="student_name" class="form-control" id="student_name"></td>  
         </tr>
         <tr>  
             <td width="30%"><label>Contact</label></td>  
-            <td width="70%"><input type="numbers" class="form-control" id="view_address"></td>  
+            <td width="70%"><input type="numbers" name="student_contact" class="form-control" id="student_contact"></td>  
         </tr>
         <tr>  
             <td width="30%"><label>E-mail</label></td>  
-            <td width="70%"><input type="email" class="form-control" id="view_gender"></td>  
+            <td width="70%"><input type="email" name="student_email" class="form-control" id="student_email"></td>  
         </tr>
         <tr>  
             <td width="30%"><label>School grade</label></td>  
-            <td width="70%"><input type="numbers" class="form-control" id="view_designation"></td>  
+            <td width="70%"><input type="numbers" name="student_grade" class="form-control" id="student_grade"></td>  
         </tr>
         <tr>  
             <td width="30%"><label>School Name</label></td>  
-            <td width="70%"><input type="text" class="form-control" id="view_age"></td>  
+            <td width="70%"><input type="text" name="school_name" class="form-control" id="school_name"></td>  
         </tr>
 		 <tr>  
             <td width="30%"><label>State</label></td>  
-            <td width="70%"><input type="text" class="form-control" id="view_age"></td>  
+            <td width="70%"><input type="text" name="school_state" class="form-control" id="school_state"></td>  
         </tr>
 		 <tr>  
             <td width="30%"><label>District</label></td>  
-            <td width="70%"><input type="text" class="form-control" id="view_age"></td>  
+            <td width="70%"><input type="text" name="school_district" class="form-control" id="school_district"></td>  
         </tr>
 		 <tr>  
             <td width="30%"><label>Pincode</label></td>  
-            <td width="70%"><input type="numbers" class="form-control" id="view_age"></td>  
+            <td width="70%"><input type="numbers" name="school_pincode" class="form-control" id="school_pincode"></td>  
         </tr>
 		 <tr>  
             <td width="30%"><label>Whatsapp No</label></td>  
-            <td width="70%"><input type="numbers" class="form-control" id="view_age"></td>  
+            <td width="70%"><input type="numbers" name="student_whatsapp" class="form-control" id="student_whatsapp"></td>  
         </tr>
 		 <tr>  
             <td width="30%"><label>School Board</label></td>  
-            <td width="70%"><input type="text" class="form-control" id="view_age"></td>  
+            <td width="70%"><input type="text" name="school_board" class="form-control" id="school_board"></td>  
         </tr>
 		
     </table>
 	 <div class="modal-footer">
-   <input type="submit" name="insert" id="insert" value="Update" class="btn btn-success" />
+   <input type="submit" name="update" id="update" value="Update" class="btn btn-success" />
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	 </form>
    </div>
 	
 	</div>
    </div>
+
+
+
+   <script>
+    $(document).ready(function () {
+        // $('#insert_form').on("submit", function (event) {
+        //     event.preventDefault();
+
+        //     $.ajax({
+        //         url: "/data_entry/course",
+        //         method: "POST",
+        //         data: $('#insert_form').serialize(),
+        //         beforeSend: function () {
+        //             $('#insert').val("Inserting");
+        //         },
+        //         success: function (data) {
+        //             $('#add_data_Modal').modal('hide');
+        //             if (data == 'success') {
+        //                 swal("Data is submitted successfully!",
+        //                     "New Course is Created", "success");
+
+        //                 var delayInMilliseconds = 6500; //1 second
+
+        //                 setTimeout(function () {
+        //                     window.location.href = "/data_entry/course";
+        //                 }, delayInMilliseconds);
+
+        //             }
+        //             if (data == 'error') {
+        //                 console.log('error')
+        //                 swal("Data is not Submitted!",
+        //                     "Error in submitting Data",
+        //                     "error");
+        //                 window.location.href = "/data_entry/course";
+        //             }
+        //         }
+        //     });
+
+        // });
+
+        $('#update_form').on("submit", function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: "/data_entry/student/change",
+                method: "POST",
+                data: $('#update_form').serialize(),
+                beforeSend: function () {
+                    $('#update').val("Updating");
+                },
+                success: function (data) {
+                    $('#add_data_Modal').modal('hide');
+                    if (data == 'success') {
+                        console.log('success')
+                        window.location.href = "/data_entry/student";
+                    }
+                }
+            });
+
+        });
+
+
+        $(document).on('click', '.view_data', function () {
+            var student_id = $(this).attr("id");
+            $.ajax({
+                url: "/data_entry/student/select",
+                method: "POST",
+                data: {
+                    student_id: student_id
+                },
+                success: function (data) {
+                    $('#dataModal').modal('show');
+                    var data_rs = JSON.parse(data);
+                    $('#student_id').val(data_rs[0]['student_id']);
+                    $('#student_name').val(data_rs[0]['student_name']);
+                    $('#student_contact').val(data_rs[0]['student_contact']);
+                    $('#student_email').val(data_rs[0]['student_email']);
+                    $('#student_grade').val(data_rs[0]['student_grade']);
+                    $('#school_name').val(data_rs[0]['school_name']);
+                    $('#school_state').val(data_rs[0]['school_state']);
+
+                    $('#school_district').val(data_rs[0]['school_district']);
+                    $('#school_pincode').val(data_rs[0]['school_pincode']);
+                    $('#student_whatsapp').val(data_rs[0]['student_whatsapp']);
+
+                    $('#school_board').val(data_rs[0]['school_board']);
+              
+                        
+                }
+            });
+        });
+    });
+</script>
 
 
 
