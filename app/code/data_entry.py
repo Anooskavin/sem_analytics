@@ -151,6 +151,11 @@ def data_entry_course_change():
     return jsonify('success')   
 
 
+####################################### Course table end ############################################
+
+
+#########################################  session Table ###############################################
+
 
 @app.route("/data_entry/session", methods=["POST", "GET"])
 def data_entry_session():
@@ -199,6 +204,55 @@ def data_entry_session_update():
                 return redirect(url_for('data_entry_session'))
     else:
         return redirect(url_for('login'))
+
+
+
+@app.route('/data_entry/session/select', methods=['GET', 'POST'])
+def data_entry_session_select():   
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST': 
+        sessio_id = request.form['sessio_id']
+        print(sessio_id)      
+        cur.execute("SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id and session_id = %s", [sessio_id])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                    'session_id': rs['session_id'],
+                    'course_name': rs['course_name'],
+                    'session_name': rs['session_name'],
+                    'session_discription': rs['session_discription'],
+                    'session_date': rs['session_date'],
+                    'status': rs['session_status'],
+                    'session_starttime': rs['session_starttime'],
+                    'session_endtime': rs['session_endtime'],
+                    'faculty_name': rs['faculty_name']}
+            employeearray.append(employee_dict)
+        return json.dumps(employeearray)
+
+@app.route("/data_entry/session/change", methods=["POST", "GET"])
+def data_entry_session_change():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":        
+        session_id = request.form['session_id']
+        print("session"+ session_id)
+        session_name = request.form['session_name']
+        session_date = request.form['session_date']
+        session_starttime = request.form['session_starttime']
+        session_endtime = request.form['session_endtime']
+        session_status= request.form['status']
+        session_discription = request.form['session_discription']
+        cursor.execute('update course_session_details set session_name=%s, session_date = %s ,session_starttime=%s , session_endtime=%s ,session_status=%s ,session_discription = %s where session_id=%s', [session_name,session_date,session_starttime,session_endtime,session_status,session_discription,session_id])
+        mysql.connection.commit()
+    return jsonify('success')   
+
+
+
+
+
+
+
+
 
 @app.route("/data_entry/faculty", methods=["POST", "GET"])
 def data_entry_faculty():
