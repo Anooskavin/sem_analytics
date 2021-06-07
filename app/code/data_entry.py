@@ -6,18 +6,23 @@ from app import *
 def data_entry_home():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
+        id=session.get('id')      
+
         home = arr.array('i', [0, 0, 0, 0])
 
         admin_name=session.get('name')
         cursor.execute('SELECT * FROM course_session_details')
         home[0] = len(cursor.fetchall())
+      
         cursor.execute('SELECT * FROM student_details')
         home[1] = len(cursor.fetchall())
         cursor.execute('SELECT * FROM course_details')
         home[2] = len(cursor.fetchall())
         cursor.execute('SELECT * FROM faculty_details')
         home[3] = len(cursor.fetchall())
-        return render_template('data_entry/index.html',admin_name=admin_name,count=home)
+        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        notifi = cursor.fetchall()
+        return render_template('data_entry/index.html',admin_name=admin_name,count=home,notifi=notifi)
     else:
         return redirect(url_for('login'))
 
@@ -31,6 +36,7 @@ def data_entry_home():
 def data_entry_subject():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
+        id=session.get('id')  
         admin_name=session.get('name')
         if request.method == 'POST':
             name = request.form['name']
@@ -44,7 +50,9 @@ def data_entry_subject():
         
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
-        return render_template('data_entry/subject.html',subject=subject,admin_name=admin_name)
+        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        notifi = cursor.fetchall()
+        return render_template('data_entry/subject.html',subject=subject,admin_name=admin_name,notifi=notifi)
     else:
         return redirect(url_for('login'))
 
@@ -88,6 +96,7 @@ def data_entry_subject_update():
 def data_entry_course():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':  
+        id=session.get('id')
         admin_name=session.get('name')      
         if request.method == 'POST':      
             adminid=session.get('id')
@@ -108,7 +117,9 @@ def data_entry_course():
         course = cursor.fetchall()
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
-        return render_template('data_entry/course.html',course=course,subject=subject,admin_name=admin_name)
+        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        notifi = cursor.fetchall()
+        return render_template('data_entry/course.html',course=course,subject=subject,admin_name=admin_name,notifi=notifi)
     else:
         return redirect(url_for('login'))
 
@@ -177,6 +188,7 @@ def data_entry_course_change():
 def data_entry_session():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
+        id=session.get('id')
         admin_name=session.get('name')
         if request.method == 'POST':      
             adminid=session.get('id')
@@ -203,7 +215,9 @@ def data_entry_session():
         faculty = cursor.fetchall()
         cursor.execute('SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id')
         sess = cursor.fetchall()
-        return render_template('data_entry/course session table.html',session=sess,course=course,faculty=faculty,admin_name=admin_name)
+        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        notifi = cursor.fetchall()
+        return render_template('data_entry/course session table.html',session=sess,course=course,faculty=faculty,admin_name=admin_name,notifi=notifi)
     else:
         return redirect(url_for('login'))
 
@@ -211,6 +225,7 @@ def data_entry_session():
 def data_entry_session_update():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':     
+        
         if request.method == "POST":
             if request.form.get("delete"):
                 result = request.form 
@@ -278,6 +293,7 @@ def data_entry_session_change():
 def data_entry_faculty():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
+        id=session.get('id')
         admin_name=session.get('name')
         if request.method == 'POST':      
             adminid=session.get('id')
@@ -292,7 +308,9 @@ def data_entry_faculty():
                 return jsonify('error')
         cursor.execute('SELECT * FROM faculty_details')
         faculty = cursor.fetchall()
-        return render_template('data_entry/Faculty table.html',faculty=faculty,admin_name=admin_name)
+        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        notifi = cursor.fetchall()
+        return render_template('data_entry/Faculty table.html',faculty=faculty,admin_name=admin_name,notifi=notifi)
     else:
         return redirect(url_for('login'))
 
@@ -363,11 +381,14 @@ def data_entry_faculty_change():
 @app.route("/data_entry/student", methods=["POST", "GET"])
 def data_entry_student():
     if 'id' in session and session.get("user_type") == 'data_entry':
+        id=session.get('id')
         admin_name=session.get('name')
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM student_details')
         student = cursor.fetchall()
-        return render_template('data_entry/student details table.html',student=student,admin_name=admin_name)
+        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        notifi = cursor.fetchall()
+        return render_template('data_entry/student details table.html',student=student,admin_name=admin_name,notifi=notifi)
     else:
         return redirect(url_for('login'))
 
