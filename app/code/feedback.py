@@ -10,7 +10,7 @@ def feedback():
     if feedback['session_status']=='open':
         return render_template('feedback/index.html',feedback=feedback)
     else:
-        return '''Form closed'''
+        return render_template('feedback/formclosed.html')
 
 @app.route('/feedback/submit', methods=["POST", "GET"])
 def feedback_submit():
@@ -45,7 +45,7 @@ def feedback_submit():
                 attendance = cursor.fetchone()
 
                 if attendance:
-                    return ''' you have already responded'''
+                    return render_template('feedback/alredyresponded.html')
                 else:
 
                     try:
@@ -61,7 +61,7 @@ def feedback_submit():
                     except Exception as Ex:
                         print('Error in Attendance: %s'%(Ex))
 
-                    return '''success'''
+                    return render_template('feedback/success.html')
             else:
                 try:
 
@@ -77,10 +77,10 @@ def feedback_submit():
                     mysql.connection.commit()
                 except Exception as Ex:
                     print('Error in Student Insertion: %s'%(Ex))
-                return '''success'''
+                return render_template('feedback/success.html')
 
         else:
-            return '''Feedback is closed'''
+            return render_template('feedback/formclosed.html')
 
 
 

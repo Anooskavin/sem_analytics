@@ -81,10 +81,11 @@
                                     <td>{{row.course_grade}}</th>
                                     <td>{{row.course_description}}</td>
                                     <td>{{row.course_duration}}</td>
-                                    <td>{{row.no_of_session}}</th>
+                                    <td>{{row.no_of_session}}</td>
                                         {% if row.course_status == "open" %}
-                                    <td><span class="badge badge-primary">{{row.course_status}}</span></td>{% endif %}
-                                    {% if row.course_status == "close" %}<td><span
+                                    <td><span class="badge badge-primary">{{row.course_status}}</span></td>
+                                    {% elif row.course_status == "close" %}
+                                    <td><span
                                             class="badge badge-success">{{row.course_status}}</span></td>{% endif %}
                                     <td><a type="button" name="view" value="view" id="{{row.course_id}}" class="btn btn-success btn-xs view_data"><i class="fas fa-pencil-alt"></i></a></td>
                                     <td><button type="submit" name="delete" value="{{row.course_id}}"
