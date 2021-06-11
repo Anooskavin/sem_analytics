@@ -199,10 +199,19 @@ def data_entry_session():
             sdate = request.form['sdate']
             stime = request.form['stime']
             etime = request.form['etime']          
-            fid = request.form['fid']                   
-         
+            fid = request.form['fid']    
+                           
+           
+          
+
             try:
                 cursor.execute("INSERT INTO course_session_details (course_id, session_duration ,faculty_id,session_name,session_discription,session_date,session_starttime,session_endtime) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",[cname,sduration,fid,sname,desc,sdate,stime,etime])
+                mysql.connection.commit()
+                last_id = cursor.lastrowid
+                cursor.execute('SELECT * FROM course_details Where course_id=%s',[cname])
+                courses = cursor.fetchone()
+                print(last_id)                
+                cursor.execute('INSERT INTO student_attendance (session_id,student_id) SELECT %s,student_id FROM student_details where school_grade=%s'% (last_id,courses['course_grade']))
                 mysql.connection.commit()
                 return jsonify('success')
             except Exception as Ex:
@@ -215,6 +224,7 @@ def data_entry_session():
         faculty = cursor.fetchall()
         cursor.execute('SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id')
         sess = cursor.fetchall()
+
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
         return render_template('data_entry/course session table.html',session=sess,course=course,faculty=faculty,admin_name=admin_name,notifi=notifi)
