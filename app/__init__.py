@@ -11,8 +11,8 @@ app = Flask(__name__)
 app.secret_key = 'your secret key'
 app.config['MYSQL_HOST'] = '127.0.0.1'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'barathg'
-app.config['MYSQL_DB'] = 'school_management'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'school_mangement'
 
 mysql = MySQL(app)
 
