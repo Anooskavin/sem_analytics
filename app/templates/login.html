@@ -75,15 +75,13 @@
       .done(function(data) {
 
         if (data.success='admin') {
+                  window.location.href = "admin_analytics/home";
+			      }
+
+			else if (data.success='data_entry') {
                   window.location.href = "data_entry/home";
 			      }
 
-			if (data.success='data_entry') {
-                  window.location.href = "data_entry/home";
-			      }
-			else if(data.success1){
-			      window.location.href = "user";
-			     }
 			else {
 			      $('#errorAlert').text(data.error).show();
 

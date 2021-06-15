@@ -28,6 +28,8 @@ def login():
     if(not session.get("id") is None):
         if(session.get("user_type") == 'data_entry'):
             return redirect(url_for('data_entry_home'))
+        elif(session.get("user_type") == 'admin'):
+            return redirect(url_for('admin_analytics_home'))
 
 
     return render_template('login.html')

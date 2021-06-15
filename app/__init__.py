@@ -16,4 +16,4 @@ app.config['MYSQL_DB'] = 'school_management'
 
 mysql = MySQL(app)
 
-from app.code import login,data_entry,feedback
+from app.code import login,data_entry,feedback,admin_analytics
