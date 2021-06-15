@@ -83,7 +83,7 @@ def admin_analytics_course():
 #########################################  session Table ###############################################
 
 
-@app.route("/admin_analytics/session/", methods=["POST", "GET"])
+@app.route("/admin_analytics/session", methods=["POST", "GET"])
 def admin_analytics_session():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'admin':

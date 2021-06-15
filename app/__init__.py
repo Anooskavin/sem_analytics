@@ -8,6 +8,7 @@ import mysql.connector
 from mysql import connector
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.secret_key = 'your secret key'
 app.config['MYSQL_HOST'] = '127.0.0.1'
 app.config['MYSQL_USER'] = 'root'
