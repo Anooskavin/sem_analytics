@@ -1,19 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% include 'header/analytics_header.html' %}
-<head>
-       <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Table</title>
 
-
-
-
-
-
-
-</head>
 
 
 <body id="page-top">
@@ -30,9 +18,7 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Course Table</h1>
         <p class="mb-4" >Table Analysis on Subject, Course, Session, Attendance and feedback with all sotring and searching with export table option
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!
+
         </p>
 
         <!-- DataTales Example -->
@@ -61,13 +47,15 @@
         <tr>
 
             <th data-field="id" >S.No</th>
-            <th data-field="name" data-sortable="True" data-filter-control="select">Subject Name</th>
-            <th data-field="cna" data-sortable="True" data-filter-control="select">Course Name</th>
-             <th data-field="grade" data-sortable="True" class="col-sm-2" data-filter-control="select">Grade</th>
-            <th data-field="desc" data-sortable="True" data-filter-control="input">Course Description</th>
- <th data-field="dur" data-sortable="True" data-filter-control="select">Duration</th>
-            <th data-field="sess" data-sortable="True" data-filter-control="input">No.of.Session</th>
-              <th data-field="status" data-sortable="True" data-filter-control="select">Status</th>
+            <th data-field="city" data-sortable="True" data-filter-control="select">Subject Name</th>
+            <th data-field="age" data-sortable="True" data-filter-control="select">Course Name</th>
+             <th data-field="grade" data-sortable="True" class="col-sm-2" >Grade</th>
+
+ <th data-field="dur" data-sortable="True" >Duration</th>
+            <th data-field="sess" data-sortable="True" >No.of.Session</th>
+              <th data-field="status" data-sortable="True" >Status</th>
+            <th data-field="desc" data-sortable="True" >Course Description</th>
+            <th data-field="link" data-sortable="True" >Go to session</th>
 
 
         </tr>
@@ -121,104 +109,140 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
   <script src="https://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
-
-    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+   <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!--    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>-->
 
  <script>
         var data = [
         {% for row in course %}
         {
         "id": "{{loop.index}}",
-        "name": "{{row.subject_name}}",
-        "cna": "<a href={{url_for('admin_analytics_session',a=row.course_id,b=row.course_name)}}>{{row.course_name}}</a>",
+        "city": "{{row.subject_name}}",
+        "age": "{{row.course_name}}",
         "grade": "{{row.course_grade}}",
         "desc": "{{row.course_description}}",
-        "dur": "{{row.course_duration}}",
+
         "sess": "{{row.no_of_session}}",
         "status": "{{row.course_status}}",
+        "dur": "{{row.course_duration}}",
+        "link": "<a href={{url_for('admin_analytics_session',a=row.course_id,b=row.course_name)}}>Go to {{row.course_name}}</a>",
 
 
 
       },
       {% endfor %}
       ];
-
-      var $table = $('#subject')
-
-      $table.bootstrapTable({
+$('#subject').bootstrapTable({
           data: data,
-
-
           onCreatedControls () {
 
-            $('select.bootstrap-table-filter-control-grade').each(function (index, i) {
+            $('select.bootstrap-table-filter-control-city').each(function (index, i) {
               i.setAttribute('multiple','multiple');
               $(this).find('option[value=""]').remove();
-              console.log('1');
               $(this).multipleSelect('destroy').multipleSelect({
-
                 container: 'body',
                 filter: true,
                 selectAll:true
 
               })
-            })
+            }),
 
+      $('select.bootstrap-table-filter-control-age').each(function (index, i) {
+        i.setAttribute('multiple','multiple');
+        $(this).find('option[value=""]').remove();
+        $(this).multipleSelect('destroy').multipleSelect({
+          container: 'body',
+          filter: true,
+          selectAll:true
 
-          }
+        })
+      })
+
+          },
+
        })
-
-
-
-
-
-       $('button[name="clearSearch"]').click(function() {
-
-    $('select.bootstrap-table-filter-control-grade').multipleSelect('setSelects', [])
-
-    filterData()
+       var $table = $('#subject')
+  $table.bootstrapTable({
+    data: data
   })
 
 
+  $('button[name="clearSearch"]').click(function() {
+    $('select.bootstrap-table-filter-control-city').multipleSelect('setSelects', [])
+    filterData()
+  })
 
-
-
-
-
-
-
-
+window.filterCities=0,
+window.filterCities1=0
 
   function customFilter(row,filter){
-  console.log('3');
-    const filterCities = filter['cities']
-    return filterCities.includes(row.grade)
+     filterCities = filter['cities']
+     console.log(filterCities)
+     console.log(filterCities1)
+    if (filterCities1 == 0 || filterCities1 == []){
+      console.log("1")
+    return filterCities.length == 0 || filterCities.includes(row.city)
+    }
+    else if (filterCities == 0 || filterCities == []){
+      console.log("12")
+    return filterCities1.length == 0 || filterCities1.includes(row.age)
+    }
+    else{
+      console.log("2")
+      return filterCities1.length == 0 || filterCities1.includes(row.age) && filterCities.includes(row.city) || filterCities.length == 0
+    }
   }
 
-
-
-
   function filterData() {
-  console.log('4');
     $table.bootstrapTable('filterBy', {
-      cities: $('select.bootstrap-table-filter-control-grade').multipleSelect('getSelects'),
-
+      cities: $('select.bootstrap-table-filter-control-city').multipleSelect('getSelects')
     }, {
       'filterAlgorithm': customFilter
     })
-
-
   }
 
-
-
-
-
-
-  $('select.bootstrap-table-filter-control-grade').change(function () {
-  console.log('5');
+  $('select.bootstrap-table-filter-control-city').change(function () {
     filterData()
   })
+
+
+
+  $('button[name="clearSearch"]').click(function() {
+    $('select.bootstrap-table-filter-control-age').multipleSelect('setSelects', [])
+    filterData1()
+  })
+
+  function customFilter1(row,filter){
+     filterCities1 = filter['cities1']
+     console.log(filterCities)
+     console.log(filterCities1)
+     if (filterCities == 0 || filterCities == []){
+      console.log("1")
+    return filterCities1.length == 0 || filterCities1.includes(row.age)
+    }
+    else if (filterCities1 == 0 || filterCities1 == []){
+      console.log("12")
+    return filterCities.length == 0 || filterCities.includes(row.city)
+    }
+    else{
+      console.log("2")
+      return filterCities1.length == 0 || filterCities1.includes(row.age) && filterCities.includes(row.city) || filterCities.length == 0
+    }
+  }
+
+  function filterData1() {
+    $table.bootstrapTable('filterBy', {
+      cities1: $('select.bootstrap-table-filter-control-age').multipleSelect('getSelects')
+    }, {
+      'filterAlgorithm': customFilter1
+    })
+  }
+
+  $('select.bootstrap-table-filter-control-age').change(function () {
+    filterData1()
+  })
+
+
 
 
 

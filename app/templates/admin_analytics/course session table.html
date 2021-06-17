@@ -29,9 +29,7 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Session Table</h1>
         <p class="mb-4" >Table Analysis on Subject, Course, Session, Attendance and feedback with all sotring and searching with export table option
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!
+
         </p>
 
         <!-- DataTales Example -->
@@ -50,6 +48,7 @@
                 </h6>
             </div>
             <div class="card-body">
+
                 <div style="float:right;">Export Data</div>
                 <div class="table-responsive">
 
@@ -60,15 +59,16 @@
         <tr>
 
             <th data-field="id" >S.No</th>
-            <th data-field="cname" data-sortable="True" data-filter-control="select">Course Name</th>
-            <th data-field="sname" data-sortable="True" data-filter-control="select">Session Name</th>
-             <th data-field="fname" data-sortable="True" data-filter-control="input">Faculty Name</th>
-            <th data-field="desc" data-sortable="True" data-filter-control="input">Session Description</th>
- <th data-field="date" data-sortable="True" data-filter-control="input">Date</th>
-            <th data-field="start" data-sortable="True" data-filter-control="select">Start Time</th>
-              <th data-field="end" data-sortable="True" data-filter-control="select">End Time</th>
-              <th data-field="status" data-sortable="True" data-filter-control="input">Status</th>
+            <th data-field="city" data-sortable="True" data-filter-control="select">Course Name</th>
+            <th data-field="age" data-sortable="True" data-filter-control="select">Session Name</th>
+             <th data-field="fname" data-sortable="True" data-filter-control="select">Faculty Name</th>
+<th data-field="status" data-sortable="True" data-filter-control="select">Status</th>
+ <th data-field="date" data-sortable="True" >Date</th>
+            <th data-field="start" data-sortable="True" >Start Time</th>
+              <th data-field="end" data-sortable="True" >End Time</th>
 
+<th data-field="desc" data-sortable="True">Session Description</th>
+            <th data-field="link" data-sortable="True">Go to attendance</th>
         </tr>
 
         </thead>
@@ -128,15 +128,16 @@
         {% for row in session %}
         {
         "id": "{{loop.index}}",
-        "cname": "{{row.course_name}}",
-        "sname": "<a href={{url_for('attendance',b=row.session_id)}}>{{row.session_name}}</a>",
+        "city": "{{row.course_name}}",
+        "age": "{{row.session_name}}",
           "fname": "{{row.faculty_name}}",
-        "desc": "{{row.session_discription}}",
+
         "date": "{{row.session_date}}",
         "start": "{{row.session_starttime}}",
         "end": "{{row.session_endtime}}",
           "status": "{{row.session_status}}",
-
+ "desc": "{{row.session_discription}}",
+ "link":"<a href={{url_for('attendance',b=row.session_id)}}>Go to  {{row.session_name}}</a>"
 
 
 
@@ -144,83 +145,115 @@
       {% endfor %}
       ];
 
-      var $table = $('#subject')
-
-      $table.bootstrapTable({
+      $('#subject').bootstrapTable({
           data: data,
-
-
           onCreatedControls () {
 
-            $('select.bootstrap-table-filter-control-grade').each(function (index, i) {
+            $('select.bootstrap-table-filter-control-city').each(function (index, i) {
               i.setAttribute('multiple','multiple');
               $(this).find('option[value=""]').remove();
-              console.log('1');
               $(this).multipleSelect('destroy').multipleSelect({
-
                 container: 'body',
                 filter: true,
                 selectAll:true
 
               })
-            })
+            }),
 
+      $('select.bootstrap-table-filter-control-age').each(function (index, i) {
+        i.setAttribute('multiple','multiple');
+        $(this).find('option[value=""]').remove();
+        $(this).multipleSelect('destroy').multipleSelect({
+          container: 'body',
+          filter: true,
+          selectAll:true
 
-          }
+        })
+      })
+
+          },
+
        })
-
-
-
-
-
-       $('button[name="clearSearch"]').click(function() {
-
-    $('select.bootstrap-table-filter-control-grade').multipleSelect('setSelects', [])
-
-    filterData()
+       var $table = $('#subject')
+  $table.bootstrapTable({
+    data: data
   })
 
 
+  $('button[name="clearSearch"]').click(function() {
+    $('select.bootstrap-table-filter-control-city').multipleSelect('setSelects', [])
+    filterData()
+  })
 
-
-
-
-
-
-
-
+window.filterCities=0,
+window.filterCities1=0
 
   function customFilter(row,filter){
-  console.log('3');
-    const filterCities = filter['cities']
-    return filterCities.includes(row.grade)
+     filterCities = filter['cities']
+     console.log(filterCities)
+     console.log(filterCities1)
+    if (filterCities1 == 0 || filterCities1 == []){
+      console.log("1")
+    return filterCities.length == 0 || filterCities.includes(row.city)
+    }
+    else if (filterCities == 0 || filterCities == []){
+      console.log("12")
+    return filterCities1.length == 0 || filterCities1.includes(row.age)
+    }
+    else{
+      console.log("2")
+      return filterCities1.length == 0 || filterCities1.includes(row.age) && filterCities.includes(row.city) || filterCities.length == 0
+    }
   }
 
-
-
-
   function filterData() {
-  console.log('4');
     $table.bootstrapTable('filterBy', {
-      cities: $('select.bootstrap-table-filter-control-grade').multipleSelect('getSelects'),
-
+      cities: $('select.bootstrap-table-filter-control-city').multipleSelect('getSelects')
     }, {
       'filterAlgorithm': customFilter
     })
-
-
   }
 
-
-
-
-
-
-  $('select.bootstrap-table-filter-control-grade').change(function () {
-  console.log('5');
+  $('select.bootstrap-table-filter-control-city').change(function () {
     filterData()
   })
 
+
+
+  $('button[name="clearSearch"]').click(function() {
+    $('select.bootstrap-table-filter-control-age').multipleSelect('setSelects', [])
+    filterData1()
+  })
+
+  function customFilter1(row,filter){
+     filterCities1 = filter['cities1']
+     console.log(filterCities)
+     console.log(filterCities1)
+     if (filterCities == 0 || filterCities == []){
+      console.log("1")
+    return filterCities1.length == 0 || filterCities1.includes(row.age)
+    }
+    else if (filterCities1 == 0 || filterCities1 == []){
+      console.log("12")
+    return filterCities.length == 0 || filterCities.includes(row.city)
+    }
+    else{
+      console.log("2")
+      return filterCities1.length == 0 || filterCities1.includes(row.age) && filterCities.includes(row.city) || filterCities.length == 0
+    }
+  }
+
+  function filterData1() {
+    $table.bootstrapTable('filterBy', {
+      cities1: $('select.bootstrap-table-filter-control-age').multipleSelect('getSelects')
+    }, {
+      'filterAlgorithm': customFilter1
+    })
+  }
+
+  $('select.bootstrap-table-filter-control-age').change(function () {
+    filterData1()
+  })
 
 
       </script>

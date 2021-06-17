@@ -29,24 +29,65 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Attendance Table</h1>
         <p class="mb-4" >Table Analysis on Subject, Course, Session, Attendance and feedback with all sotring and searching with export table option
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!
+
         </p>
+                    <div class="row" >
+ <div class="col-xl-3 col-md-6 mb-4" >
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                 Students Present:
+                                                <h1>{{present['present']}}</h1></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4" >
+                            <div class="card border-left-danger shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                                Students Absent:
+                                                <h1>{{absent['absent']}}</h1></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
+                <h6 class="m-0 font-weight-bold text-primary">{{attendance[0]['session_name']}}
 
-                    <div class="my-2" >
-<!--                        <div id="container"></div>-->
+                    <div class="my-2" style="float:right;">
+
+
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text"></span>
+
                     </div>
                 </h6>
             </div>
 
 
             <div class="card-body">
+
 
                 <div style="float:right;">Export Data</div>
                 <div class="table-responsive">
@@ -59,10 +100,11 @@
         <tr>
 
             <th data-field="id" >S.No</th>
-            <th data-field="name" data-sortable="True" data-filter-control="input">Name</th>
+            <th data-field="name" data-sortable="True"  data-filter-control="input">Name</th>
             <th data-field="grade" data-sortable="True" data-filter-control="input">Grade</th>
-            <th data-field="ses_name"  data-sortable="True" class="col-sm-2" data-filter-control="input"  >Session Name</th>
-            <th data-field="ses_id" data-sortable="True" data-filter-control="input">Session Id</th>
+            <th data-field="contact" data-sortable="True" data-filter-control="input">Contact</th>
+            <th data-field="present"  data-sortable="True" class="col-sm-2" data-filter-control="select">Class attended</th>
+
 
 
         </tr>
@@ -126,8 +168,13 @@
         "id": "{{loop.index}}",
         "name": "{{row.student_name}}",
         "grade": "{{row.school_grade}}",
-        "ses_name": "{{row.session_name}}",
-        "ses_id": "{{row.session_id}}",
+        "contact": "{{row.student_contact}}",
+        {% if row.satt_present == 'YES'%}
+        "present":  "Present",
+        {% else %}
+        "present":  "Absent",
+        {% endif %}
+
 
 
       },

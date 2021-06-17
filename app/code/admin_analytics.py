@@ -187,13 +187,24 @@ def attendance():
         admin_name = session.get('name')
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('select DISTINCT student_details.student_name,student_details.school_grade, course_session_details.session_id,course_session_details.session_name from student_details, course_session_details, course_details, student_attendance where course_session_details.course_id = course_details.course_id and student_details.student_id = student_attendance.student_id and course_session_details.session_id =%s and  student_attendance.session_id=%s',(session_id, session_id))
+        cursor.execute('select DISTINCT student_details.student_name,student_details.student_contact,student_details.school_grade, student_attendance.satt_present,course_session_details.session_name from student_details, course_session_details, course_details, student_attendance where course_session_details.course_id = course_details.course_id and student_details.student_id = student_attendance.student_id and course_session_details.session_id =%s and  student_attendance.session_id=%s',(session_id, session_id))
         attendance= cursor.fetchall()
-        cursor.execute('SELECT * FROM subject')
-        subject = cursor.fetchall()
-        cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
-        course = cursor.fetchall()
-        return render_template('admin_analytics/attendance.html',attendance=attendance,admin_name=admin_name,subject=subject,course=course)
+
+
+        cursor.execute("SELECT count(satt_present) as present from student_attendance  where satt_present='YES' and  session_id=%s",(session_id))
+        present=cursor.fetchone()
+
+        cursor.execute("SELECT count(satt_present) as absent from student_attendance  where satt_present='NO' and  session_id=%s",(session_id))
+        absent = cursor.fetchone()
+
+
+
+
+
+
+
+
+        return render_template('admin_analytics/attendance.html',attendance=attendance,admin_name=admin_name,present=present,absent=absent)
     else:
         return redirect(url_for('login'))
         
