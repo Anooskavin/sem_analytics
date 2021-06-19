@@ -29,9 +29,7 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Student Table</h1>
        <p class="mb-4" >Table Analysis on Subject, Course, Session, Attendance and feedback with all sotring and searching with export table option
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!
+
         </p>
 
         <!-- DataTales Example -->
@@ -65,8 +63,8 @@
             <th data-field="grade"  data-sortable="True" class="col-sm-2" data-filter-control="select"  >Grade</th>
             <th data-field="scname" data-sortable="True" data-filter-control="input">School Name</th>
             <th data-field="contact" data-sortable="True" data-filter-control="input">Contact</th>
-            <th data-field="district" data-sortable="True" data-filter-control="select">District</th>
-             <th data-field="state" data-sortable="True" data-filter-control="select">State</th>
+            <th data-field="city" data-sortable="True" data-filter-control="select">District</th>
+             <th data-field="age" data-sortable="True" data-filter-control="select">State</th>
 
         </tr>
 
@@ -132,88 +130,120 @@
         "grade": "{{row.school_grade}}",
         "scname": "{{row.school_name}}",
         "contact": "{{row.student_contact}}",
-        "district": "{{row.school_district}}",
-        "state": "{{row.school_state}}"
+        "city": "{{row.school_district}}",
+        "age": "{{row.school_state}}"
 
       },
       {% endfor %}
       ];
 
-      var $table = $('#table')
-
-      $table.bootstrapTable({
+  $('#table').bootstrapTable({
           data: data,
-
-
           onCreatedControls () {
 
-            $('select.bootstrap-table-filter-control-grade').each(function (index, i) {
+            $('select.bootstrap-table-filter-control-city').each(function (index, i) {
               i.setAttribute('multiple','multiple');
               $(this).find('option[value=""]').remove();
-              console.log('1');
               $(this).multipleSelect('destroy').multipleSelect({
-
                 container: 'body',
                 filter: true,
                 selectAll:true
 
               })
-            })
+            }),
 
+      $('select.bootstrap-table-filter-control-age').each(function (index, i) {
+        i.setAttribute('multiple','multiple');
+        $(this).find('option[value=""]').remove();
+        $(this).multipleSelect('destroy').multipleSelect({
+          container: 'body',
+          filter: true,
+          selectAll:true
 
-          }
+        })
+      })
+
+          },
+
        })
+ var $table = $('#table')
+  $table.bootstrapTable({
+    data: data
+  })
 
+  $('button[name="clearSearch"]').click(function() {
+    $('select.bootstrap-table-filter-control-city').multipleSelect('setSelects', [])
+    filterData()
+  })
 
+window.filterCities=0,
+window.filterCities1=0
 
+  function customFilter(row,filter){
+     filterCities = filter['cities']
+     console.log(filterCities)
+     console.log(filterCities1)
+    if (filterCities1 == 0 || filterCities1 == []){
+      console.log("1")
+    return filterCities.length == 0 || filterCities.includes(row.city)
+    }
+    else if (filterCities == 0 || filterCities == []){
+      console.log("12")
+    return filterCities1.length == 0 || filterCities1.includes(row.age)
+    }
+    else{
+      console.log("2")
+      return filterCities1.length == 0 || filterCities1.includes(row.age) && filterCities.includes(row.city) || filterCities.length == 0
+    }
+  }
 
+  function filterData() {
+    $table.bootstrapTable('filterBy', {
+      cities: $('select.bootstrap-table-filter-control-city').multipleSelect('getSelects')
+    }, {
+      'filterAlgorithm': customFilter
+    })
+  }
 
-       $('button[name="clearSearch"]').click(function() {
-
-    $('select.bootstrap-table-filter-control-grade').multipleSelect('setSelects', [])
-
+  $('select.bootstrap-table-filter-control-city').change(function () {
     filterData()
   })
 
 
 
+  $('button[name="clearSearch"]').click(function() {
+    $('select.bootstrap-table-filter-control-age').multipleSelect('setSelects', [])
+    filterData1()
+  })
 
-
-
-
-
-
-
-
-  function customFilter(row,filter){
-  console.log('3');
-    const filterCities = filter['cities']
-    return filterCities.includes(row.grade)
+  function customFilter1(row,filter){
+     filterCities1 = filter['cities1']
+     console.log(filterCities)
+     console.log(filterCities1)
+     if (filterCities == 0 || filterCities == []){
+      console.log("1")
+    return filterCities1.length == 0 || filterCities1.includes(row.age)
+    }
+    else if (filterCities1 == 0 || filterCities1 == []){
+      console.log("12")
+    return filterCities.length == 0 || filterCities.includes(row.city)
+    }
+    else{
+      console.log("2")
+      return filterCities1.length == 0 || filterCities1.includes(row.age) && filterCities.includes(row.city) || filterCities.length == 0
+    }
   }
 
-
-
-
-  function filterData() {
-  console.log('4');
+  function filterData1() {
     $table.bootstrapTable('filterBy', {
-      cities: $('select.bootstrap-table-filter-control-grade').multipleSelect('getSelects'),
-
+      cities1: $('select.bootstrap-table-filter-control-age').multipleSelect('getSelects')
     }, {
-      'filterAlgorithm': customFilter
+      'filterAlgorithm': customFilter1
     })
-
-
   }
 
-
-
-
-
-
-  $('select.bootstrap-table-filter-control-grade').change(function () {
-  console.log('5');
-    filterData()
+  $('select.bootstrap-table-filter-control-age').change(function () {
+    filterData1()
   })
 
 

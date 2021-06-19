@@ -30,9 +30,7 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800" >Subject Table</h1>
         <p class="mb-4" >Table Analysis on Subject, Course, Session, Attendance and feedback with all sotring and searching with export table option
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!
+
         </p>
 
         <!-- DataTales Example -->
@@ -51,18 +49,21 @@
                 </h6>
             </div>
             <div class="card-body">
-                <div style="float:right;">Export Data</div>
-                <div class="table-responsive"  >
 
 
-                        <table class="table table-bordered"  width="100%" cellspacing="0"  data-show-export="true"  id="subject"  data-pagination="True"  data-show-filter-control-switch="true" data-click-to-select="true" data-toggle="Table" data-filter-control="true">
+                <div class="table-responsive" >
+
+
+                        <table class="table table-bordered"  width="100%" cellspacing="0"  data-show-export="true"
+                               id="subject"  data-pagination="True"  data-show-filter-control-switch="true" data-click-to-select="true"
+                               data-toggle="Table"  data-filter-control="true" >
 
                             <thead >
         <tr>
 
             <th data-field="id"  >S.No</th>
             <th data-field="name" data-sortable="True" data-filter-control="select">Name</th>
-            <th data-field="email" data-sortable="True" data-filter-control="input">Email</th>
+            <th data-field="email" data-sortable="True" >Description</th>
 
         </tr>
 
@@ -112,8 +113,9 @@
 <!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
 <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.0/bootstrap-table.js"></script>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/editable/bootstrap-table-editable.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
-  <script src="https://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>-->
+
+    <script src="https://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
 
     <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -131,7 +133,7 @@
       {% endfor %}
       ];
 
-      var $table = $('#subject')
+    var $table = $('#subject')
 
       $table.bootstrapTable({
           data: data,
@@ -207,6 +209,8 @@
   console.log('5');
     filterData()
   })
+
+
 
 
 
