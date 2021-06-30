@@ -52,7 +52,7 @@
                             {% for row in subject %}
                             <tr>
                                 <td>{{loop.index}}</td>
-                                <td><a style="text-decoration: none;" href="http://127.0.0.1:5000/data_entry/session?id={{row.subject_id}}">{{row.subject_name}}</a></td>
+                                <td><a style="text-decoration: none;" href="http://127.0.0.1:5000/data_entry/course?course_id={{row.subject_id}}">{{row.subject_name}}</a></td>
                                 <td>{{row.subject_description}}</td>
                                 <!-- <td><a type="button" name="view" id="{{row.subject_id}}"
                                         class="btn btn-success btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>

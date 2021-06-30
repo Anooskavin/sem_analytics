@@ -98,7 +98,7 @@ def data_entry_course():
     if 'id' in session and session.get("user_type") == 'data_entry':  
         id=session.get('id')
         admin_name=session.get('name')
-        course_ids = request.args.get('id')  
+        course_ids = request.args.get('course_id')  
         print(course_ids)   
         if request.method == 'POST':      
             adminid=session.get('id')
@@ -118,11 +118,11 @@ def data_entry_course():
         if course_ids:
             cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id and subject.subject_id=%s',[course_ids,])
             course = cursor.fetchall()
-            print('entered')
+            
         else:
             cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
             course = cursor.fetchall()
-            print("not")
+            
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
@@ -198,6 +198,8 @@ def data_entry_session():
     if 'id' in session and session.get("user_type") == 'data_entry':
         id=session.get('id')
         admin_name=session.get('name')
+        session_ids = request.args.get('session_id')  
+        print(session_ids)
         if request.method == 'POST':      
             adminid=session.get('id')
             cname = request.form['cname']
@@ -225,13 +227,17 @@ def data_entry_session():
             except Exception as Ex:
                 return jsonify('error')
 
-        
+        if session_ids:
+            cursor.execute('SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id and course_details.course_id=%s',[session_ids,])
+            sess = cursor.fetchall()
+        else:
+            cursor.execute('SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id')
+            sess = cursor.fetchall()
         cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
         course = cursor.fetchall()
         cursor.execute('SELECT * FROM faculty_details')
         faculty = cursor.fetchall()
-        cursor.execute('SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id')
-        sess = cursor.fetchall()
+    
 
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
@@ -299,6 +305,42 @@ def data_entry_session_change():
 
 
 ####################################### Session table end ############################################
+
+
+
+
+
+########################################  Attendance Table ############################################
+
+
+#########################################  session Table ###############################################
+
+
+@app.route("/data_entry/session/attendance", methods=["POST", "GET"])
+def data_entry_attendance():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'data_entry':
+        id=session.get('id')
+        admin_name=session.get('name')
+        session_ids = request.args.get('session_id')  
+        print(session_ids)
+        if session_ids:
+            cursor.execute('SELECT * FROM student_attendance,student_details WHERE student_attendance.student_id=student_details.student_id and student_attendance.session_id=%s',[session_ids,])
+            sess = cursor.fetchall()
+        else:
+            return redirect(url_for('login'))
+
+        cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
+        course = cursor.fetchall()
+        cursor.execute('SELECT * FROM faculty_details')
+        faculty = cursor.fetchall()
+    
+
+        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        notifi = cursor.fetchall()
+        return render_template('data_entry/course session table.html',session=sess,course=course,faculty=faculty,admin_name=admin_name,notifi=notifi)
+    else:
+        return redirect(url_for('login'))
 
 
 #########################################  Faculty Table ###############################################
