@@ -97,7 +97,9 @@ def data_entry_course():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':  
         id=session.get('id')
-        admin_name=session.get('name')      
+        admin_name=session.get('name')
+        course_ids = request.args.get('id')  
+        print(course_ids)   
         if request.method == 'POST':      
             adminid=session.get('id')
             subjectid = request.form['subjectid']
@@ -112,9 +114,15 @@ def data_entry_course():
                 return jsonify('success')
             except Exception as Ex:
                 return jsonify('error')
-        
-        cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
-        course = cursor.fetchall()
+
+        if course_ids:
+            cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id and subject.subject_id=%s',[course_ids,])
+            course = cursor.fetchall()
+            print('entered')
+        else:
+            cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
+            course = cursor.fetchall()
+            print("not")
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
