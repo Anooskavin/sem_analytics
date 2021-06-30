@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-auto">
 
-                            <i class="fas fa-laptop fa-2x text-gray-300"></i>
+                            <i class="fas fa-book-open  fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -42,11 +42,11 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Total Complete Session</div>
+                                Total completed session</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                            <i class="far fa-check-circle fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Non Completed Session
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total on going session
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-book-reader fa-2x text-gray-300"></i>
+                            <i class="far fa-times-circle fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -114,15 +114,13 @@
                                     <th>S no</th>
                                     <th>Course Name</th>
                                     <th>Session Name</th>
-                                    <th>Session Description</th>
                                     <th>Session Date</th>
                                     <th>Session Start Time</th>
                                     <th>Session End Time</th>
                                     <th>Faculty Name</th>
                                     <th>Session Status</th>
-                                    <th>Feedback Link</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
+                                    <th>link</th>
+                                    <th style="width: fit-content;">Action</th>
 
 
                                 </tr>
@@ -133,8 +131,7 @@
                                 <tr>
                                     <td>{{loop.index}}</td>
                                     <td>{{row.course_name}}</td>
-                                    <td>{{row.session_name}}</th>
-                                    <td>{{row.session_discription}}</td>
+                                    <td><a style="text-decoration: none;" href="/data_entry/session/attendance?session_id={{row.session_id}}&session_name={{row.session_name}}">{{row.session_name}}</a></th>
                                     <td>{{row.session_date}}</td>
                                     <td>{{row.session_starttime}}</th>
                                     <td>{{row.session_endtime}}</td>
@@ -147,15 +144,16 @@
                                         <a href="/feedback?id={{row.session_id}}" class="btn btn-warning "><i
                                                 class="fas fa-copy"></i></a>
                                     </td>
+                                    
                                     <td>
                                         <a type="button" name="view" value="view" id="{{row.session_id}}"
-                                            class="btn btn-success btn-xs view_data"><i
-                                                class="fas fa-pencil-alt"></i></a>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-danger " value="{{row.session_id}}"
+                                            class="btn btn-primary btn-xs view_data"><i
+                                                class="fas fa-pencil-alt"></i></a>&nbsp;
+                                        {% if row.session_status == "open" %}
+                                        <button type="submit" class="btn btn-danger btn-xs " value="{{row.session_id}}"
                                             name="delete" id='deletecheck' onclick="return validateForm()"><i
                                                 class="fas fa-trash"></i></button>
+                                                {% endif %}
                                     </td>
 
 
@@ -237,7 +235,7 @@
                         <br />
 
                         <label>Enter Session Start Time</label>
-                        <input type="time" name="stime" id="name" class="form-control" />
+                        <input type="time" name="stime" id="name"  min="0:00" max="12:00"  class="form-control" />
                         <br />
 
                         <label>Enter Session End Time</label>
@@ -265,7 +263,7 @@
 
                 <div class="modal-footer">
                     <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
                     </form>
                 </div>
             </div>

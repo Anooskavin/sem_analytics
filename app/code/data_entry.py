@@ -313,7 +313,6 @@ def data_entry_session_change():
 ########################################  Attendance Table ############################################
 
 
-#########################################  session Table ###############################################
 
 
 @app.route("/data_entry/session/attendance", methods=["POST", "GET"])
@@ -323,25 +322,22 @@ def data_entry_attendance():
         id=session.get('id')
         admin_name=session.get('name')
         session_ids = request.args.get('session_id')  
-        print(session_ids)
+        session_name = request.args.get('session_name')  
+
+        print(session_name)
         if session_ids:
             cursor.execute('SELECT * FROM student_attendance,student_details WHERE student_attendance.student_id=student_details.student_id and student_attendance.session_id=%s',[session_ids,])
-            sess = cursor.fetchall()
+            attendance = cursor.fetchall()
         else:
-            return redirect(url_for('login'))
-
-        cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
-        course = cursor.fetchall()
-        cursor.execute('SELECT * FROM faculty_details')
-        faculty = cursor.fetchall()
-    
+            return redirect(url_for('login'))  
 
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
-        return render_template('data_entry/course session table.html',session=sess,course=course,faculty=faculty,admin_name=admin_name,notifi=notifi)
+        return render_template('data_entry/attendance_table.html',attendance=attendance,session_name=session_name,admin_name=admin_name,notifi=notifi)
     else:
         return redirect(url_for('login'))
 
+#########################################  Attendance Table end ###############################################
 
 #########################################  Faculty Table ###############################################
 
