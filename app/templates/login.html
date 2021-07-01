@@ -5,12 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/>
 <style>
   body{
 
-  background-image:  url('https://www.bitsathy.ac.in/assets/images/main-slider/poster.webp');
+  background-image:  url('https://getmyuni.azureedge.net/college-image/big/bannari-amman-institute-of-technology-bait-coimbatore.jpg');
   background-repeat: no-repeat;
   background-size: auto;
   background-size: cover;
@@ -61,7 +62,6 @@
   <script type="text/javascript">
     $(document).on('submit','#admin_form',function(e)
                    {
-      console.log('hello');
       e.preventDefault();
       $.ajax({
         type:'POST',
@@ -73,17 +73,19 @@
       })
 
       .done(function(data) {
-
-        if (data.success='admin') {
+        if (data.success=='admin') {
+                  console.log("admin")
                   window.location.href = "admin_analytics/home";
 			      }
 
-			else if (data.success='data_entry') {
+			else if (data.success=='data_entry') {
                   window.location.href = "data_entry/home";
 			      }
 
-			else if(data.success='error') {
-			        document.getElementById('errorAlert').style.display = "block";
+			else if(data.success=='error') {
+              console.log ("error")
+              swal("Wrong Credentials !!", "Please check your Username and Password !", "error");
+
 
 			      }
 		});
