@@ -5,23 +5,95 @@
 <body id="page-top">
 
     <!-- Page Wrapper -->
+     <!-- Content Row -->
+     <div class="container-fluid">
 
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Session Details</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+        </div>
+     <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total sessions</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                        </div>
+                        <div class="col-auto">
+
+                            <i class="fas fa-book-open  fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Total completed session</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="far fa-check-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total on going session
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2</div>
+                                </div>
+                                <div class="col">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="far fa-times-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Requests Card Example -->
+        
+    </div>
+    </div>
+    
     <!-- End of Sidebar -->
 
     <!-- Begin Page Content -->
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Session Table</h1>
-        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-            For more information about DataTables, please visit the <a target="_blank"
-                href="https://datatables.net">official DataTables documentation</a>.</p>
-
+       
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Session Table
-
+                   
                     <div class="my-2" style="float:right;">
                         <button href="#" class="btn btn-primary btn-icon-split" data-toggle="modal"
                             data-target="#add_data_Modal">
@@ -31,7 +103,6 @@
                             <span class="text">Add</span>
                         </button>
                     </div>
-                </h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -43,43 +114,24 @@
                                     <th>S no</th>
                                     <th>Course Name</th>
                                     <th>Session Name</th>
-                                    <th>Session Description</th>
                                     <th>Session Date</th>
                                     <th>Session Start Time</th>
                                     <th>Session End Time</th>
                                     <th>Faculty Name</th>
                                     <th>Session Status</th>
-                                    <th>Feedback Link</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
+                                    <th>link</th>
+                                    <th style="width: fit-content;">Action</th>
 
 
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>S no</th>
-                                    <th>Course Name</th>
-                                    <th>Session Name</th>
-                                    <th>Session Description</th>
-                                    <th>Session Date</th>
-                                    <th>Session Start Time</th>
-                                    <th>Session End Time</th>
-                                    <th>Faculty Name</th>
-                                    <th>Session Status</th>
-                                    <th>Feedback Link</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
-
-                                </tr>
-                            </tfoot>
+                           
                             <tbody>
                                 {% for row in session %}
                                 <tr>
                                     <td>{{loop.index}}</td>
                                     <td>{{row.course_name}}</td>
-                                    <td>{{row.session_name}}</th>
-                                    <td>{{row.session_discription}}</td>
+                                    <td><a style="text-decoration: none;" href="/data_entry/session/attendance?session_id={{row.session_id}}&session_name={{row.session_name}}">{{row.session_name}}</a></th>
                                     <td>{{row.session_date}}</td>
                                     <td>{{row.session_starttime}}</th>
                                     <td>{{row.session_endtime}}</td>
@@ -92,15 +144,16 @@
                                         <a href="/feedback?id={{row.session_id}}" class="btn btn-warning "><i
                                                 class="fas fa-copy"></i></a>
                                     </td>
+                                    
                                     <td>
                                         <a type="button" name="view" value="view" id="{{row.session_id}}"
-                                            class="btn btn-success btn-xs view_data"><i
-                                                class="fas fa-pencil-alt"></i></a>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-danger " value="{{row.session_id}}"
+                                            class="btn btn-primary btn-xs view_data"><i
+                                                class="fas fa-pencil-alt"></i></a>&nbsp;
+                                        {% if row.session_status == "open" %}
+                                        <button type="submit" class="btn btn-danger btn-xs " value="{{row.session_id}}"
                                             name="delete" id='deletecheck' onclick="return validateForm()"><i
                                                 class="fas fa-trash"></i></button>
+                                                {% endif %}
                                     </td>
 
 
@@ -182,7 +235,7 @@
                         <br />
 
                         <label>Enter Session Start Time</label>
-                        <input type="time" name="stime" id="name" class="form-control" />
+                        <input type="time" name="stime" id="name"  min="0:00" max="12:00"  class="form-control" />
                         <br />
 
                         <label>Enter Session End Time</label>
@@ -210,7 +263,7 @@
 
                 <div class="modal-footer">
                     <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
                     </form>
                 </div>
             </div>
