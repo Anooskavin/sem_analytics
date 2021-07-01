@@ -129,30 +129,14 @@
                                             <th>Contact</th>
 											<th>E-mail</th>
                                             <th>Grade</th>
-											<th>School Name</th>
-                                            <th>State</th>
-											<th>District</th>
-											<th>Options</th>
+											<th>Whatsapp</th>
+                                            <th>Account Status</th>
+											<th>Action</th>
 											
                                            
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>S no</th>
-                                            <th>Student Name</th>
-                                            <th>Contact</th>
-											<th>E-mail</th>
-                                            <th>Grade</th>
-											<th>School Name</th>
-                                            <th>State</th>
-											<th>District</th>
-											<th>Options</th>
-											
-                                           
-                                        </tr>
-                                        </tr>
-                                    </tfoot>
+                                    
                                     <tbody>
                                     {% for row in student %}
                                         <tr>
@@ -160,10 +144,15 @@
                                             <td>{{row.student_name}}</td>
                                             <td>{{row.student_contact}}</td>
 											<td>{{row.student_email}}</td>
-											<td>{{row.school_grade}}</td>
-                                            <td>{{row.school_name}}</td>
-											<td>{{row.school_state}}</td>
-                                            <td>{{row.school_district}}</td>
+											<td>{{row.student_grade}}</td>
+                                            <td>{{row.student_whatsapp}}</td>
+                                            {% if row.account_status == "allow" %}
+                                            <td><span class="badge badge-primary">VERIFIED</span></td>
+                                            {% elif row.account_status == "waiting" %}
+                                            <td><span class="badge badge-warning">WAITING</span></td>
+                                            {% elif row.account_status == "block" %}
+                                            <td><span class="badge badge-danger">BLOCKED</span></td>{% endif %}
+											
 											
 											<td>
 											
