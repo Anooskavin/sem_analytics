@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'header/data_entry_header.html' %}
+
+        <!-- End of Sidebar -->
+
+       
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">School Details</h1>
+                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                        For more information about DataTables, please visit the <a target="_blank"
+                            href="https://datatables.net">official DataTables documentation</a>.</p>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6>
+							
+							<div class="my-2" style="float:right;">
+                                    <BUTTON href="#" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#add_data_Modal">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="text">Add</span>
+                                    </button>
+                                    </div></h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <form method="post"  action="/data_entry/faculty/update" >
+
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>S no</th>
+                                            <th>School Name</th>
+											<th>School State</th>
+                                            <th>School District</th>
+											<th>School pincode</th>
+											<th>School board</th>										
+											<th>School contact</th>
+											<th>School status</th>
+											<th>Action</th>
+
+                                
+											
+                                           
+                                        </tr>
+                                    </thead>
+                        
+                                    <tbody>
+                                         {% for row in school %}
+                                        <tr>
+                                            <td>{{loop.index}}</td>
+                                            <td>{{row.school_name}}</td>
+											<td>{{row.school_state}}</td>
+                                            <td>{{row.school_district}}</td>
+                                            <td>{{row.school_pincode}}</td>
+                                            <td>{{row.school_board}}</td>
+                                            <td>{{row.school_contact}}</td>
+                                            {% if row.school_status == "approved" %}
+                                            <td><span class="badge badge-success">Approved</span></td>
+                                            {% elif row.school_status == "notapproved" %}
+                                            <td><span class="badge badge-warning">Not Approved</span></td>{% endif %}
+										
+											<td>
+
+                                                {% if row.school_status == "approved" and row.school_status == "decline" %}
+                                                <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-primary btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>
+                                                {% elif row.school_status == "notapproved" %}
+
+
+                                                <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-success btn-xs view_data"><i class="fas fa-thumbs-up"></i></a>
+                                                <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-danger btn-xs view_data"><i class="fas fa-thumbs-down"></i></a>
+                                                {% endif %}
+											</td>
+                                       
+											
+                                            
+                                          
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+	
+	
+		<!-- Add Modal-->
+<div id="add_data_Modal" class="modal fade">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+    <h4 class="modal-title">Insert Faculty</h4>
+    <button type="button" class="close" data-dismiss="modal">×</button>
+   
+   </div>
+   <div class="modal-body">
+    <form method="post" id="insert_form">
+	 <label>Enter Faculty Name</label>
+     <input type="text" name="fname" id="name" class="form-control" />
+	 <br />
+	
+     <label>Enter Faculty Email</label>
+     <input type="mail" name="email" id="name" class="form-control" />
+     <br />
+	 
+	 <label>Enter Faculty Contact</label>
+      <input type="number" name="contact" id="address" class="form-control"/>
+     <br />
+     
+	
+     
+   </div>
+
+   <div class="modal-footer">
+   <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	 </form>
+   </div>
+  </div>
+ </div>
+</div>
+
+
+   <!--Update table modal-->
+	
+	<div id="dataModal" class="modal fade">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+   <h4 class="modal-title">School Details</h4>
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    
+   </div>
+   <div class="modal-body">
+      <div class="table-responsive">  
+	  <form method="post" id="update_form" >
+        <table class="table table-bordered">
+            <input type="hidden" class="form-control" name="school_id" id="school_id">
+
+        <tr>  
+            <td width="30%"><label>School Name</label>
+            <td width="70%"><input type="text" name="school_name" class="form-control" id="school_name"></td>  
+        </tr>
+
+        <tr>  
+            <td width="30%"><label>School State</label>
+            <td width="70%"><input type="text" name="school_state" class="form-control" id="school_state"></td>  
+        </tr>
+
+        <tr>  
+            <td width="30%"><label>School District</label>
+            <td width="70%"><input type="text" name="school_district" class="form-control" id="school_district"></td>  
+        </tr>
+        <tr>  
+            <td width="30%"><label>School Pincode</label>
+            <td width="70%"><input type="text" name="school_pincode" class="form-control" id="school_pincode"></td>  
+        </tr>
+
+        <tr>  
+            <td width="30%"><label>School Board</label> 
+            <td width="70%"><input type="text" name="school_board" class="form-control" id="school_board"/></td>    
+        </tr>
+        <tr>  
+            <td width="30%"><label>School Contact</label> 
+            <td width="70%"><input type="number" name="school_contact" class="form-control" id="school_contact"/></td>    
+        </tr>
+        <tr>  
+            <td width="30%"><label>School Approval Status</label> 
+            <td width="70%"><select name="school_status" id="mySelect" class="form-control">
+                <option value="notapproved"> ⭕ Not Approved</option>
+                <option value="approved">✅ Approve</option>
+                <option value="decline">❌ Decline</option>
+
+            </select></td>
+            </tr>
+       
+    </table>
+	 <div class="modal-footer">
+    <input type="submit" name="update" id="update" value="Update" class="btn btn-success" />
+    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+	 </form>
+   </div>
+	
+	</div>
+   </div>
+	
+
+   
+   <script>
+    $(document).ready(function () {
+        $('#insert_form').on("submit", function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: "/data_entry/faculty",
+                method: "POST",
+                data: $('#insert_form').serialize(),
+                beforeSend: function () {
+                    $('#insert').val("Inserting");
+                },
+                success: function (data) {
+                    $('#add_data_Modal').modal('hide');
+                    if (data == 'success') {
+                        swal("Data is submitted successfully!",
+                            "New Faculty is Created", "success");
+
+                        var delayInMilliseconds = 6500; //1 second
+
+                        setTimeout(function () {
+                            window.location.href =
+                                "/data_entry/faculty";
+                        }, delayInMilliseconds);
+
+                    }
+                    if (data == 'error') {
+                        console.log('error')
+                        swal("Data is not Submitted!",
+                            "Error in submitting Data",
+                            "error");
+                        window.location.href = "/data_entry/faculty";
+                    }
+                }
+            });
+
+        });
+
+
+
+        $('#update_form').on("submit", function (event) {
+            event.preventDefault();
+         
+                $.ajax({
+                    url: "/data_entry/school_details/change",
+                    method: "POST",
+                    data: $('#update_form').serialize(),
+                    beforeSend: function () {
+                        $('#update').val("Updating");
+                    },
+                    success: function (data) {
+                        $('#add_data_Modal').modal('hide');
+                        if (data == 'success') {
+                            console.log('success')
+                            window.location.href = "/data_entry/school_details";
+                        }
+                    }
+                });
+            
+        });
+
+
+        $(document).on('click', '.view_data', function () {
+            var school_id = $(this).attr("id");
+            $.ajax({
+                url: "/data_entry/school_details/select",
+                method: "POST",
+                data: {
+                    school_id: school_id
+                },
+                success: function (data) {
+                    $('#dataModal').modal('show');
+                    var data_rs = JSON.parse(data);
+                    $('#school_id').val(data_rs[0]['school_id']);
+                    $('#school_name').val(data_rs[0]['school_name']);
+                    $('#school_state').val(data_rs[0]['school_state']);
+                    $('#school_district').val(data_rs[0]['school_district']);
+                    $('#school_pincode').val(data_rs[0]['school_pincode']);
+                    $('#school_board').val(data_rs[0]['school_board']);
+                    $('#school_contact').val(data_rs[0]['school_contact']);                   
+
+                    document.getElementById("mySelect").value = data_rs[0]['school_status'];
+
+                }
+            });
+        });
+
+
+
+    });
+
+
+
+    
+</script>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<script>
+
+swal("{{message}}", "Faculty Deleted Successfully !", "success");
+
+</script>
+{% endfor %}
+{% endif %}
+{% endwith %} 
+
+
+</body>
+
+</html>
