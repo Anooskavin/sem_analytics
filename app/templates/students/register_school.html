@@ -1,121 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<title>Attendance</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="{{url_for('static',filename='img/icons/favicon.ico')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href=" {{url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fonts/Linearicons-Free-v1.0.0/icon-font.min.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/animate/animate.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/select2/select2.min.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/util.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/main.css')}}">
-<!--===============================================================================================-->
+  <title>Academics &mdash; Website by Colorlib</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="{{url_for('static',filename='fonts/icomoon/style.css')}}">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='css_stud/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='css_stud/jquery-ui.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='css_stud/owl.carousel.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='css_stud/owl.theme.default.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static',filename='css_stud/owl.theme.default.min.css')}}">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='css_stud/jquery.fancybox.min.css')}}">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='css_stud/bootstrap-datepicker.css')}}">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='fonts/flaticon/font/flaticon.css')}}">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='css_stud/aos.css')}}">
+  <link href="{{url_for('static',filename='css_stud/jquery.mb.YTPlayer.min.css')}}" media="all" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='css_stud/style.css')}}">
+<link rel="stylesheet" type="text/css" href="fonts.googleapis.com/css?family=Open+Sans" />
+
+
+<style>
+
+::placeholder {
+font-size:14px;
+color:#a3c2c2;
+}
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
+
+.container{
+  padding-top:50px;
+  margin: auto;
+}
+</style>
 </head>
-<body>
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
 
-	<div class="container-contact100" style="background-image: url('static/img/bg-01.jpg');">
-		<div class="wrap-contact100">
-			<form class="contact100-form validate-form" name="form1" method="post" action="/feedback/submit">
-				<span class="contact100-form-title">
-					<center>Attendance</center>
-				</span>
-				<br>
-				<input type="hidden" name="session_id" value="{{feedback.session_id}}" />
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-				
-					<span class="label-input100"> Course Name</span>
-					<input class="input100" type="text" id='course' name="course" value="{{feedback.course_name}}" disabled>
-				     
-				</div>
 
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-					<span class="label-input100"> Session Name</span>
-					<input class="input100" type="text" id='session' name="session" value="{{feedback.session_name}}" disabled>
-				    	
-				</div>
-				
-				
 
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-				
-					<span class="label-input100">Tell us your name (eg: Murali Krishan M) *</span>
-					<input class="input100" type="text" id='text1' name="text1" onkeyup="allLetter()" placeholder="Enter your name" required oninvalid="this.setCustomValidity('Enter Your Name')"
-                                                                                                             oninput="this.setCustomValidity('')">
-				     <span id='message'></span>	
-				</div>
 
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-					<span class="label-input100">Enter your email (eg: murali@gmail.com)*</span>
-					<input class="input100" type="text" name="email" id="email" onkeyup="allmail()" placeholder="Enter your email" required oninvalid="this.setCustomValidity('Enter Your Mail id')"
-                                                                                                             oninput="this.setCustomValidity('')">
-					 <span id='message1'></span>	
-				</div>
-				
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-				
-					<span class="label-input100">Mobile no (eg:9456543234)*</span>
-					<input class="input100" type="number" id='mobile' name="mobile" onkeyup="allmobile()" placeholder="Enter your mobile no" required oninvalid="this.setCustomValidity('Enter Your Mobile number')"
-                                                                                                             oninput="this.setCustomValidity('')">
-				     <span id='message2'></span>	
-				</div>
-				
-				
 
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-					<span class="label-input100">Select Your Grade *</span>
-					<select class="input100" name="grade" required oninvalid="this.setCustomValidity('Select Your Grade')"
-                                                                      oninput="this.setCustomValidity('')">
-						   <option value="" disabled selected>Select your Grade *</option>
-						  <option value="1">I</option>
-						  <option value="2">II</option>
-						  <option value="3">III</option>
-						  <option value="4">IV</option>
-						  <option value="5">V</option>
-						  <option value="6">VI</option>
-						  <option value="7">VII</option>
-						  <option value="8">VIII</option>
-						  <option value="9">IX</option>
-						  <option value="10">X</option>
-						  <option value="11">XI</option>
-						  <option value="12">XII</option>
-					</select>
-					 <span id='message1'></span>	
-				</div>
-				
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-				
-					<span class="label-input100">Whatsapp no (eg:9456543234)*</span>
-					<input class="input100" type="number" id='whatsapp' name="whatsapp" onkeyup="allwhats()" placeholder="Enter your whatsapp no" required oninvalid="this.setCustomValidity('Enter Your whatsapp number')"
-                                                                                                             oninput="this.setCustomValidity('')">
-				     <span id='message3'></span>	
-				</div>
+    <div class="site-section ftco-subscribe-1 site-blocks-cover pb-4" style="background-image:url({{ url_for('static', filename='img/bg_1.jpg')}})">
+        <div class="container">
+          <div class="row align-items-end justify-content-center text-center">
+            <div class="col-lg-7">
+              <h2 class="mb-0">Register School</h2>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-				<div class="wrap-input100">
-					<span class="label-input100">School Name (eg:Bannari Amman Vidya Niketan) *</span>
-					<input class="input100" type="text" id="schoolname" name="schoolname" onkeyup="allschool()" placeholder="School Name" required oninvalid="this.setCustomValidity('Enter Your School Name')"
-                                                                                                             oninput="this.setCustomValidity('')" >
-					
-				</div>
-				
-				
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-				<span class="label-input100">Select your State *</span>
-				
-				<select class="input100" id="inputState" name="state" required oninvalid="this.setCustomValidity('Select Your State')"
-                                                                      oninput="this.setCustomValidity('')">
+
+    <div class="custom-breadcrumns border-bottom">
+      <div class="container">
+
+        <span class="current">Register School</span>
+      </div>
+    </div>
+
+    <div class="site-section">
+        <div class="container">
+
+
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+				<form action="{{url_for('student_school_register')}}" method="POST">
+                    <div class="row">
+
+
+
+
+
+
+
+
+
+
+
+
+					   <div class="col-md-12 form-group">
+
+					      <label for="school">School Name (eg:Bannari Amman Vidya Niketan) *</label>
+					      <input class="form-control form-control-lg" type="text" id="schoolname" name="schoolname" onkeyup="allschool()" placeholder="School Name" oninvalid="this.setCustomValidity('Enter Your School Name')"
+                                                                                                             oninput="this.setCustomValidity('')" required >
+
+		               </div>
+
+					   <div class="col-md-12 form-group">
+					   <label for="state">State *</label>
+					   <select class="form-control form-control-lg" id="inputState" name="state"  oninvalid="this.setCustomValidity('Select Your State')"
+                                                                      oninput="this.setCustomValidity('')" required />
                         <option value="" disabled selected>Select State</option>
                         <option value="Andra Pradesh">Andra Pradesh</option>
                         <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -155,160 +146,98 @@
                         <option value="Lakshadeep">Lakshadeep</option>
                         <option value="Pondicherry">Pondicherry</option>
                       </select>
-				</div>
-				
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-				<span class="label-input100">Select your District *</span>
-				<select class="input100" id="inputDistrict" name="district" required>
+
+					   </div>
+
+					   <div class="col-md-12 form-group">
+					   <label for="District">District *</label>
+					   <select class="form-control form-control-lg" id="inputDistrict" name="district" required>
 							<option value=""> Select District </option>
 						</select>
-						<span class="focus-input100"></span>
-				</div>
-				
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-				
-					<span class="label-input100">Pincode (eg:641659)*</span>
-					<input class="input100" type="number" id='pin' name="pin" onkeyup="allpin()" placeholder="Enter your pincode" required oninvalid="this.setCustomValidity('Enter Your pincode')"
-                                                                                                             oninput="this.setCustomValidity('')">
-				     <span id='message4'></span>	
-				</div>
-				
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-				
-					<span class="label-input100">Select Borad *</span>
-					<select class="input100" name="board" required oninvalid="this.setCustomValidity('Select Your Board')"
-                                                                      oninput="this.setCustomValidity('')">
+					   </div>
+
+					   <div class="col-md-12 form-group">
+					   <label for="board">Board *</label>
+					   <select class="form-control form-control-lg" name="board"  oninvalid="this.setCustomValidity('Select Your Board')"
+                                                                      oninput="this.setCustomValidity('')" required>
 						   <option value="" disabled selected>Select your Board</option>
 						  <option value="CBSE">CBSE</option>
 						  <option value="STATE BOARD">STATE BOARD</option>
 						  <option value="ICSE">ICSE</option>
 						  <option value="OTHERS">OTHERS</option>
 						  </SELECT>
-				     <span id='message3'></span>	
-				</div>
-				
-				
-				
 
-				<div class="wrap-input100 validate-input">
-					<span class="label-input100">Feedback *</span>
-					<textarea class="input100" name="feedback" placeholder="Your Feedback..." required oninvalid="this.setCustomValidity('Provide your feedback')"
-                                                                                                             oninput="this.setCustomValidity('')"></textarea>
-				</div>
-				
-				<div class="wrap-input100 validate-input">
-					<span class="label-input100">Do you wish to attend future classes</span><br>
-					<input type="radio" id="choice" name="choice" value="yes" required>
-                        <label for="yes">Yes</label>
-                        <input type="radio" id="choice" name="choice" value="no">
-                        <label for="female">No</label>
+					   </div>
 
-				</div>
-				
-				
-				<div class="container-contact100-form-btn">
-					<div class="wrap-contact100-form-btn">
-						<div class="contact100-form-bgbtn"></div>
-						<button class="contact100-form-btn" id="submit-btn" type="submit" name="insert">
-							Submit
-						</button>
-					</div>
-				</div>
-				
-				
-			</form>
-		</div>
-
-		<span class="contact100-more">
-				
-				
-		</span>
-	</div>
+					   <div class="col-md-12 form-group">
+					         <label for="pin">Pincode *</label>
+					         <input class="form-control form-control-lg" type="number" id='pin' name="pin" onkeyup="allpin()" placeholder="Enter your pincode" required oninvalid="this.setCustomValidity('Enter Your pincode')"
+                                                                                                             oninput="this.setCustomValidity('')">
+				             <span id='message4'></span>
 
 
 
-	<div id="dropDownSelect1"></div>
+					    </div>
 
-<!--===============================================================================================-->
-	<script src="{{url_for('static',filename='vendor/jquery/jquery-3.2.1.min.js')}}"></script>
-<!--===============================================================================================-->
-	<script src="{{url_for('static',filename='endor/bootstrap/js/popper.js')}}v"></script>
-	<script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
-<!--===============================================================================================-->
-	<script src="{{url_for('static',filename='vendor/select2/select2.min.js')}}"></script>
-<!--===============================================================================================-->
-	<script src="{{url_for('static',filename='js/main1.js')}}"></script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-<script>
-function allLetter()
-      { 
-	  document.getElementById("text1").style.textTransform = "uppercase";
-	  var inputtxt = document.getElementById('text1');
-	  console.log(inputtxt);
-      var letters = /^[A-Za-z ]+ [A-Za-z]{1,4}$/;
-      if(inputtxt.value.match(letters))
-      {
-    
-	   document.getElementById('message').innerHTML = '';
-       document.getElementById('submit-btn').disabled = false;
-      }
-      else
-      {
-	  document.getElementById('message').style.color = 'red';
-     
-	   document.getElementById('message').innerHTML = 'Enter your Name with Initial at last Avoid numbers and special characters';
-      document.getElementById('submit-btn').disabled = true;
-      }
-      }
-</script>
-<script>
+					   <div class="col-md-12 form-group">
+					         <label for="pin">Phone*</label>
+					         <input class="form-control form-control-lg" type="number" id='phone' name="phone" onkeyup="allphone()" placeholder="Enter School phone no" required oninvalid="this.setCustomValidity('Enter Phone no')"
+                                                                                                             oninput="this.setCustomValidity('')">
+				             <span id='message7'></span>
 
-function allmail()
-      { 
-	  var inputmail = document.getElementById('email');
-	  
-      var email = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-      if(inputmail.value.match(email))
-      {
-    
-	   document.getElementById('message1').innerHTML = '';
-	    document.getElementById('submit-btn').disabled = false;
-      
-      }
-      else
-      {
-	  document.getElementById('message1').style.color = 'red';
-     
-	   document.getElementById('message1').innerHTML = 'Enter Valid e-mail';
-      document.getElementById('submit-btn').disabled = true;
-      }
-      }
-</script>
-<script>
 
-function allmobile()
-      { 
-	  var inputmobile = document.getElementById('mobile');
-	  
-      var mobile = /^[6789][0-9]{9}$/;
-      if(inputmobile.value.match(mobile))
-      {
-    
-	   document.getElementById('message2').innerHTML = '';
-	    document.getElementById('submit-btn').disabled = false;
-      
-      }
-      else
-      {
-	  document.getElementById('message2').style.color = 'red';
-     
-	   document.getElementById('message2').innerHTML = 'Enter Valid Mobile no';
-      document.getElementById('submit-btn').disabled = true;
-      }
-      }
-</script>
+
+					    </div>
+
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="submit" id="submit-btn" value="Register School" class="btn btn-primary btn-lg px-5">
+                        </div>
+                    </div>
+                    <br>
+                    <u style="float:right;"><a href="{{url_for('student_login')}}" style="color:blue">log in here !</a></u>
+                </div>
+				</form>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+  <!-- .site-wrap -->
+
+  <!-- loader -->
+  <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#51be78"/></svg></div>
+
+ <script src="{{url_for('static',filename='js_stud/jquery-3.3.1.min.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/jquery-migrate-3.0.1.min.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/jquery-ui.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/popper.min.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/bootstrap.min.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/owl.carousel.min.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/jquery.stellar.min.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/jquery.countdown.min.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/bootstrap-datepicker.min.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/jquery.easing.1.3.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/aos.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/jquery.fancybox.min.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/jquery.sticky.js')}}"></script>
+  <script src="{{url_for('static',filename='js_stud/jquery.mb.YTPlayer.min.js')}}"></script>
+
+   <script>
+    {% if msg != '' %}
+
+        alert("{{msg}}");
+     {% endif %}
+    </script>
 <script>
 function allschool()
 {
@@ -316,57 +245,59 @@ function allschool()
 document.getElementById("schoolname").style.textTransform = "uppercase";
 }
 </script>
-<script>
-function allwhats()
-      { 
-	  var inputwhats = document.getElementById('whatsapp');
-	  
-      var whatsapp = /^[6789][0-9]{9}$/;
-      if(inputwhats.value.match(whatsapp))
+    <script>
+function allphone()
       {
-    
-	   document.getElementById('message3').innerHTML = '';
+	  var inputphone = document.getElementById('phone');
+
+      var phone  = /^[0-9]{10}$/;
+      if(inputphone .value.match(phone))
+      {
+
+	   document.getElementById('message7').innerHTML = '';
 	    document.getElementById('submit-btn').disabled = false;
-      
+
       }
       else
       {
-	  document.getElementById('message3').style.color = 'red';
-     
-	   document.getElementById('message3').innerHTML = 'Enter Valid Mobile no';
+	  document.getElementById('message7').style.color = 'red';
+
+	   document.getElementById('message7').innerHTML = 'Enter Valid Phone no';
       document.getElementById('submit-btn').disabled = true;
       }
       }
 </script>
+
 <script>
 function allpin()
-      { 
+      {
 	  var inputpin = document.getElementById('pin');
-	  
+
       var pin = /^[0-9]{6}$/;
       if(inputpin.value.match(pin))
       {
-    
+
 	   document.getElementById('message4').innerHTML = '';
 	    document.getElementById('submit-btn').disabled = false;
-      
+
       }
       else
       {
 	  document.getElementById('message4').style.color = 'red';
-     
+
 	   document.getElementById('message4').innerHTML = 'Enter Valid Pin code';
       document.getElementById('submit-btn').disabled = true;
       }
       }
 </script>
+
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'UA-23581568-13');
-  
+
 var AndraPradesh = ["Anantapur","Chittoor","East Godavari","Guntur","Kadapa","Krishna","Kurnool","Prakasam","Nellore","Srikakulam","Visakhapatnam","Vizianagaram","West Godavari"];
 var ArunachalPradesh = ["Anjaw","Changlang","Dibang Valley","East Kameng","East Siang","Kra Daadi","Kurung Kumey","Lohit","Longding","Lower Dibang Valley","Lower Subansiri","Namsai","Papum Pare","Siang","Tawang","Tirap","Upper Siang","Upper Subansiri","West Kameng","West Siang","Itanagar"];
 var Assam = ["Baksa","Barpeta","Biswanath","Bongaigaon","Cachar","Charaideo","Chirang","Darrang","Dhemaji","Dhubri","Dibrugarh","Goalpara","Golaghat","Hailakandi","Hojai","Jorhat","Kamrup Metropolitan","Kamrup (Rural)","Karbi Anglong","Karimganj","Kokrajhar","Lakhimpur","Majuli","Morigaon","Nagaon","Nalbari","Dima Hasao","Sivasagar","Sonitpur","South Salmara Mankachar","Tinsukia","Udalguri","West Karbi Anglong"];
@@ -529,9 +460,13 @@ $("#inputState").change(function(){
   $("#inputDistrict").html(htmlString);
 
 });
-   
+
 </script>
 
 
+
+  <script src="{{url_for('static',filename='js_stud/main.js')}}"></script>
+
 </body>
+
 </html>

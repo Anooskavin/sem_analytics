@@ -36,7 +36,7 @@
        <!--   <a href="#">Forgot your password?</a>-->
           <button type="submit">Sign In</button>
 
-           <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
+           <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;">Incorrect Username password</div>
         </form>
       </div>
       <div class="overlay-container">
@@ -82,8 +82,8 @@
                   window.location.href = "data_entry/home";
 			      }
 
-			else {
-			      $('#errorAlert').text(data.error).show();
+			else if(data.success='error') {
+			        document.getElementById('errorAlert').style.display = "block";
 
 			      }
 		});
