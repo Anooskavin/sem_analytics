@@ -167,7 +167,6 @@ def data_entry_course_select():
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method == 'POST': 
         course_id = request.form['course_id']
-        print(course_id)      
         cur.execute("SELECT * FROM course_details,subject WHERE course_details.subject_id=subject.subject_id and course_id = %s", [course_id])
         rsemployee = cur.fetchall()
         employeearray = []
@@ -180,6 +179,7 @@ def data_entry_course_select():
                     'course_duration': rs['course_duration'],
                     'no_of_session': rs['no_of_session'],
                     'status': rs['course_status'],
+                    'approval_status': rs['course_approval_status'],
                     'course_description': rs['course_description']}
             employeearray.append(employee_dict)
         return json.dumps(employeearray)
