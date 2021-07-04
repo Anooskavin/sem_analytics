@@ -37,7 +37,6 @@
                 </h6>
             </div>
             <div class="card-body">
-                <div style="float:right;">Export Data</div>
                 <div class="table-responsive">
 
 
@@ -111,7 +110,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!--    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>-->
-
  <script>
         var data = [
         {% for row in course %}
@@ -120,7 +118,7 @@
         "city": "{{row.subject_name}}",
         "age": "{{row.course_name}}",
         "grade": "{{row.course_grade}}",
-        "desc": "{{row.course_description}}",
+        "desc": "{{row.course_description}}"  ,
 
         "sess": "{{row.no_of_session}}",
         "status": "{{row.course_status}}",

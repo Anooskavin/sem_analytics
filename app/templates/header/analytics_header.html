@@ -9,7 +9,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
     rel="stylesheet">
     <link rel = "icon" href = "{{url_for('static',filename='/img/favicon.png')}}" type = "image/x-icon">
-    <title>Data_entry</title>
+
+    <title>Admin</title>
 
     <!-- check for delete -->
 
@@ -32,12 +33,10 @@
 
 
 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
-
-    <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+<link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template-->
     <link href={{url_for('static',filename='vendor/fontawesome-free/css/all.min.css')}} rel="stylesheet"
@@ -128,8 +127,17 @@
         </li>
 
         <!-- Divider -->
+        <li class="nav-item">
+            <a class="nav-link" href="/admin_analytics/adminuser">
+                <i class="fas fa-fw fa-users"></i>
+                <span>User details</span></a>
+        </li>
         <hr class="sidebar-divider">
 
+        <!-- Heading -->
+        <!-- <div class="sidebar-heading">
+            Addons
+        </div> -->
         <!-- Heading -->
         <!-- <div class="sidebar-heading">
             Addons
@@ -202,17 +210,17 @@
                 </button>
 
                 <!-- Topbar Search -->
-<!--                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">-->
-<!--                    <div class="input-group">-->
-<!--                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."-->
-<!--                            aria-label="Search" aria-describedby="basic-addon2">-->
-<!--                        <div class="input-group-append">-->
-<!--                            <button class="btn btn-primary" type="button">-->
-<!--                                <i class="fas fa-search fa-sm"></i>-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </form>-->
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -338,7 +346,7 @@
                                     <div class="text-truncate">Last month's report looks great, I am very happy with
                                         the progress so far, keep up the good work!</div>
                                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-
+                        
 
                                 </div>
                             </a>
@@ -418,7 +426,7 @@
 
 
             <script src="{{url_for('static',filename='vendor/jquery/jquery.min.js')}}"></script>
-
+            <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
             <!-- Core plugin JavaScript-->
             <script src="{{url_for('static',filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -427,17 +435,19 @@
             <script src="{{url_for('static',filename='js/sb-admin-2.min.js')}}"></script>
 
             <!-- Page level plugins -->
-<!--            <script src="{{url_for('static',filename='vendor/chart.js/Chart.min.js')}}"></script>-->
+            <script src="{{url_for('static',filename='vendor/chart.js/Chart.min.js')}}"></script>
 
             <!-- Page level custom scripts -->
-<!--            <script src="{{url_for('static',filename='js/demo/chart-area-demo.js')}}"></script>-->
-<!--            <script src="{{url_for('static',filename='js/demo/chart-pie-demo.js')}}"></script>-->
+            <script src="{{url_for('static',filename='js/demo/chart-area-demo.js')}}"></script>
+            <script src="{{url_for('static',filename='js/demo/chart-pie-demo.js')}}"></script>
 
             <!-- Page level plugins -->
             <script src="{{url_for('static',filename='vendor/datatables/jquery.dataTables.min.js')}}"></script>
             <script src="{{url_for('static',filename='vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
             <!-- Page level custom scripts -->
             <script src="{{url_for('static',filename='js/demo/datatables-demo.js')}}"></script>
+
+
 
 
             <!-- Footer -->
