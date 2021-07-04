@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'header/data_entry_header.html' %}
+
+        <!-- End of Sidebar -->
+
+       
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">User Table</h1>
+                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                        For more information about DataTables, please visit the <a target="_blank"
+                            href="https://datatables.net">official DataTables documentation</a>.</p>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                          <h6>
+							
+							<div class="my-2" style="float:right;">
+                                    <BUTTON href="#" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#add_data_Modal">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="text">Add</span>
+                                    </button>
+                                    </div></h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <form method="post"  action="/admin_analytics/adminuser/update" >
+
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>S no</th>
+                                            <th>Admin Name</th>
+											<th>Admin Username</th>
+                                            <th>Admin Password</th>
+											<th>Account Status</th>
+											<th>Account User Type</th>
+                                            <th>Action</th>
+
+											
+                                           
+                                        </tr>
+                                    </thead>
+                                   
+                                    <tbody>
+                                         {% for row in user %}
+                                        <tr>
+                                            <td>{{loop.index}}</td>
+                                            <td>{{row.admin_name}}</td>
+											<td>{{row.admin_username}}</td>
+                                            <td>{{row.admin_password}}</td>
+
+                                            {% if row.admin_status == "yes" %}
+                                            <td><span class="badge badge-success">VERIFIED</span></td>
+                                            {% elif row.admin_status == "no" %}
+                                            <td><span class="badge badge-danger">BLOCKED</span></td>{% endif %}  
+                                            {% if row.admin_usertype == "admin" %}
+                                            <td><span class="badge badge-primary">ADMIN</span></td>
+                                            {% elif row.admin_usertype == "data_entry" %}
+                                            <td><span class="badge badge-warning">DATA ENTRY</span></td>{% endif %}                                           
+											<td>
+											
+											
+                                                <a type="button" name="view" value="view" id="{{row.admin_id}}" class="btn btn-primary btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>										
+                                                <button type="submit" class="btn btn-danger " value="{{row.admin_id}}"
+                                                name="delete" id='deletecheck' onclick="return validateForm()"><i
+                                                    class="fas fa-trash"></i></button>
+											
+											</td>
+                                       
+											
+											
+                                          
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+	
+	
+		<!-- Add Modal-->
+<div id="add_data_Modal" class="modal fade">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+    <h4 class="modal-title">Insert Admin User</h4>
+    <button type="button" class="close" data-dismiss="modal">×</button>
+   
+   </div>
+   <div class="modal-body">
+    <form method="post" id="insert_form">
+	 <label>Admin Name</label>
+     <input type="text" name="name" id="name" class="form-control" />
+	 <br />
+	
+     <label>Admin Username</label>
+     <input type="text" name="username" id="name" class="form-control" />
+     <br />
+	 
+	 <label>Admin Password</label>
+      <input type="text" name="passwd" id="address" class="form-control"/>
+     <br />
+     
+     <label>Admin User Type</label>
+     <select name="user_type" style="visibility: visible;"  id="mySelect" class="form-control">
+        <option value="data_entry">DATA ENTRY</option>
+        <option value="admin">ADMIN</option>
+</select>
+     <br />
+
+    
+	
+     
+   </div>
+
+   <div class="modal-footer">
+   <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	 </form>
+   </div>
+  </div>
+ </div>
+</div>
+
+
+   <!--Update table modal-->
+	
+	<div id="dataModal" class="modal fade">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+   <h4 class="modal-title">Faculty Details</h4>
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    
+   </div>
+   <div class="modal-body">
+      <div class="table-responsive">  
+	  <form method="post" id="update_form">
+        <table class="table table-bordered">
+            <input type="hidden" class="form-control" name="admin_id" id="admin_id">
+
+        <tr>  
+            <td width="30%"><label>Admin Name</label>
+            <td width="70%"><input type="text" name="admin_name" class="form-control" id="admin_name"></td>  
+        </tr>
+        <tr>  
+            <td width="30%"><label>Admin Password</label> 
+            <td width="70%"><input type="mail" name="admin_password" class="form-control" id="admin_password"></td>  
+        </tr>
+        <tr>  
+            <td width="30%"><label>Admin Status</label> 
+            <td width="70%"><select name="status" style="visibility: visible;"  id="status" class="form-control">
+                <option value="yes">VERIFY</option>
+                <option value="no">BLOCK</option>
+        </select></td>    
+        </tr>
+        <tr>  
+            <td width="30%"><label>Account User Type</label> 
+            <td width="70%"><select name="user_type" style="visibility: visible;"  id="user_type" class="form-control">
+                <option value="admin">ADMIN</option>
+                <option value="data_entry">DATA_ENTRY</option>
+        </select></td>    
+        </tr>
+       
+    </table>
+	 <div class="modal-footer">
+   <input type="submit" name="update" id="update" value="Update" class="btn btn-success" />
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	 </form>
+   </div>
+	
+	</div>
+   </div>
+	
+
+   
+   <script>
+    $(document).ready(function () {
+        $('#insert_form').on("submit", function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: "/admin_analytics/adminuser",
+                method: "POST",
+                data: $('#insert_form').serialize(),
+                beforeSend: function () {
+                    $('#insert').val("Inserting");
+                },
+                success: function (data) {
+                    $('#add_data_Modal').modal('hide');
+                    if (data == 'success') {
+                        swal("Data is submitted successfully!",
+                            "New Faculty is Created", "success");
+
+                        var delayInMilliseconds = 6500; //1 second
+
+                        setTimeout(function () {
+                           location.reload();
+                        }, delayInMilliseconds);
+
+                    }
+                    if (data == 'error') {
+                        console.log('error')
+                        swal("Data is not Submitted!",
+                            "Error in submitting Data",
+                            "error");
+                        location.reload();
+                    }
+                }
+            });
+
+        });
+
+
+
+        $('#update_form').on("submit", function (event) {
+            event.preventDefault();
+         
+                $.ajax({
+                    url: "/admin_analytics/adminuser/change",
+                    method: "POST",
+                    data: $('#update_form').serialize(),
+                    beforeSend: function () {
+                        $('#update').val("Updating");
+                    },
+                    success: function (data) {
+                        $('#add_data_Modal').modal('hide');
+                        if (data == 'success') {
+                            console.log('success')
+                            location.reload();
+                        }
+                    }
+                });
+            
+        });
+
+
+        $(document).on('click', '.view_data', function () {
+            var admin_id = $(this).attr("id");
+            $.ajax({
+                url: "/admin_analytics/adminuser/select",
+                method: "POST",
+                data: {
+                    admin_id: admin_id
+                },
+                success: function (data) {
+                    $('#dataModal').modal('show');
+                    var data_rs = JSON.parse(data);
+                    $('#admin_id').val(data_rs[0]['admin_id']);
+                    $('#admin_name').val(data_rs[0]['admin_name']);
+                    $('#admin_password').val(data_rs[0]['admin_password']);
+                    document.getElementById("status").value = data_rs[0]['admin_status'];
+                    document.getElementById("user_type").value = data_rs[0]['admin_usertype'];
+
+                }
+            });
+        });
+
+
+
+    });
+
+
+
+    
+</script>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<script>
+
+swal("{{message}}", "Faculty Deleted Successfully !", "success");
+
+</script>
+{% endfor %}
+{% endif %}
+{% endwith %} 
+
+
+</body>
+
+</html>

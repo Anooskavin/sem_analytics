@@ -521,7 +521,7 @@ def data_entry_student_select():
     if request.method == 'POST': 
         student_id = request.form['student_id']
         print(student_id)      
-        cur.execute("SELECT * FROM student_details where student_id = %s", [student_id])
+        cur.execute("SELECT * FROM student_details,school_details where student_details.school_id=school_details.school_id and student_id = %s", [student_id])
         rsemployee = cur.fetchall()
         employeearray = []
         for rs in rsemployee:
@@ -529,14 +529,14 @@ def data_entry_student_select():
                     'student_id': rs['student_id'],
                     'student_name': rs['student_name'],
                     'student_contact': rs['student_contact'],
-                    'student_email': rs['student_email'],
-                    'student_grade': rs['school_grade'],
                     'school_name': rs['school_name'],
-                    'school_state': rs['school_state'],
-                    'school_district': rs['school_district'],
-                    'student_whatsapp': rs['student_whatsapp'],
                     'school_board': rs['school_board'],
-                    'school_pincode': rs['school_pincode']}
+                    'school_pincode': rs['school_pincode'],
+                    'student_email': rs['student_email'],
+                    'student_grade': rs['student_grade'],             
+                    'student_whatsapp': rs['student_whatsapp'],
+                    'account_status': rs['account_status']
+                    }
             employeearray.append(employee_dict)
         return json.dumps(employeearray)
 
@@ -545,19 +545,17 @@ def data_entry_student_change():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method == "POST":        
         student_id = request.form['student_id']
-        print("session"+ student_id)
         student_name = request.form['student_name']
         student_contact = request.form['student_contact']
         student_email = request.form['student_email']
-        student_grade = request.form['student_grade']
-        school_name = request.form['school_name']
-        school_state = request.form['school_state']
-        school_district = request.form['school_district']
-        school_pincode = request.form['school_pincode']
-        school_board = request.form['school_board']
+        student_whatsapp = request.form['student_whatsapp']
+        status = request.form['status']
+
+
+        
        
-        cursor.execute('update student_details set student_name=%s, student_contact = %s ,student_email=%s , school_grade=%s ,school_name=%s ,school_state = %s,school_district=%s,school_pincode=%s,school_board=%s where student_id=%s',
-        [student_name,student_contact,student_email,student_grade,school_name,school_state,school_district,school_pincode,school_board,student_id])
+        cursor.execute('update student_details set student_name=%s, student_contact = %s ,student_email=%s , student_whatsapp=%s , account_status=%s where student_id=%s',
+        [student_name,student_contact,student_email,student_whatsapp,status,student_id])
         mysql.connection.commit()
     return jsonify('success')   
 
