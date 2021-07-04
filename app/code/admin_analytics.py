@@ -289,14 +289,12 @@ def admin_analytics_user_select():
 def admin_analytics_user_change():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method == "POST":        
-        admin_id = request.form['admin_id']
-        
+        admin_id = request.form['admin_id']        
         admin_name = request.form['admin_name']
         admin_username = request.form['admin_username']
         admin_password = request.form['admin_password']
-
-        admin_status = request.form['admin_status']
-        admin_usertype = request.form['admin_usertype']
+        admin_status = request.form['status']
+        admin_usertype = request.form['user_type']
 
 
         cursor.execute('update admin set admin_name=%s, admin_username = %s ,admin_password=%s ,admin_status=%s , admin_usertype = %s where admin_id=%s', [admin_name,admin_username,admin_password,admin_status,admin_usertype,admin_id])

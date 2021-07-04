@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-{% include 'header/data_entry_header.html' %}
+    {% include 'header/analytics_header.html' %}
 
         <!-- End of Sidebar -->
 
@@ -68,7 +68,7 @@
 											<td>
 											
 											
-                                                <a type="button" name="view" value="view" id="{{row.admin_id}}" class="btn btn-primary btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>										
+                                                <button type="button" name="view" value="view" id="{{row.admin_id}}" class="btn btn-primary btn-xs view_data"><i class="fas fa-pencil-alt"></i></button>										
                                                 <button type="submit" class="btn btn-danger " value="{{row.admin_id}}"
                                                 name="delete" id='deletecheck' onclick="return validateForm()"><i
                                                     class="fas fa-trash"></i></button>
@@ -183,8 +183,12 @@
             <td width="70%"><input type="text" name="admin_name" class="form-control" id="admin_name"></td>  
         </tr>
         <tr>  
+            <td width="30%"><label>Admin Username</label>
+            <td width="70%"><input type="text" name="admin_username" class="form-control" id="admin_username"></td>  
+        </tr>
+        <tr>  
             <td width="30%"><label>Admin Password</label> 
-            <td width="70%"><input type="mail" name="admin_password" class="form-control" id="admin_password"></td>  
+            <td width="70%"><input type="text" name="admin_password" class="form-control" id="admin_password"></td>  
         </tr>
         <tr>  
             <td width="30%"><label>Admin Status</label> 
@@ -287,6 +291,7 @@
                     var data_rs = JSON.parse(data);
                     $('#admin_id').val(data_rs[0]['admin_id']);
                     $('#admin_name').val(data_rs[0]['admin_name']);
+                    $('#admin_username').val(data_rs[0]['admin_username']);
                     $('#admin_password').val(data_rs[0]['admin_password']);
                     document.getElementById("status").value = data_rs[0]['admin_status'];
                     document.getElementById("user_type").value = data_rs[0]['admin_usertype'];
