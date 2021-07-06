@@ -98,7 +98,7 @@ background:#2d2d2d;}
 
                                    <div class="form-group">
                                       <label for="grade"><span class="input-field-icon"><i class="fas fa-user-graduate"></i></span> Grade:</label>
-                                      <select class="form-control" name="grade" id="grade"  oninvalid="this.setCustomValidity('Select Your Grade')"
+                                      <select style="height:46px;" class="form-control" name="grade" id="grade"  oninvalid="this.setCustomValidity('Select Your Grade')"
                                                                       oninput="this.setCustomValidity('')" required>
                                           <option value="" disabled selected><h6>Select your Grade</h6></option>
                                           <option value="1">I</option>
@@ -130,7 +130,7 @@ background:#2d2d2d;}
 
                                   <div class="form-group">
                                       <label for="school_name"><span class="input-field-icon"><i class="fas fa-school"></i></span> School Name   ( <span id="message8"></span> )</label>
-                                       <select id="school_name" name="school_name"  class="form-control" required>
+                                       <select style="height:46px;" id="school_name" name="school_name"  class="form-control" required>
                                      <option value="" disabled selected>Select your School </option>
 
                                 </select>
@@ -165,7 +165,7 @@ background:#2d2d2d;}
 
 
                                  <div class="form-group">
-                            <label for="password"><span class="input-field-icon"><i class="fas fa-unlock-alt"></i></span> Password *</label> <span style="float:right;" toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                            <label for="password"><span class="input-field-icon"><i class="fas fa-unlock-alt"></i></span> Password </label> <span style="float:right;" toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             <input type="password" value="" name="password" id="password" onkeyup="allpwd()" class="form-control form-control-lg" required>
 
 							<span id='message6'></span>	<br>
@@ -173,7 +173,7 @@ background:#2d2d2d;}
                         </div>
 
                         <div class="form-group">
-                            <label for="confirm_password"><span class="input-field-icon"><i class="fas fa-unlock-alt"></i></span> Re-type Password *</label>
+                            <label for="confirm_password"><span class="input-field-icon"><i class="fas fa-unlock-alt"></i></span> Re-type Password </label>
                             <input type="password" id="confirm_password" onkeyup='check();' class="form-control form-control-lg" required >
 
                         </div>
