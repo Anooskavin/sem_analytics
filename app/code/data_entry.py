@@ -167,7 +167,6 @@ def data_entry_course_select():
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method == 'POST': 
         course_id = request.form['course_id']
-        print(course_id)      
         cur.execute("SELECT * FROM course_details,subject WHERE course_details.subject_id=subject.subject_id and course_id = %s", [course_id])
         rsemployee = cur.fetchall()
         employeearray = []
@@ -180,6 +179,7 @@ def data_entry_course_select():
                     'course_duration': rs['course_duration'],
                     'no_of_session': rs['no_of_session'],
                     'status': rs['course_status'],
+                    'approval_status': rs['course_approval_status'],
                     'course_description': rs['course_description']}
             employeearray.append(employee_dict)
         return json.dumps(employeearray)
@@ -466,19 +466,46 @@ def data_entry_student():
     if 'id' in session and session.get("user_type") == 'data_entry':
         id=session.get('id')
         count = arr.array('i', [0, 0, 0, 0])
+        school_id = request.args.get('school_id')  
+        status = request.args.get('status')  
 
         admin_name=session.get('name')
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM student_details')
-        student = cursor.fetchall()
-        cursor.execute('SELECT * FROM student_details')
-        count[0] = len(cursor.fetchall())      
-        cursor.execute('SELECT * FROM student_details where account_status="allow"')
-        count[1] = len(cursor.fetchall())
-        cursor.execute('SELECT * FROM student_details where account_status="block"')
-        count[2] = len(cursor.fetchall())
-        cursor.execute('SELECT * FROM student_details where account_status="waiting"')
-        count[3] = len(cursor.fetchall())
+        if school_id:
+            cursor.execute('SELECT * FROM student_details,school_details where school_details.school_id=student_details.school_id and student_details.school_id=%s',[school_id,])
+            student = cursor.fetchall()
+            cursor.execute('SELECT * FROM student_details,school_details where school_details.school_id=student_details.school_id and student_details.school_id=%s',[school_id,])
+            count[0] = len(cursor.fetchall())  
+    
+            cursor.execute('SELECT * FROM student_details,school_details where school_details.school_id=student_details.school_id and student_details.school_id=%s and student_details.account_status="allow"',[school_id,])
+            count[1] = len(cursor.fetchall())
+            cursor.execute('SELECT * FROM student_details,school_details where school_details.school_id=student_details.school_id and student_details.school_id=%s and student_details.account_status="block"',[school_id,])
+            count[2] = len(cursor.fetchall())
+            cursor.execute('SELECT * FROM student_details,school_details where school_details.school_id=student_details.school_id and student_details.school_id=%s and student_details.account_status="waiting"',[school_id,])
+            count[3] = len(cursor.fetchall())
+        elif status == "new":
+            cursor.execute('SELECT * FROM student_details,school_details where school_details.school_id=student_details.school_id and student_details.account_status="waiting"')
+            student = cursor.fetchall()
+            cursor.execute('SELECT * FROM student_details')
+            count[0] = len(cursor.fetchall())      
+            cursor.execute('SELECT * FROM student_details where account_status="allow"')
+            count[1] = len(cursor.fetchall())
+            cursor.execute('SELECT * FROM student_details where account_status="block"')
+            count[2] = len(cursor.fetchall())
+            cursor.execute('SELECT * FROM student_details where account_status="waiting"')
+            count[3] = len(cursor.fetchall())
+        else:
+            cursor.execute('SELECT * FROM student_details')
+            student = cursor.fetchall()
+            cursor.execute('SELECT * FROM student_details')
+            count[0] = len(cursor.fetchall())      
+            cursor.execute('SELECT * FROM student_details where account_status="allow"')
+            count[1] = len(cursor.fetchall())
+            cursor.execute('SELECT * FROM student_details where account_status="block"')
+            count[2] = len(cursor.fetchall())
+            cursor.execute('SELECT * FROM student_details where account_status="waiting"')
+            count[3] = len(cursor.fetchall())
+
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
         return render_template('data_entry/student details table.html',student=student,count=count,admin_name=admin_name,notifi=notifi)
@@ -494,7 +521,7 @@ def data_entry_student_select():
     if request.method == 'POST': 
         student_id = request.form['student_id']
         print(student_id)      
-        cur.execute("SELECT * FROM student_details where student_id = %s", [student_id])
+        cur.execute("SELECT * FROM student_details,school_details where student_details.school_id=school_details.school_id and student_id = %s", [student_id])
         rsemployee = cur.fetchall()
         employeearray = []
         for rs in rsemployee:
@@ -502,14 +529,14 @@ def data_entry_student_select():
                     'student_id': rs['student_id'],
                     'student_name': rs['student_name'],
                     'student_contact': rs['student_contact'],
-                    'student_email': rs['student_email'],
-                    'student_grade': rs['school_grade'],
                     'school_name': rs['school_name'],
-                    'school_state': rs['school_state'],
-                    'school_district': rs['school_district'],
-                    'student_whatsapp': rs['student_whatsapp'],
                     'school_board': rs['school_board'],
-                    'school_pincode': rs['school_pincode']}
+                    'school_pincode': rs['school_pincode'],
+                    'student_email': rs['student_email'],
+                    'student_grade': rs['student_grade'],             
+                    'student_whatsapp': rs['student_whatsapp'],
+                    'account_status': rs['account_status']
+                    }
             employeearray.append(employee_dict)
         return json.dumps(employeearray)
 
@@ -518,19 +545,17 @@ def data_entry_student_change():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method == "POST":        
         student_id = request.form['student_id']
-        print("session"+ student_id)
         student_name = request.form['student_name']
         student_contact = request.form['student_contact']
         student_email = request.form['student_email']
-        student_grade = request.form['student_grade']
-        school_name = request.form['school_name']
-        school_state = request.form['school_state']
-        school_district = request.form['school_district']
-        school_pincode = request.form['school_pincode']
-        school_board = request.form['school_board']
+        student_whatsapp = request.form['student_whatsapp']
+        status = request.form['status']
+
+
+        
        
-        cursor.execute('update student_details set student_name=%s, student_contact = %s ,student_email=%s , school_grade=%s ,school_name=%s ,school_state = %s,school_district=%s,school_pincode=%s,school_board=%s where student_id=%s',
-        [student_name,student_contact,student_email,student_grade,school_name,school_state,school_district,school_pincode,school_board,student_id])
+        cursor.execute('update student_details set student_name=%s, student_contact = %s ,student_email=%s , student_whatsapp=%s , account_status=%s where student_id=%s',
+        [student_name,student_contact,student_email,student_whatsapp,status,student_id])
         mysql.connection.commit()
     return jsonify('success')   
 
@@ -547,6 +572,8 @@ def data_entry_student_change():
 def data_entry_school_details():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
+        count = arr.array('i', [0, 0, 0, 0])
+
         id=session.get('id')
         status = request.args.get('status')  
 
@@ -565,12 +592,21 @@ def data_entry_school_details():
         if(status):
             cursor.execute('SELECT * FROM school_details where school_status=%s',[status,])
             school = cursor.fetchall()
+
         else:
             cursor.execute('SELECT * FROM school_details')
             school = cursor.fetchall()
+        cursor.execute('SELECT * FROM school_details')
+        count[0] = len(cursor.fetchall())
+        cursor.execute('SELECT * FROM school_details where school_status="approved"')
+        count[1] = len(cursor.fetchall())
+        cursor.execute('SELECT * FROM school_details where school_status="rejected"')
+        count[2] = len(cursor.fetchall())
+        cursor.execute('SELECT * FROM school_details where school_status="notapproved"')
+        count[3] = len(cursor.fetchall())
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
-        return render_template('data_entry/school_details.html',school=school,admin_name=admin_name,notifi=notifi)
+        return render_template('data_entry/school_details.html',school=school,count=count,admin_name=admin_name,notifi=notifi)
     else:
         return redirect(url_for('login'))
 

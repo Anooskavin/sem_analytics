@@ -6,7 +6,7 @@ def login():
         user = request.form['admin']
         pwd = request.form['pwd']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM admin WHERE admin_username = %s AND admin_password= %s',(user,pwd))
+        cursor.execute('SELECT * FROM admin WHERE admin_username = %s AND admin_password= %s and admin_status="yes"',(user,pwd))
         user = cursor.fetchone()
         if user:
             if user['admin_usertype']=='data_entry':

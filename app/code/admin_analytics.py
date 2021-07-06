@@ -179,7 +179,7 @@ def admin_analytics_student():
 ####################################### Student table end ############################################
 
 
-#########################################   ###############################################
+#########################################  attendance details ###############################################
 @app.route("/admin_analytics/attendance", methods=["POST", "GET"])
 def attendance():
     if 'id' in session and session.get("user_type") == 'admin':
@@ -208,3 +208,100 @@ def attendance():
     else:
         return redirect(url_for('login'))
         
+
+
+#########################################  attendance details end ###############################################
+
+
+#########################################  User Table ###############################################
+
+
+
+
+
+@app.route("/admin_analytics/adminuser", methods=["POST", "GET"])
+def admin_analytics_user():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'admin':
+        id=session.get('id')
+        admin_name=session.get('name')
+        if request.method == 'POST':      
+            adminid=session.get('id')
+            name = request.form['name']
+            username = request.form['username']
+            passwd = request.form['passwd']     
+            user_type = request.form['user_type']              
+         
+            try:
+                cursor.execute("INSERT INTO admin (admin_name, admin_username ,admin_password,admin_usertype) VALUES (%s, %s, %s,%s)",[name,username,passwd,user_type])
+                mysql.connection.commit()
+                return jsonify('success')
+            except Exception as Ex:
+                return jsonify('error')
+        cursor.execute('SELECT * FROM admin')
+        user = cursor.fetchall()
+        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        notifi = cursor.fetchall()
+        return render_template('admin_analytics/admin_user.html',user=user,admin_name=admin_name,notifi=notifi)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route("/admin_analytics/adminuser/update", methods=["POST", "GET"])
+def admin_analytics_user_update():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'admin':     
+        if request.method == "POST":
+            if request.form.get("delete"):
+                result = request.form 
+                id = result["delete"]
+                cursor.execute('delete from admin where admin_id=%s;', [id])
+                mysql.connection.commit()
+                flash("Deleted ♥️")                                         
+                return redirect(url_for('admin_analytics_user'))
+    else:
+        return redirect(url_for('login'))
+
+
+
+
+@app.route('/admin_analytics/adminuser/select', methods=['GET', 'POST'])
+def admin_analytics_user_select():   
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST': 
+        admin_id = request.form['admin_id']
+        print(admin_id)      
+        cur.execute("SELECT * FROM admin where admin_id = %s", [admin_id])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                    'admin_id': rs['admin_id'],
+                    'admin_name': rs['admin_name'],
+                    'admin_username': rs['admin_username'],
+                    'admin_password': rs['admin_password'],
+                    'admin_status': rs['admin_status'],
+                    'admin_usertype': rs['admin_usertype']}
+            employeearray.append(employee_dict)
+        return json.dumps(employeearray)
+
+@app.route("/admin_analytics/adminuser/change", methods=["POST", "GET"])
+def admin_analytics_user_change():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":        
+        admin_id = request.form['admin_id']        
+        admin_name = request.form['admin_name']
+        admin_username = request.form['admin_username']
+        admin_password = request.form['admin_password']
+        admin_status = request.form['status']
+        admin_usertype = request.form['user_type']
+
+
+        cursor.execute('update admin set admin_name=%s, admin_username = %s ,admin_password=%s ,admin_status=%s , admin_usertype = %s where admin_id=%s', [admin_name,admin_username,admin_password,admin_status,admin_usertype,admin_id])
+        mysql.connection.commit()
+    return jsonify('success')   
+
+
+
+
+####################################### User table end ############################################
