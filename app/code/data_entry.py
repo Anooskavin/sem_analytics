@@ -465,13 +465,23 @@ def data_entry_faculty_change():
 def data_entry_student():
     if 'id' in session and session.get("user_type") == 'data_entry':
         id=session.get('id')
+        count = arr.array('i', [0, 0, 0, 0])
+
         admin_name=session.get('name')
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM student_details')
         student = cursor.fetchall()
+        cursor.execute('SELECT * FROM student_details')
+        count[0] = len(cursor.fetchall())      
+        cursor.execute('SELECT * FROM student_details where account_status="allow"')
+        count[1] = len(cursor.fetchall())
+        cursor.execute('SELECT * FROM student_details where account_status="block"')
+        count[2] = len(cursor.fetchall())
+        cursor.execute('SELECT * FROM student_details where account_status="waiting"')
+        count[3] = len(cursor.fetchall())
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
-        return render_template('data_entry/student details table.html',student=student,admin_name=admin_name,notifi=notifi)
+        return render_template('data_entry/student details table.html',student=student,count=count,admin_name=admin_name,notifi=notifi)
     else:
         return redirect(url_for('login'))
 

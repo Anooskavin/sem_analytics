@@ -3,9 +3,10 @@ import MySQLdb.cursors
 import re
 from flask_mysqldb import MySQL
 import array as arr
-
+import os
 import mysql.connector
 from mysql import connector
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False

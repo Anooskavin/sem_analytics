@@ -6,6 +6,7 @@ from app import *
 def student_login():
     msg=''
     if request.method == 'POST' and 'username' in request.form and 'pwd' in request.form:
+        msg = ''
         username=request.form['username']
         pwd=request.form['pwd']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -17,6 +18,7 @@ def student_login():
             return render_template('students/login.html',msg='Invalid Credentials/ Account not Verified')
 
 
+
     return render_template('students/login.html',msg='')
 
 @app.route("/student/register",methods=["POST", "GET"])
@@ -25,6 +27,10 @@ def student_register():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('select * from school_details')
     school_details=cursor.fetchall()
+
+    cursor.execute('select student_email from student_details')
+    student = cursor.fetchall()
+    print(student)
     if request.method == 'POST':
         username=request.form['username']
         email=request.form['email']
@@ -34,11 +40,13 @@ def student_register():
         #state1=request.form['state1']
         #district1=request.form['district1']
         #board=request.form['board']
+        f = request.files['file']
 
         school_name=request.form['school_name']
 
 
         password=request.form['password']
+
 
         cursor.execute('select * from student_details where student_email=%s ',[email])
         student=cursor.fetchone()
@@ -50,13 +58,20 @@ def student_register():
             cursor.execute ('select school_id from school_details where school_name =%s',[school_name])
             school=cursor.fetchone()
 
-            cursor.execute('insert into student_details (student_name ,student_contact, student_email,student_grade,student_whatsapp,student_password,school_id,account_status) values(%s,%s,%s,%s,%s,%s,%s,%s)',(username,mobile,email,grade,whatsapp,password,school['school_id'],'No') )
+
+            basepath = os.path.dirname(__file__)
+            #file_path = os.path.join(basepath, secure_filename(f.filename))
+
+            f.save(os.path.join(app.root_path, 'static/img/id_images/{0}-{1}.png'.format(username,mobile)))
+            student_id= "img/id_images/{0}-{1}".format(username,mobile)
+
+            cursor.execute('insert into student_details (student_name ,student_contact, student_email,student_grade,student_whatsapp,student_password,school_id,account_status,student_idcard) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)',(username,mobile,email,grade,whatsapp,password,school['school_id'],'No',student_id) )
             mysql.connection.commit()
             return render_template('students/register.html', school_details=school_details,msg='Registered Successfuly Check email/message for verification we will get you soon ')
 
 
 
-    return render_template('students/register.html',school_details=school_details,msg='')
+    return render_template('students/register.html',school_details=school_details,msg='',student=student)
 
 
 #########################################Student school register #############################################
