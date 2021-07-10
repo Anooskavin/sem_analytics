@@ -651,6 +651,7 @@ def data_entry_school_details_select():
             employeearray.append(employee_dict)
         return json.dumps(employeearray)
 
+
 @app.route("/data_entry/school_details/change", methods=["POST", "GET"])
 def data_entry_school_change():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
