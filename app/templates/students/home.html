@@ -1,0 +1,320 @@
+<html lang="en" class=" sizes customelements history pointerevents postmessage webgl websockets cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside flexbox picture srcset webworkers"><head>
+{% include 'header/student_header.html' %}
+			<title>Login | Learning Management System Online</title>
+
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<style>
+      .input-icons i {
+            position: absolute;
+        }
+
+        .input-icons {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .icon {
+            padding: 10px;
+            min-width: 40px;
+        }
+
+        .category{
+        background-color:#4a4545;
+        color:#ffffff;
+        }
+
+</style>
+</head>
+<body class="gray-bg">
+
+
+<section class="category-header-area">
+    <div class="container-lg">
+        <div class="row">
+            <div class="col">
+
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="http://localhost/Online_Learning_Management_System/home"><i class="fas fa-home"></i></a></li>
+                        <li class="breadcrumb-item">
+                            <a href="#">
+                                Courses                            </a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            All Category                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="category-course-list-area">
+    <div class="container">
+        <div class="category-filter-box filter-box clearfix">
+            <span>Showing On This Page : 0</span>
+            <a href="javascript::" onclick="toggleLayout('grid')" style="float: right; font-size: 19px; margin-left: 5px;"><i class="fas fa-th"></i></a>
+            <a href="javascript::" onclick="toggleLayout('list')" style="float: right; font-size: 19px;"><i class="fas fa-th-list"></i></a>
+            <a href="http://localhost/Online_Learning_Management_System/home/courses" style="float: right; font-size: 19px; margin-right: 5px;"><i class="fas fa-sync-alt"></i></a>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 filter-area">
+                <div class="card">
+                    <a href="javascript::"  style="color: unset;">
+                        <div class="card-header filter-card-header" id="headingOne" data-toggle="collapse" data-target="#collapseFilter" aria-expanded="true" aria-controls="collapseFilter">
+                            <h6 class="mb-0">
+                                Filter                                <i class="fas fa-sliders-h" style="float: right;"></i>
+                            </h6>
+                        </div>
+                    </a>
+                    <div id="collapseFilter" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body pt-0">
+
+
+                            <div class="filter_type">
+                                <div class="form-group">
+                                    <h6>Subjects</h6>
+                                    <ul>
+                                        <li>
+<!--                                            <div class="">-->
+<!--                                                <input type="radio" id="price_all" name="price" class="prices custom-radio" value="all"  >-->
+<!--                                                <label for="price_all">All</label>-->
+<!--                                            </div>-->
+                                            <form action="{{url_for('home')}}" method="POST">
+                                                <input type="checkbox" class="checkbox" id="select_all" > Select all<br/>
+                                                <hr>
+                                                {% for i in subject %}
+                                                <input type=checkbox name=filter_subject class="checkbox"  value={{i.subject_id}}> {{i.subject_name}} <br/>
+                                                {% endfor %}
+                                                <br>
+                                                <button type="submit">Filter</button>
+                                                </form>
+
+
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="category-course-list">
+                    <ul>
+
+    </ul>
+                                           <div class="row ">
+
+                                               <div class="site-section" >
+        <div class="container" >
+            {%for i in range(0, len,3)%}
+            <div class="row" >
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="course-1-item">
+                        <figure class="thumnail">
+                        <a href="course-single.html"><img src="{{url_for('static',filename='img/bg_1.jpg')}}"   alt="Image" class="img-fluid" style="height:200px;width:950px;"></a>
+
+                        <div class="category"><h3>{{courses[i]['subject_name']}}</h3></div>
+                            <h5>{{courses[i]['course_name']}}</h5>
+                        </figure>
+                        <div class="course-1-content pb-4" >
+
+                        <div class="rating text-center mb-3">
+                            <span class="icon-star2 text-warning">No of Sessions: {{courses[i]['no_of_session']}}</span>
+                            <span class="icon-star2 text-warning"></span>
+
+                        </div>
+
+                            <br>
+
+                            {% if courses[i]['course_id'] in my_course %}
+                            <p><a href="" class="btn btn-primary rounded-0 px-4">Enrolled</a></p>
+                            {% else %}
+
+                        <p><a href="{{url_for('my_courses',a=courses[i]['course_id'])}}" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+
+                {%if i+1 < len%}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="course-1-item">
+                        <figure class="thumnail">
+                                <a href="course-single.html"><img src="{{url_for('static',filename='img/bg_1.jpg')}}" alt="Image" class="img-fluid" style="height:200px;width:950px;"></a>
+
+                        <div class="category"><h3>{{courses[i+1]['subject_name']}}</h3></div>
+                            <h5>{{courses[i+1]['course_name']}}</h5>
+                        </figure>
+                        <div class="course-1-content pb-4" >
+
+                        <div class="rating text-center mb-3">
+                            <span class="icon-star2 text-warning">No of Sessions: {{courses[i+1]['no_of_session']}}</span>
+                            <span class="icon-star2 text-warning"></span>
+                            <span class="icon-star2 text-warning"></span>
+                            <span class="icon-star2 text-warning"></span>
+                            <span class="icon-star2 text-warning"></span>
+                        </div>
+
+                            <br>
+
+                            {% if courses[i+1]['course_id'] in my_course %}
+                            <p><a href="" class="btn btn-primary rounded-0 px-4">Enrolled</a></p>
+                            {% else %}
+
+                        <p><a href="{{url_for('add_courses',a=courses[i+1]['course_id'])}}" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+
+                {% endif %}
+                {%if i+2 < len%}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="course-1-item">
+                        <figure class="thumnail">
+                                <a href="course-single.html"><img src="{{url_for('static',filename='img/bg_1.jpg')}}" alt="Image" class="img-fluid" style="height:200px;width:950px;"></a>
+
+                        <div class="category"><h3>{{courses[i+2]['subject_name']}}</h3></div>
+                            <h5>{{courses[i+2]['course_name']}}</h5>
+                        </figure>
+                        <div class="course-1-content pb-4" >
+
+                        <div class="rating text-center mb-3">
+                            <span class="icon-star2 text-warning">No of Sessions: {{courses[i+2]['no_of_session']}}</span>
+                            <span class="icon-star2 text-warning"></span>
+                            <span class="icon-star2 text-warning"></span>
+                            <span class="icon-star2 text-warning"></span>
+                            <span class="icon-star2 text-warning"></span>
+                        </div>
+
+                            <br>
+
+                            {% if courses[i+2]['course_id'] in my_course %}
+                            <p><a href="" class="btn btn-primary rounded-0 px-4">Enrolled</a></p>
+                            {% else %}
+
+                        <p><a href="{{url_for('add_courses',a=courses[i+2]['course_id'])}}" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+
+
+
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+<style media="screen">
+body {
+  overflow-x: hidden;
+}
+</style>                                  </div>
+                <nav>
+                                    </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+        <footer class="footer-area">
+            <div class="container-xl">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="copyright-text">
+                            <a href=""><img src="http://localhost/Online_Learning_Management_System/uploads/system/logo-dark.png" alt="" class="d-inline-block" width="110"></a>
+                            <a href="http://lms.com/" target="_blank"></a>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="nav justify-content-md-end footer-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/about_us">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/privacy_policy">Privacy Policy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/terms_and_condition">Terms & Condition</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/login">
+                                    Login                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- PAYMENT MODAL -->
+        <!-- Modal -->
+
+
+        <!-- Modal -->
+        <
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#select_all').on('click',function(){
+        if(this.checked){
+            $('.checkbox').each(function(){
+                this.checked = true;
+            });
+        }else{
+             $('.checkbox').each(function(){
+                this.checked = false;
+            });
+        }
+    });
+
+    $('.checkbox').on('click',function(){
+        if($('.checkbox:checked').length == $('.checkbox').length){
+            $('#select_all').prop('checked',true);
+        }else{
+            $('#select_all').prop('checked',false);
+        }
+    });
+});
+</script>
+
+
+
+
+
+<!-- (Ajax Modal)-->
+
+
+
+
+
+
+<!-- (Normal Modal)-->
+
+</body>
+</html>
