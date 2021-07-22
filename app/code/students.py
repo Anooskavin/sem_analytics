@@ -9,6 +9,12 @@ def student_login():
         msg = ''
         username=request.form['username']
         pwd=request.form['pwd']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('select * from student_details where student_password=%s and account_status =%s and student_contact =%s or student_email =%s',(pwd,'yes',username,username))
+        student = cursor.fetchone()
+        if student:
+            return '''Success'''
+
         status='yes'
         find = ['@']
         query=''
@@ -30,6 +36,7 @@ def student_login():
                 return redirect(url_for('home'))
             else:
                 return render_template('students/login.html', msg='Invalid Credentials/ Account not Verified')
+
         else:
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)

@@ -651,19 +651,20 @@ def data_entry_school_details_select():
             employeearray.append(employee_dict)
         return json.dumps(employeearray)
 
-# @app.route("/data_entry/faculty/change", methods=["POST", "GET"])
-# def data_entry_faculty_change():
-#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#     if request.method == "POST":        
-#         faculty_id = request.form['faculty_id']
-#         print("faculty_id"+ faculty_id)
-#         faculty_name = request.form['faculty_name']
-#         faculty_email = request.form['faculty_email']
-#         faculty_contact = request.form['faculty_contact']
 
-#         cursor.execute('update faculty_details set faculty_name=%s, faculty_email = %s ,faculty_contact=%s where faculty_id=%s', [faculty_name,faculty_email,faculty_contact,faculty_id])
-#         mysql.connection.commit()
-#     return jsonify('success')   
+@app.route("/data_entry/school_details/change", methods=["POST", "GET"])
+def data_entry_school_change():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":        
+        faculty_id = request.form['faculty_id']
+        print("faculty_id"+ faculty_id)
+        faculty_name = request.form['faculty_name']
+        faculty_email = request.form['faculty_email']
+        faculty_contact = request.form['faculty_contact']
+
+        cursor.execute('update faculty_details set faculty_name=%s, faculty_email = %s ,faculty_contact=%s where faculty_id=%s', [faculty_name,faculty_email,faculty_contact,faculty_id])
+        mysql.connection.commit()
+    return jsonify('success')   
 
 
 
