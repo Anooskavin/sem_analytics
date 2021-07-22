@@ -1,0 +1,126 @@
+<html lang="en" class=" sizes customelements history pointerevents postmessage webgl websockets cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside flexbox picture srcset webworkers"><head>
+{% include 'header/student_header.html' %}
+<head>
+
+			<title>User Profile | Learning Management System Online</title>
+
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="author" content="Learning Management System Online" />
+
+
+
+</head>
+
+<body class="gray-bg">
+<section class="user-dashboard-area">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="user-dashboard-box">
+                    <div class="user-dashboard-sidebar">
+                        <form action = "{{url_for('change_photo')}}" method = "post" enctype="multipart/form-data">
+                        <div class="user-box">
+                            {% if student.student_profile!=None %}
+                            <img src={{url_for('static',filename=student.student_profile)}} alt="" class="img-fluid">
+                            {% else %}
+                            <img src={{url_for('static',filename='img/profile_images/default_profile.png')}} alt="" class="img-fluid">
+                            {% endif %}
+
+                             <input type="file"  id="file" accept="image/*" name="change_profile"  onchange="javascript:this.form.submit();" hidden/>
+                              <label for="file" class="btn btn-primary btn-sm" type="button" >Change Photo</label></form>
+                            <div class="name">
+                                <div class="name">{{student.student_name}}</div>
+                            </div>
+                        </div>
+                        <div class="user-dashboard-menu">
+                            <ul>
+                                <li class="active"><a href="http://localhost/Online_Learning_Management_System/home/profile/user_profile">Profile</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="user-dashboard-content">
+                        <div class="content-title-box">
+                            <div class="title">Profile</div>
+                            <div class="subtitle">Add Information About Yourself To Share On Your Profile.</div>
+                        </div>
+                        <form action="{{url_for('student_profile')}}" method="post">
+                            <div class="content-box">
+                                <div class="basic-group">
+                                    <div class="form-group">
+                                        <label for="FristName">Name</label>
+                                        <input type="text" class="form-control" name = "username" id="FristName" value="{{student.student_name}}" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Email</label>
+                                        <input type="text" class="form-control" name = "email"  value="{{student.student_email}}" disabled required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Mobile No:</label>
+                                        <input type="text" class="form-control" name = "mobile" value="{{student.student_contact}}"required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Whatsapp No:</label>
+                                        <input type="text" class="form-control" name = "whatsapp"  value="{{student.student_whatsapp}}" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Grade:</label>
+                                        <input type="text" class="form-control" name = "mobile"  value="{{student.student_grade}}" disabled  required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label >School Name </label>
+                                        <input type="text" class="form-control" name = "school_name"  value="{{school.school_name}}" disabled required />
+                                    </div>
+                                     <div class="form-group">
+                                        <label >State </label>
+                                        <input type="text" class="form-control" name = "state"  value="{{school.school_state}}" disabled required />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="content-update-box">
+                                <button type="submit" class="btn">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+        <footer class="footer-area">
+            <div class="container-xl">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="copyright-text">
+                            <a href=""><img src="http://localhost/Online_Learning_Management_System/uploads/system/logo-dark.png" alt="" class="d-inline-block" width="110"></a>
+                            <a href="http://lms.com/" target="_blank"></a>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="nav justify-content-md-end footer-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/about_us">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/privacy_policy">Privacy Policy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/terms_and_condition">Terms & Condition</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/login">
+                                    Login                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+</body>
