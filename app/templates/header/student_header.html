@@ -1,205 +1,299 @@
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link name="favicon" type="image/x-icon" href="{{url_for('static',filename='uploads/system/favicon.png')}}" rel="shortcut icon">
-	<link rel="favicon" href="{{url_for('static',filename='assets/frontend/default/img/icons/favicon.ico')}}">
-<link rel="apple-touch-icon" href="{{url_for('static',filename='assets/frontend/default/img/icons/icon.png')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/jquery.webui-popover.min.css')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/select2.min.css')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/slick.css')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/slick-theme.css')}}">
+<html><head>
+    <title>Active Courses | Learning Management System Online</title>
+    <!-- all the meta tags -->
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta content="" name="description">
+<meta content="" name="author">
+    <!-- all the css files -->
+    <link rel="shortcut icon" href="https://localhost/Online_Learning_Management_System/uploads/system/favicon.png">
+<!-- third party css -->
+<link href="{{url_for('static',filename='assets/backend/css/vendor/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css">
+<link href="{{url_for('static',filename='assets/backend/css/vendor/dataTables.bootstrap4.css')}}" rel="stylesheet" type="text/css">
+<link href="{{url_for('static',filename='assets/backend/css/vendor/responsive.bootstrap4.css')}}" rel="stylesheet" type="text/css">
+<link href="{{url_for('static',filename='assets/backend/css/vendor/buttons.bootstrap4.css')}}" rel="stylesheet" type="text/css">
+<link href="{{url_for('static',filename='assets/backend/css/vendor/select.bootstrap4.css')}}" rel="stylesheet" type="text/css">
+<link href="{{url_for('static',filename='assets/backend/css/vendor/summernote-bs4.css')}}" rel="stylesheet" type="text/css">
+<link href="{{url_for('static',filename='assets/backend/css/vendor/fullcalendar.min.css')}}" rel="stylesheet" type="text/css">
+<link href="{{url_for('static',filename='assets/backend/css/vendor/dropzone.css')}}" rel="stylesheet" type="text/css">
+<!-- third party css end -->
+<!-- App css -->
+    <link href="{{url_for('static',filename='assets/backend/css/app.css')}}" rel="stylesheet" type="text/css">
+<link href="{{url_for('static',filename='assets/backend/css/app.min.css')}}" rel="stylesheet" type="text/css">
+<link href="{{url_for('static',filename='assets/backend/css/icons.min.css')}}" rel="stylesheet" type="text/css">
+
+<link href="{{url_for('static',filename='assets/backend/css/main.css')}}" rel="stylesheet" type="text/css">
+
 <!-- font awesome 5 -->
-<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/fontawesome-all.min.css')}}">
+<link href="{{url_for('static',filename='assets/backend/css/fontawesome-all.min.css')}}" rel="stylesheet" type="text/css">
+<link href="{{url_for('static',filename='assets/backend/css/font-awesome-icon-picker/fontawesome-iconpicker.min.css')}}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
 
-<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/bootstrap.min.css')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/bootstrap-tagsinput.css')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/main.css')}}">
-<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/responsive.css')}}">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')}}"></script> -->
+<script src="{{url_for('static',filename='assets/backend/js/jquery-3.3.1.min.js')}}" charset="utf-8"></script>
+<script src="{{url_for('static',filename='assets/backend/js/onDomChange.js')}}"></script>
+
+
+
+	<link rel="favicon" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/img/icons/favicon.ico">
+<link rel="apple-touch-icon" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/img/icons/icon.png">
+<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/jquery.webui-popover.min.css">
+<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/select2.min.css">
+<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/slick.css">
+<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/slick-theme.css">
+<!-- font awesome 5 -->
+<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/fontawesome-all.min.css">
+
+<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/bootstrap-tagsinput.css">
+<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/main.css">
+<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/responsive.css">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700" rel="stylesheet">
-<link rel="stylesheet" href="{{url_for('static',filename='assets/global/toastr/toastr.css')}}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.css">
-     <script src="{{url_for('static',filename='assets/backend/js/jquery-3.3.1.min.js')}}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-</head>
-<section class="menu-area">
-    <div class="container-xl">
-        <div class="row">
-            <div class="col">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/global/toastr/toastr.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.css" />
+<script src="http://localhost/Online_Learning_Management_System/assets/backend/js/jquery-3.3.1.min.js"></script>
 
-                    <ul class="mobile-header-buttons">
-                        <li><a class="mobile-nav-trigger" href="#mobile-primary-nav">Menu<span></span></a></li>
-                        <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
-                    </ul>
 
-                    <a href="http://localhost/Online_Learning_Management_System/" class="navbar-brand" href="#">
-                        <img src="http://localhost/Online_Learning_Management_System/uploads/system/logo-dark.png" alt="" height="35">
-                    </a>
 
-                    <div class="main-nav-wrap">
-  <div class="mobile-overlay"></div>
+<style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head>
+<body data-layout="detached" class="enlarged">
+    <!-- HEADER -->
+    <!-- Topbar Start -->
+<div class="navbar-custom topnav-navbar topnav-navbar-dark">
+    <div class="container-fluid">
 
- <div class="instructor-box menu-icon-box">
-                        <div class="icon">
-                            <a href="{{url_for('home')}}" style="border: 1px solid transparent; margin: 10px 10px; font-size: 14px; width: 100%; border-radius: 0; min-width: 100px;">Courses</a>
-                        </div>
-                    </div>
+        <!-- LOGO -->
+        <a href="https://localhost/Online_Learning_Management_System/Admin" class="topnav-logo" style="min-width: unset;">
+            <span class="topnav-logo-lg">
+                <img src="https://localhost/Online_Learning_Management_System/uploads/system/logo-light.png" alt="" height="40">
+            </span>
+            <span class="topnav-logo-sm">
+                <img src="https://localhost/Online_Learning_Management_System/uploads/system/logo-light-sm.png" alt="" height="40">
+            </span>
+        </a>
 
-<div class="mobile-menu-helper-bottom"></div>
+        <ul class="list-unstyled topbar-right-menu float-right mb-0">
+
+
+                <p class="nav-link  nav-user  mr-0" id="topbar-userdrop"  aria-haspopup="true" aria-expanded="false">
+                <span class="account-user-avatar">
+
+                    {% if student.student_profile!=None %}
+            <img src="{{url_for('static',filename=student.student_profile)}}" alt="user-image" height="70" class="rounded-circle ">
+
+            {% else %}
+			<img src="{{url_for('static',filename='img/profile_images/default_profile.png')}}" alt="user-image" height="70" class="rounded-circle ">
+            {% endif %}
+
+                </span>
+                <span style="color: #fff;">
+                                        <span class="account-user-name">{{student.student_name}}</span>
+                    <span class="account-position">{{student.student_email}}</span>
+                </span>
+            </p>
+
+
+
 </ul>
-</div>
-
-
-                    <form class="inline-form" action="http://localhost/Online_Learning_Management_System/home/search" method="get" style="width: 100%;">
-                        <div class="input-group search-box mobile-search">
-                            <input type="text" name = 'query' class="form-control" placeholder="Search For Courses">
-                            <div class="input-group-append">
-                                <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-
-
-                    <div class="instructor-box menu-icon-box">
-                        <div class="icon">
-                            <a href="{{url_for('my_courses')}}" style="border: 1px solid transparent; margin: 10px 10px; font-size: 14px; width: 100%; border-radius: 0; min-width: 100px;">My Courses</a>
-                        </div>
-                    </div>
-
-                    <div class="wishlist-box menu-icon-box" id = "wishlist_items">
-                        <div class="icon">
-    <a href=""><i class="far fa-heart"></i></a>
-    <span class="number">0</span>
-</div>
-<div class="dropdown course-list-dropdown corner-triangle top-right">
-    <div class="list-wrapper">
-        <div class="item-list">
-            <ul>
-                            </ul>
-        </div>
-        <div class="dropdown-footer">
-            <a href = "http://localhost/Online_Learning_Management_System/home/my_wishlist">Go To Wishlist</a>
-        </div>
+<a class="button-menu-mobile disable-btn">
+    <div class="lines">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
-    <div class="empty-box text-center d-none">
-        <p>Your wishlist is empty.</p>
-        <a href="">Explore Courses</a>
-    </div>
+</a>
+<div class="app-search">
+    <h4 style="color: #fff; float: left;"> Learning Management System Online</h4>
+    <a href="https://localhost/Online_Learning_Management_System/home" target="" class="btn btn-outline-light ml-3">Visit Website</a>
 </div>
-                    </div>
-
-                    <div class="cart-box menu-icon-box" id = "cart_items">
-                        <div class="icon">
-	<a href="javascript::" onclick="showCartPage()"><i class="fas fa-shopping-cart"></i></a>
-	<span class="number">0</span>
 </div>
+</div>
+<!-- end Topbar -->
+    <div class="container-fluid active">
+        <div class="wrapper in">
+            <!-- BEGIN CONTENT -->
+            <!-- SIDEBAR -->
+            <!-- ========== Left Sidebar Start ========== -->
+<div class="left-side-menu left-side-menu-detached active">
+	<div class="leftbar-user active">
+		<a href="javascript: void(0);">
+            {% if student.student_profile!=None %}
+            <img src="{{url_for('static',filename=student.student_profile)}}" alt="user-image" height="70" class="rounded-circle shadow-sm">
 
-<!-- Cart Dropdown goes here -->
-<div class="dropdown course-list-dropdown corner-triangle top-right" style="display: none;"> <!-- Just remove the display none from the css to make it work -->
-	<div class="list-wrapper">
-		<div class="item-list">
-			<ul>
-							</ul>
-		</div>
-		<div class="dropdown-footer">
-			<div class="cart-total-price clearfix">
-				<span>Total:</span>
-				<div class="float-right">
-					<span class="current-price">$0</span>
-					<!-- <span class="original-price">$94.99</span> -->
-				</div>
-			</div>
-			<a href = "http://localhost/Online_Learning_Management_System/home/shopping_cart">Go To Cart</a>
-		</div>
+            {% else %}
+			<img src="{{url_for('static',filename='img/profile_images/default_profile.png')}}" alt="user-image" height="70" class="rounded-circle shadow-sm">
+            {% endif %}
+            <br><br>
+
+            <form action = "{{url_for('change_photo')}}" method = "post" enctype="multipart/form-data">
+
+                          <input type="file"  id="file" accept="image/*" name="change_profile"  onchange="javascript:this.form.submit();" hidden/>
+                <label for ="file" type="button" class="btn btn-primary"  style="height:40px;background-color:SlateBlue;border-color:SlateBlue;" ><h6>Change Photo</h6></label></form>
+						<span class="leftbar-user-name">{{student.student_name}}</span>
+		</a>
 	</div>
-	<div class="empty-box text-center d-none">
-		<p>Your Cart Is Empty.</p>
-		<a href="">Keep Shopping</a>
-	</div>
+
+	<!--- Sidemenu -->
+		<ul class="metismenu side-nav side-nav-light in">
+
+			<li class="side-nav-title side-nav-item">Navigation</li>
+
+			<li class="side-nav-item ">
+				<a href="{{url_for('home')}}" class="side-nav-link">
+					<i class="dripicons-view-apps"></i>
+					<span>Dashboard</span>
+				</a>
+			</li>
+
+<!--			<li class="side-nav-item ">-->
+<!--				<a href="javascript: void(0);" class="side-nav-link ">-->
+<!--					<i class="dripicons-network-1"></i>-->
+<!--					<span> Categories </span>-->
+<!--					<span class="menu-arrow"></span>-->
+<!--				</a>-->
+<!--				<ul class="side-nav-second-level collapse" aria-expanded="false">-->
+<!--					<li class="">-->
+<!--						<a href="https://localhost/Online_Learning_Management_System/admin/categories">Categories</a>-->
+<!--					</li>-->
+
+<!--					<li class="">-->
+<!--						<a href="https://localhost/Online_Learning_Management_System/admin/category_form/add_category">Add New Category</a>-->
+<!--					</li>-->
+<!--				</ul>-->
+<!--			</li>-->
+
+<!--			<li class="side-nav-item active">-->
+<!--				<a href="https://localhost/Online_Learning_Management_System/admin/courses" class="side-nav-link ">-->
+<!--					<i class="dripicons-archive"></i>-->
+<!--					<span>My Courses</span>-->
+<!--				</a>-->
+<!--			</li>-->
+<!--			<li class="side-nav-item">-->
+<!--				<a href="https://localhost/Online_Learning_Management_System/admin/users" class="side-nav-link ">-->
+<!--					<i class="dripicons-user-group"></i>-->
+<!--					<span>Students</span>-->
+<!--				</a>-->
+<!--			</li>-->
+
+<!--			<li class="side-nav-item ">-->
+<!--				<a href="javascript: void(0);" class="side-nav-link ">-->
+<!--					<i class="dripicons-network-3"></i>-->
+<!--					<span> Enrolment </span>-->
+<!--					<span class="menu-arrow"></span>-->
+<!--				</a>-->
+<!--				<ul class="side-nav-second-level collapse" aria-expanded="false">-->
+<!--					<li class="">-->
+<!--						<a href="https://localhost/Online_Learning_Management_System/admin/enrol_history">Enrol History</a>-->
+<!--					</li>-->
+
+<!--					<li class="">-->
+<!--						<a href="https://localhost/Online_Learning_Management_System/admin/enrol_student">Enrol A Student</a>-->
+<!--					</li>-->
+<!--				</ul>-->
+<!--			</li>-->
+
+<!--			<li class="side-nav-item">-->
+<!--				<a href="javascript: void(0);" class="side-nav-link ">-->
+<!--					<i class="dripicons-box"></i>-->
+<!--					<span> Report </span>-->
+<!--					<span class="menu-arrow"></span>-->
+<!--				</a>-->
+<!--				<ul class="side-nav-second-level collapse" aria-expanded="false">-->
+<!--					<li class=""> <a href="https://localhost/Online_Learning_Management_System/admin/admin_revenue">Admin Revenue</a> </li>-->
+<!--												<li class="">-->
+<!--									<a href="https://localhost/Online_Learning_Management_System/admin/instructor_revenue">-->
+<!--											Instructor Revenue <span class="badge badge-danger-lighten badge-pill">0</span>-->
+<!--									</a>-->
+<!--							</li>-->
+<!--									</ul>-->
+<!--			</li>-->
+
+			<li class="side-nav-item">
+				<a href="{{url_for('student_profile')}}" class="side-nav-link ">
+					<i class="dripicons-message"></i>
+					<span>My profile</span>
+				</a>
+			</li>
+
+			<li class="side-nav-item">
+				<a href="{{url_for('student_logout')}}" class="side-nav-link">
+                <i class="mdi mdi-logout mr-1"></i>
+                <span>Logout</span>
+            </a>
+			</li>
+
+<!--			<li class="side-nav-item">-->
+<!--			<a href="javascript: void(0);" class="side-nav-link ">-->
+<!--				<i class="dripicons-toggles"></i>-->
+<!--				<span> Settings </span>-->
+<!--				<span class="menu-arrow"></span>-->
+<!--			</a>-->
+<!--			<ul class="side-nav-second-level collapse" aria-expanded="false">-->
+<!--				<li class="">-->
+<!--					<a href="https://localhost/Online_Learning_Management_System/admin/system_settings">System Settings</a>-->
+<!--				</li>-->
+<!--				<li class="">-->
+<!--					<a href="https://localhost/Online_Learning_Management_System/admin/frontend_settings">Website Settings</a>-->
+<!--				</li>-->
+<!--				<li class="">-->
+<!--					<a href="https://localhost/Online_Learning_Management_System/admin/payment_settings">Payment Settings</a>-->
+<!--				</li>-->
+<!--				<li class="">-->
+<!--					<a href="https://localhost/Online_Learning_Management_System/admin/instructor_settings">Instructor Settings</a>-->
+<!--				</li>-->
+<!--				<li class="">-->
+<!--					<a href="https://localhost/Online_Learning_Management_System/admin/manage_language">Language Settings</a>-->
+<!--				</li>-->
+<!--				<li class="">-->
+<!--					<a href="https://localhost/Online_Learning_Management_System/admin/smtp_settings">Smtp Settings</a>-->
+<!--				</li>-->
+<!--				<li class="">-->
+<!--					<a href="https://localhost/Online_Learning_Management_System/admin/about">About</a>-->
+<!--				</li>-->
+<!--				<li class="">-->
+<!--					<a href="https://localhost/Online_Learning_Management_System/admin/themes">Themes</a>-->
+<!--				</li>-->
+<!--				<li class="">-->
+<!--					<a href="https://localhost/Online_Learning_Management_System/admin/mobile_app">Mobile App</a>-->
+<!--				</li>-->
+<!--			</ul>-->
+<!--		</li>-->
+	    </ul>
 </div>
+               <!-- bundle -->
+<script src="{{url_for('static',filename='assets/backend/js/app.min.js')}}"></script>
+<!-- third party js -->
+<script src="{{url_for('static',filename='assets/backend/js/vendor/Chart.bundle.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/jquery-jvectormap-1.2.2.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/jquery-jvectormap-world-mill-en.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/jquery.dataTables.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/dataTables.bootstrap4.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/dataTables.responsive.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/dataTables.buttons.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/buttons.html5.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/buttons.flash.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/buttons.print.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/dataTables.keyTable.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/dataTables.select.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/summernote-bs4.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/fullcalendar.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/pages/demo.summernote.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/dropzone.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/pages/demo.dashboard.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/pages/datatable-initializer.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/font-awesome-icon-picker/fontawesome-iconpicker.min.js')}}" charset="utf-8"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/bootstrap-tagsinput.min.js')}}" charset="utf-8"></script>
+<script src="{{url_for('static',filename='assets/backend/js/bootstrap-tagsinput.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/vendor/dropzone.min.js')}}" charset="utf-8"></script>
+<script src="{{url_for('static',filename='assets/backend/js/ui/component.fileupload.js')}}" charset="utf-8"></script>
+<script src="{{url_for('static',filename='assets/backend/js/pages/demo.form-wizard.js')}}"></script>
+<!-- dragula js-->
+<script src="{{url_for('static',filename='assets/backend/js/vendor/dragula.min.js')}}"></script>
+<!-- component js -->
+<script src="{{url_for('static',filename='assets/backend/js/ui/component.dragula.js')}}"></script>
 
-<script type="text/javascript">
-function showCartPage() {
-	window.location.replace("http://localhost/Online_Learning_Management_System/home/shopping_cart");
-}
-</script>
-                    </div>
-
-
-
-                    <div class="user-box menu-icon-box">
-                        <div class="icon">
-                            <a href="javascript::">
-                                                                {% if student.student_profile!=None %}
-                            <img src={{url_for('static',filename=student.student_profile)}} alt="" class="img-fluid">
-                            {% else %}
-                            <img src={{url_for('static',filename='img/profile_images/default_profile.png')}} alt="" class="img-fluid">
-                            {% endif %}
-                                                    </a>
-                    </div>
-                    <div class="dropdown user-dropdown corner-triangle top-right">
-                        <ul class="user-dropdown-menu">
-
-                            <li class="dropdown-user-info">
-                                <a href="">
-                                    <div class="clearfix">
-                                        <div class="user-image float-left">
-                                                                                            {% if student.student_profile!=None %}
-                            <img src={{url_for('static',filename=student.student_profile)}} alt="" class="img-fluid">
-                            {% else %}
-                            <img src={{url_for('static',filename='img/profile_images/default_profile.png')}} alt="" class="img-fluid">
-                            {% endif %}
-                                                                                    </div>
-                                        <div class="user-details">
-                                            <div class="user-name">
-                                                <span class="hi">Hi,</span>
-                                                {{student['student_name']}}                                            </div>
-                                            <div class="user-email">
-                                                <span class="email">{{student['student_email']}}</span>
-                                                <span class="welcome">Welcome Back</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-
-                            <li class="user-dropdown-menu-item"><a href="{{url_for('home')}}"><i class="far fa-gem"></i>My Courses</a></li>
-                            <li class="user-dropdown-menu-item"><a href="{{url_for('student_profile')}}"><i class="fas fa-user"></i>User Profile</a></li>
-                            <li class="dropdown-user-logout user-dropdown-menu-item"><a href="{{url_for('student_logout')}}">Log Out</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-
-
-                <span class="signin-box-move-desktop-helper"></span>
-                <div class="sign-in-box btn-group d-none">
-
-                    <button type="button" class="btn btn-sign-in" data-toggle="modal" data-target="#signInModal">Log In</button>
-
-                    <button type="button" class="btn btn-sign-up" data-toggle="modal" data-target="#signUpModal">Sign Up</button>
-
-                </div> <!--  sign-in-box end -->
-
-
-            </nav>
-        </div>
-    </div>
-</div>
-</section>
-  <script src="{{url_for('static',filename='assets/backend/js/jquery-3.3.1.min.js')}}"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/vendor/modernizr-3.5.0.min.js')}}"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/vendor/jquery-3.2.1.min.js')}}"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/popper.min.js')}}"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/bootstrap.min.js')}}"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/slick.min.js')}}"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/select2.min.js')}}"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/tinymce.min.js')}}"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/multi-step-modal.js')}}"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/jquery.webui-popover.min.js')}}"></script>
-<script src="https://content.jwplatform.com/libraries/O7BMTay5.js"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/main.js')}}"></script>
-<script src="{{url_for('static',filename='assets/global/toastr/toastr.min.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.js" charset="utf-8"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/bootstrap-tagsinput.min.js')}}assets/frontend/default/js/bootstrap-tagsinput.min.js"></script>
-<script src="{{url_for('static',filename='assets/frontend/default/js/custom.js')}}"></script>
+<script src="{{url_for('static',filename='assets/backend/js/custom.js')}}"></script>

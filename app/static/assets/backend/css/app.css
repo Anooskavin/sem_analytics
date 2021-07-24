@@ -479,7 +479,9 @@ pre {
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
-  margin-left: auto; }
+  margin-left: auto;
+  height:max-content;
+  }
 
 .row {
   display: -webkit-box;
@@ -8394,6 +8396,18 @@ body[data-layout="detached"] {
       position: fixed;
       left: 0;
       overflow-y: auto; }
+
+
+
+
+
+
+
+
+
+
+
+
     body[data-layout="detached"] .content-page {
       margin-left: 0 !important;
       padding: 0 10px 60px 10px; } }

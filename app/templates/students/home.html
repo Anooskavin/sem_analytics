@@ -1,320 +1,588 @@
-<html lang="en" class=" sizes customelements history pointerevents postmessage webgl websockets cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside flexbox picture srcset webworkers"><head>
 {% include 'header/student_header.html' %}
-			<title>Login | Learning Management System Online</title>
+            <!-- PAGE CONTAINER-->
+            <div class="content-page">
+                <div class="content">
+                    <!-- BEGIN PlACE PAGE CONTENT HERE -->
+                    <div class="row ">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="page-title"> <i class="mdi mdi-apple-keyboard-command title_icon"></i> Courses
+                </h4>
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+<!--<div class="row">-->
+<!--    <div class="col-12">-->
+<!--        <div class="card widget-inline">-->
+<!--            <div class="card-body p-0">-->
+<!--                <div class="row no-gutters">-->
+<!--                    <div class="col-sm-6 col-xl-3">-->
+<!--                        <a href="https://localhost/Online_Learning_Management_System/admin/courses" class="text-secondary">-->
+<!--                            <div class="card shadow-none m-0">-->
+<!--                                <div class="card-body text-center">-->
+<!--                                    <i class="dripicons-link text-muted" style="font-size: 24px;"></i>-->
+<!--                                    <h3><span>0</span></h3>-->
+<!--                                    <p class="text-muted font-15 mb-0">Active Courses</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-sm-6 col-xl-3">-->
+<!--                        <a href="https://localhost/Online_Learning_Management_System/admin/courses" class="text-secondary">-->
+<!--                            <div class="card shadow-none m-0 border-left">-->
+<!--                                <div class="card-body text-center">-->
+<!--                                    <i class="dripicons-link-broken text-muted" style="font-size: 24px;"></i>-->
+<!--                                    <h3><span>0</span></h3>-->
+<!--                                    <p class="text-muted font-15 mb-0">Pending Courses</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-sm-6 col-xl-3">-->
+<!--                        <a href="https://localhost/Online_Learning_Management_System/admin/courses" class="text-secondary">-->
+<!--                            <div class="card shadow-none m-0 border-left">-->
+<!--                                <div class="card-body text-center">-->
+<!--                                    <i class="dripicons-star text-muted" style="font-size: 24px;"></i>-->
+<!--                                    <h3><span>0</span></h3>-->
+<!--                                    <p class="text-muted font-15 mb-0">Free Courses</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                    <div class="col-sm-6 col-xl-3">-->
+<!--                        <a href="https://localhost/Online_Learning_Management_System/admin/courses" class="text-secondary">-->
+<!--                            <div class="card shadow-none m-0 border-left">-->
+<!--                                <div class="card-body text-center">-->
+<!--                                    <i class="dripicons-tags text-muted" style="font-size: 24px;"></i>-->
+<!--                                    <h3><span>0</span></h3>-->
+<!--                                    <p class="text-muted font-15 mb-0">Paid Courses</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+
+<!--                </div> &lt;!&ndash; end row &ndash;&gt;-->
+<!--            </div>-->
+<!--        </div> &lt;!&ndash; end card-box&ndash;&gt;-->
+<!--    </div> &lt;!&ndash; end col&ndash;&gt;-->
+<!--</div>-->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mb-3 header-title">Course List</h4>
+                <form class="row justify-content-left" action="{{url_for('home')}}" method="POST">
+                    <!-- Course Categories -->
+                    <div class="col-xl-3">
+                        <div class="form-group">
+                            <label >Subjects</label>
+                            <select name="subject" class="form-control select2 " >
+                                <option value="all">All subjects</option>
+                                {% for i in subject %}
+                                <option value={{i.subject_id}}>{{i.subject_name}}</option>
+                                {% endfor %}
 
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            </select>
+
+
+<!--<div class="select-list">-->
+<!--  <div class="title">Configure Table</div>-->
+<!--  <div class="select-options">-->
+<!--      {% for i in subject %}-->
+<!--    <div class="option">-->
+<!--        <input type="checkbox" name="vehicle" id="option1" value="{{i.subject_name}}" />-->
+<!--        <label for="option1">{{i.subject_name}}</label>-->
+<!--    </div>-->
+<!--{% endfor %}-->
+<!--  </div>-->
+<!--</div>-->
 
 
 
 
-<style>
-      .input-icons i {
-            position: absolute;
-        }
-
-        .input-icons {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .icon {
-            padding: 10px;
-            min-width: 40px;
-        }
-
-        .category{
-        background-color:#4a4545;
-        color:#ffffff;
-        }
-
-</style>
-</head>
-<body class="gray-bg">
-
-
-<section class="category-header-area">
-    <div class="container-lg">
-        <div class="row">
-            <div class="col">
-
-                <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="http://localhost/Online_Learning_Management_System/home"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item">
-                            <a href="#">
-                                Courses                            </a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                            All Category                        </li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
     </div>
-</section>
-
-
-<section class="category-course-list-area">
-    <div class="container">
-        <div class="category-filter-box filter-box clearfix">
-            <span>Showing On This Page : 0</span>
-            <a href="javascript::" onclick="toggleLayout('grid')" style="float: right; font-size: 19px; margin-left: 5px;"><i class="fas fa-th"></i></a>
-            <a href="javascript::" onclick="toggleLayout('list')" style="float: right; font-size: 19px;"><i class="fas fa-th-list"></i></a>
-            <a href="http://localhost/Online_Learning_Management_System/home/courses" style="float: right; font-size: 19px; margin-right: 5px;"><i class="fas fa-sync-alt"></i></a>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 filter-area">
-                <div class="card">
-                    <a href="javascript::"  style="color: unset;">
-                        <div class="card-header filter-card-header" id="headingOne" data-toggle="collapse" data-target="#collapseFilter" aria-expanded="true" aria-controls="collapseFilter">
-                            <h6 class="mb-0">
-                                Filter                                <i class="fas fa-sliders-h" style="float: right;"></i>
-                            </h6>
-                        </div>
-                    </a>
-                    <div id="collapseFilter" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body pt-0">
-
-
-                            <div class="filter_type">
-                                <div class="form-group">
-                                    <h6>Subjects</h6>
-                                    <ul>
-                                        <li>
-<!--                                            <div class="">-->
-<!--                                                <input type="radio" id="price_all" name="price" class="prices custom-radio" value="all"  >-->
-<!--                                                <label for="price_all">All</label>-->
-<!--                                            </div>-->
-                                            <form action="{{url_for('home')}}" method="POST">
-                                                <input type="checkbox" class="checkbox" id="select_all" > Select all<br/>
-                                                <hr>
-                                                {% for i in subject %}
-                                                <input type=checkbox name=filter_subject class="checkbox"  value={{i.subject_id}}> {{i.subject_name}} <br/>
-                                                {% endfor %}
-                                                <br>
-                                                <button type="submit">Filter</button>
-                                                </form>
-
-
-
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-9">
-                <div class="category-course-list">
-                    <ul>
-
-    </ul>
-                                           <div class="row ">
-
-                                               <div class="site-section" >
-        <div class="container" >
-            {%for i in range(0, len,3)%}
-            <div class="row" >
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="course-1-item">
-                        <figure class="thumnail">
-                        <a href="course-single.html"><img src="{{url_for('static',filename='img/bg_1.jpg')}}"   alt="Image" class="img-fluid" style="height:200px;width:950px;"></a>
-
-                        <div class="category"><h3>{{courses[i]['subject_name']}}</h3></div>
-                            <h5>{{courses[i]['course_name']}}</h5>
-                        </figure>
-                        <div class="course-1-content pb-4" >
-
-                        <div class="rating text-center mb-3">
-                            <span class="icon-star2 text-warning">No of Sessions: {{courses[i]['no_of_session']}}</span>
-                            <span class="icon-star2 text-warning"></span>
-
-                        </div>
-
-                            <br>
-
-                            {% if courses[i]['course_id'] in my_course %}
-                            <p><a href="" class="btn btn-primary rounded-0 px-4">Enrolled</a></p>
-                            {% else %}
-
-                        <p><a href="{{url_for('my_courses',a=courses[i]['course_id'])}}" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-
-                {%if i+1 < len%}
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="course-1-item">
-                        <figure class="thumnail">
-                                <a href="course-single.html"><img src="{{url_for('static',filename='img/bg_1.jpg')}}" alt="Image" class="img-fluid" style="height:200px;width:950px;"></a>
-
-                        <div class="category"><h3>{{courses[i+1]['subject_name']}}</h3></div>
-                            <h5>{{courses[i+1]['course_name']}}</h5>
-                        </figure>
-                        <div class="course-1-content pb-4" >
-
-                        <div class="rating text-center mb-3">
-                            <span class="icon-star2 text-warning">No of Sessions: {{courses[i+1]['no_of_session']}}</span>
-                            <span class="icon-star2 text-warning"></span>
-                            <span class="icon-star2 text-warning"></span>
-                            <span class="icon-star2 text-warning"></span>
-                            <span class="icon-star2 text-warning"></span>
-                        </div>
-
-                            <br>
-
-                            {% if courses[i+1]['course_id'] in my_course %}
-                            <p><a href="" class="btn btn-primary rounded-0 px-4">Enrolled</a></p>
-                            {% else %}
-
-                        <p><a href="{{url_for('add_courses',a=courses[i+1]['course_id'])}}" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-
-                {% endif %}
-                {%if i+2 < len%}
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="course-1-item">
-                        <figure class="thumnail">
-                                <a href="course-single.html"><img src="{{url_for('static',filename='img/bg_1.jpg')}}" alt="Image" class="img-fluid" style="height:200px;width:950px;"></a>
-
-                        <div class="category"><h3>{{courses[i+2]['subject_name']}}</h3></div>
-                            <h5>{{courses[i+2]['course_name']}}</h5>
-                        </figure>
-                        <div class="course-1-content pb-4" >
-
-                        <div class="rating text-center mb-3">
-                            <span class="icon-star2 text-warning">No of Sessions: {{courses[i+2]['no_of_session']}}</span>
-                            <span class="icon-star2 text-warning"></span>
-                            <span class="icon-star2 text-warning"></span>
-                            <span class="icon-star2 text-warning"></span>
-                            <span class="icon-star2 text-warning"></span>
-                        </div>
-
-                            <br>
-
-                            {% if courses[i+2]['course_id'] in my_course %}
-                            <p><a href="" class="btn btn-primary rounded-0 px-4">Enrolled</a></p>
-                            {% else %}
-
-                        <p><a href="{{url_for('add_courses',a=courses[i+2]['course_id'])}}" class="btn btn-primary rounded-0 px-4">Enroll In This Course</a></p>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-
-
-
-
-
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
-
-
 </div>
 
+                <!-- Course Status -->
+                <div class="col-xl-2">
+                    <div class="form-group">
+                        <label >Status</label>
+                        <select name="status" class="form-control select2 " >
+                            <option value="all">All Courses</option>
+                                <option value="yes">Enrolled</option>
 
 
-<style media="screen">
-body {
-  overflow-x: hidden;
-}
-</style>                                  </div>
-                <nav>
-                                    </nav>
-            </div>
-        </div>
-    </div>
-</section>
 
+                            </select>
 
-        <footer class="footer-area">
-            <div class="container-xl">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="copyright-text">
-                            <a href=""><img src="http://localhost/Online_Learning_Management_System/uploads/system/logo-dark.png" alt="" class="d-inline-block" width="110"></a>
-                            <a href="http://lms.com/" target="_blank"></a>
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="nav justify-content-md-end footer-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/about_us">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/privacy_policy">Privacy Policy</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/terms_and_condition">Terms & Condition</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/login">
-                                    Login                                </a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
+
+                <!-- Course Instructors -->
+
+
+                <div class="col-xl-2">
+                    <label for=".." class="text-white">..</label>
+                    <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                </div>
+            </form>
+<h4 class="page-title"> <i class="mdi mdi-apple-keyboard-command title_icon"></i> Subject : {{current[0]}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    Status: {{current[1]}}
+                </h4>
+            <div class="table-responsive-sm mt-4">
+                                                    <div class="col-lg-9">
+                <div class="category-course-list">
+
+{% if courses ==() %}
+                    <center>No data Found</center>
+                    {% else %}
+{%for i in courses %}
+        <div class="course-box-2">
+            <div class="course-image">
+                <a href="http://localhost/Online_Learning_Management_System/home/course/calculus/1">
+                    <img src="http://localhost/Online_Learning_Management_System/uploads/thumbnails/course_thumbnails/course-thumbnail.png"  alt="" class="img-fluid" style="float:left">
+                </a>
             </div>
-        </footer>
+            <div class="course-details">
+                <a href="http://localhost/Online_Learning_Management_System/home/course/calculus/1" class="course-title">{{i.course_name}}</a>
+                <a href="http://localhost/Online_Learning_Management_System/home/instructor_page/1" class="course-instructor">
+                    <span class="instructor-name">{{i.subject_name}}</span>
+                </a>
+                <div class="course-subtitle">
+                    Status :
+                    {% if i.course_status == 'open' %}<span style="color:green;">{{i.course_status}}</span>
+                    {% else %}<span style="color:red;">{{i.course_status}}</span> {% endif %}
+                </div>
+                <div class="course-meta">
+                    <span class=""><i class="fas fa-play-circle"></i>
+                        {{i.no_of_session}} Sessions                    </span>
+                    <span class=""><i class="far fa-clock"></i>
+                        {{i.course_duration}} Minutes                   </span>
+                    <span class=""><i class="fas fa-closed-captioning"></i>English</span>
 
-        <!-- PAYMENT MODAL -->
-        <!-- Modal -->
+                    <br><br>
+                    {% if i.course_id in my_course %}
+                            <p><a href="" class="btn btn-success rounded-0 px-4" style="background-color:green">Enrolled</a></p>
+                            {% else %}
+                    <a href="{{url_for('add_courses',a=i.course_id)}}"  class="btn btn-primary rounded-0 px-4">Enroll</a>
+                    {% endif %}
+
+                </div>
 
 
-        <!-- Modal -->
-        <
+            </div>
+    </div>
+
+<br>
+{% endfor %}
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+                                    </div>
+                                                    </div>
+                            </div>
+        </div>
+    </div>
+</div>
+</div>
+                    <!-- END PLACE PAGE CONTENT HERE -->
+                </div>
+            </div>
+            <!-- END CONTENT -->
+        </div>
+    </div>
+    <!-- all the js files -->
+
+<!-- Dashboard chart's data is coming from this file -->
+
+ <script type="text/javascript">
+ ! function(o) {
+     "use strict";
+     var t = function() {
+         this.$body = o("body"), this.charts = []
+     };
+     t.prototype.respChart = function(r, a, n, e) {
+         Chart.defaults.global.defaultFontColor = "#8391a2", Chart.defaults.scale.gridLines.color = "#8391a2";
+         var i = r.get(0).getContext("2d"),
+             s = o(r).parent();
+         return function() {
+             var t;
+             switch (r.attr("width", o(s).width()), a) {
+                 case "Line":
+                     t = new Chart(i, {
+                         type: "line",
+                         data: n,
+                         options: e
+                     });
+                     break;
+                 case "Doughnut":
+                     t = new Chart(i, {
+                         type: "doughnut",
+                         data: n,
+                         options: e
+                     })
+             }
+             return t
+         }()
+     }, t.prototype.initCharts = function() {
+         var t = [];
+         if (0 < o("#task-area-chart").length) {
+             t.push(this.respChart(o("#task-area-chart"), "Line", {
+                 labels: [
+                                          "January",
+                                        "February",
+                                        "March",
+                                        "April",
+                                        "May",
+                                        "June",
+                                        "July",
+                                        "August",
+                                        "September",
+                                        "October",
+                                        "November",
+                                        "December",
+                                     ],
+                 datasets: [{
+                     label: "This Year",
+                     backgroundColor: "rgba(114, 124, 245, 0.3)",
+                     borderColor: "#727cf5",
+                     data: [
+                                                 "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                             ]
+                 }]
+             }, {
+                 maintainAspectRatio: !1,
+                 legend: {
+                     display: !1
+                 },
+                 tooltips: {
+                     intersect: !1
+                 },
+                 hover: {
+                     intersect: !0
+                 },
+                 plugins: {
+                     filler: {
+                         propagate: !1
+                     }
+                 },
+                 scales: {
+                     xAxes: [{
+                         reverse: !0,
+                         gridLines: {
+                             color: "rgba(0,0,0,0.05)"
+                         }
+                     }],
+                     yAxes: [{
+                         ticks: {
+                             stepSize: 10,
+                             display: !1
+                         },
+                         min: 10,
+                         max: 100,
+                         display: !0,
+                         borderDash: [5, 5],
+                         gridLines: {
+                             color: "rgba(0,0,0,0)",
+                             fontColor: "#fff"
+                         }
+                     }]
+                 }
+             }))
+         }
+         if (0 < o("#project-status-chart").length) {
+             t.push(this.respChart(o("#project-status-chart"), "Doughnut", {
+                 labels: ["Active Course", "Pending Course"],
+                 datasets: [{
+                     data: [0, 0],
+                     backgroundColor: ["#0acf97", "#FFC107"],
+                     borderColor: "transparent",
+                     borderWidth: "2"
+                 }]
+             }, {
+                 maintainAspectRatio: !1,
+                 cutoutPercentage: 80,
+                 legend: {
+                     display: !1
+                 }
+             }))
+         }
+         return t
+     }, t.prototype.init = function() {
+         var r = this;
+         Chart.defaults.global.defaultFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif', r.charts = this.initCharts(), o(window).on("resize", function(t) {
+             o.each(r.charts, function(t, r) {
+                 try {
+                     r.destroy()
+                 } catch (t) {}
+             }), r.charts = r.initCharts()
+         })
+     }, o.ChartJs = new t, o.ChartJs.Constructor = t
+ }(window.jQuery),
+ function(t) {
+     "use strict";
+     window.jQuery.ChartJs.init()
+ }();
+
+ </script>
+
 <script type="text/javascript">
-$(document).ready(function(){
-    $('#select_all').on('click',function(){
-        if(this.checked){
-            $('.checkbox').each(function(){
-                this.checked = true;
-            });
-        }else{
-             $('.checkbox').each(function(){
-                this.checked = false;
-            });
-        }
-    });
+  $(document).ready(function() {
+    $(function() {
+       $('.icon-picker').iconpicker();
+     });
+  });
+</script>
 
-    $('.checkbox').on('click',function(){
-        if($('.checkbox:checked').length == $('.checkbox').length){
-            $('#select_all').prop('checked',true);
-        }else{
-            $('#select_all').prop('checked',false);
-        }
-    });
-});
+<!-- Toastr and alert notifications scripts -->
+<script type="text/javascript">
+function notify(message) {
+  $.NotificationApp.send("Heads Up!", message ,"top-right","rgba(0,0,0,0.2)","info");
+}
+
+function success_notify(message) {
+  $.NotificationApp.send("Congratulations!", message ,"top-right","rgba(0,0,0,0.2)","success");
+}
+
+function error_notify(message) {
+  $.NotificationApp.send("Oh Snap!", message ,"top-right","rgba(0,0,0,0.2)","error");
+}
+
+function error_required_field() {
+  $.NotificationApp.send("Oh Snap!", "Please Fill All The Required Fields" ,"top-right","rgba(0,0,0,0.2)","error");
+}
 </script>
 
 
 
+<script type="text/javascript">
+  $.NotificationApp.send("Hi!", 'Welcome Student' ,"top-right","rgba(0,0,0,0.2)","success");
+</script><div class="jq-toast-wrap top-right"><div class="jq-toast-single jq-has-icon jq-icon-success" style="text-align: left; display: none;"><span class="jq-toast-loader jq-toast-loaded" style="-webkit-transition: width 2.6s ease-in;                       -o-transition: width 2.6s ease-in;                       transition: width 2.6s ease-in;                       background-color: rgba(0,0,0,0.2);"></span><span class="close-jq-toast-single">×</span><h2 class="jq-toast-heading">Congratulations!</h2>Welcom admin admin</div></div>
+    <script type="text/javascript">
+function showAjaxModal(url, header)
+{
+    // SHOWING AJAX PRELOADER IMAGE
+    jQuery('#scrollable-modal .modal-body').html('<div style="text-align:center;margin-top:200px;"><img src="https://localhost/Online_Learning_Management_System/assets/global/bg-pattern-light.svg" /></div>');
+    jQuery('#scrollable-modal .modal-title').html('...');
+    // LOADING THE AJAX MODAL
+    jQuery('#scrollable-modal').modal('show', {backdrop: 'true'});
 
+    // SHOW AJAX RESPONSE ON REQUEST SUCCESS
+    $.ajax({
+        url: url,
+        success: function(response)
+        {
+            jQuery('#scrollable-modal .modal-body').html(response);
+            jQuery('#scrollable-modal .modal-title').html(header);
+        }
+    });
+}
+function showLargeModal(url, header)
+{
+    // SHOWING AJAX PRELOADER IMAGE
+    jQuery('#large-modal .modal-body').html('<div style="text-align:center;margin-top:200px;"><img src="https://localhost/Online_Learning_Management_System/assets/global/bg-pattern-light.svg" height = "50px" /></div>');
+    jQuery('#large-modal .modal-title').html('...');
+    // LOADING THE AJAX MODAL
+    jQuery('#large-modal').modal('show', {backdrop: 'true'});
 
-<!-- (Ajax Modal)-->
+    // SHOW AJAX RESPONSE ON REQUEST SUCCESS
+    $.ajax({
+        url: url,
+        success: function(response)
+        {
+            jQuery('#large-modal .modal-body').html(response);
+            jQuery('#large-modal .modal-title').html(header);
+        }
+    });
+}
+</script>
 
+<!-- (Large Modal)-->
+<div class="modal fade" id="large-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
+<!-- Scrollable modal -->
+<div class="modal fade" id="scrollable-modal" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="scrollableModalTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body ml-2 mr-2">
 
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div>
 
+<script type="text/javascript">
+function confirm_modal(delete_url)
+{
+    jQuery('#alert-modal').modal('show', {backdrop: 'static'});
+    document.getElementById('update_link').setAttribute('href' , delete_url);
+}
+</script>
 
+<!-- Info Alert Modal -->
+<div id="alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-information h1 text-info"></i>
+                    <h4 class="mt-2">Heads Up!</h4>
+                    <p class="mt-3">Are You Sure?</p>
+                    <button type="button" class="btn btn-info my-2" data-dismiss="modal">Cancel</button>
+                    <a href="#" id="update_link" class="btn btn-danger my-2">Continue</a>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+    (function($){
+  $.fn.multiselect = function() {
 
-<!-- (Normal Modal)-->
+    var selector = this;
+    var options = $.extend({
+          onChange: function() {}
+      }, arguments[0] || {});
 
-</body>
-</html>
+    activate();
+
+    /////////
+
+    function activate() {
+
+      //events
+      $(selector).find('.title').on('click', function(e) {
+        $(this).parent().find('.select-options').toggle();
+      });
+
+      $(selector).find('input[type="checkbox"]').change(function(e){
+        options.onChange.call(this);
+      });
+
+    }
+  };
+
+}(jQuery));
+
+$(document).ready(function() {
+  $('.select-list').multiselect({
+    onChange: updateTable
+  });
+});
+
+function updateTable() {
+  var checkboxValue = $(this).val();
+  var isChecked = $(this).is(':checked');
+
+}
+</script>
+<style>
+    @color-text-general: #555;
+@color-background-light: #fff;
+@color-pale-grey: #eaeaec;
+@font-general: "Open Sans", sans-serif;
+
+body {
+  font-family: @font-general;
+}
+
+.select-list {
+  font-family: @font-general;
+  color: @color-text-general;
+  background: @color-background-light;
+
+  .title {
+    display: inline-block;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid @color-pale-grey;
+    border-radius: 5px;
+    padding: 10px 15px 10px 15px;
+
+    &::after {
+      display: inline-block;
+      content: ">";
+      margin-left: 15px;
+      font-size: 11px;
+      transform: rotate(90deg) scale(1, 2);
+    }
+
+    &:hover {
+      background: @color-pale-grey;
+    }
+  }
+
+  .select-options {
+    margin-top: 5px;
+    display: none;
+    position: absolute;
+    z-index: 500;
+    border: 1px solid @color-pale-grey;
+    background: @color-background-light;
+
+    .option {
+      label {
+        display: inline-block;
+        padding: 10px 30px 10px 10px;
+      }
+
+      &:hover {
+        background: @color-pale-grey;
+      }
+
+      input {
+        margin: 10px 0 12px 15px;
+      }
+    }
+  }
+}
+
+</style>
+
+</body></html>
