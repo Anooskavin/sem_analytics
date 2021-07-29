@@ -144,15 +144,15 @@
 {%for i in courses %}
         <div class="course-box-2">
             <div class="course-image">
-                <a href="http://localhost/Online_Learning_Management_System/home/course/calculus/1">
-                    <img src="http://localhost/Online_Learning_Management_System/uploads/thumbnails/course_thumbnails/course-thumbnail.png"  alt="" class="img-fluid" style="float:left">
-                </a>
+
+                    <img src="{{url_for('static',filename='img/course.jpg')}}"  alt="" class="img-fluid" style="float:left">
+
             </div>
             <div class="course-details">
-                <a href="http://localhost/Online_Learning_Management_System/home/course/calculus/1" class="course-title">{{i.course_name}}</a>
-                <a href="http://localhost/Online_Learning_Management_System/home/instructor_page/1" class="course-instructor">
+                <p class="course-title">{{i.course_name}}</p>
+                <p class="course-instructor">
                     <span class="instructor-name">{{i.subject_name}}</span>
-                </a>
+                </p>
                 <div class="course-subtitle">
                     Status :
                     {% if i.course_status == 'open' %}<span style="color:green;">{{i.course_status}}</span>

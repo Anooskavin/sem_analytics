@@ -262,7 +262,7 @@ def change_photo():
         cursor.execute('update student_details set student_profile=%s WHERE student_id  = %s', (path, id))
         mysql.connection.commit()
         flash("Profile Image Updated Successfully!")
-        return redirect(url_for('student_profile'))
+        return redirect(url_for('home'))
 
     else:
         return redirect(url_for('student_login'))

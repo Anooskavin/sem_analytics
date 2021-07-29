@@ -7,7 +7,7 @@
 <meta content="" name="description">
 <meta content="" name="author">
     <!-- all the css files -->
-    <link rel="shortcut icon" href="https://localhost/Online_Learning_Management_System/uploads/system/favicon.png">
+
 <!-- third party css -->
 <link href="{{url_for('static',filename='assets/backend/css/vendor/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css">
 <link href="{{url_for('static',filename='assets/backend/css/vendor/dataTables.bootstrap4.css')}}" rel="stylesheet" type="text/css">
@@ -36,23 +36,23 @@
 
 
 
-	<link rel="favicon" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/img/icons/favicon.ico">
-<link rel="apple-touch-icon" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/img/icons/icon.png">
-<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/jquery.webui-popover.min.css">
-<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/select2.min.css">
-<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/slick.css">
-<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/slick-theme.css">
+	<link rel="favicon" href="{{url_for('static',filename='assets/frontend/default/img/icons/favicon.ico')}}">
+<link rel="apple-touch-icon" href="{{url_for('static',filename='assets/frontend/default/img/icons/icon.png')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/jquery.webui-popover.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/slick.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/slick-theme.css')}}">
 <!-- font awesome 5 -->
-<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/fontawesome-all.min.css')}}">
 
-<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/bootstrap-tagsinput.css">
-<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/main.css">
-<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/frontend/default/css/responsive.css">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/bootstrap-tagsinput.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/main.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/responsive.css')}}">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700" rel="stylesheet">
-<link rel="stylesheet" href="http://localhost/Online_Learning_Management_System/assets/global/toastr/toastr.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.css" />
-<script src="http://localhost/Online_Learning_Management_System/assets/backend/js/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="{{url_for('static',filename='assets/global/toastr/toastr.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.css')}}" />
+<script src="{{url_for('static',filename='assets/backend/js/jquery-3.3.1.min.js')}}"></script>
 
 
 
@@ -65,12 +65,12 @@
     <div class="container-fluid">
 
         <!-- LOGO -->
-        <a href="https://localhost/Online_Learning_Management_System/Admin" class="topnav-logo" style="min-width: unset;">
+        <a href="{{url_for('home')}}" class="topnav-logo" style="min-width: unset;">
             <span class="topnav-logo-lg">
-                <img src="https://localhost/Online_Learning_Management_System/uploads/system/logo-light.png" alt="" height="40">
+                <img src="{{url_for('static',filename='uploads/system/logo-light.png')}}" alt="" height="40">
             </span>
             <span class="topnav-logo-sm">
-                <img src="https://localhost/Online_Learning_Management_System/uploads/system/logo-light-sm.png" alt="" height="40">
+                <img src="{{url_for('static',filename='uploads/system/logo-light-sm.png')}}" alt="" height="40">
             </span>
         </a>
 
@@ -106,7 +106,7 @@
 </a>
 <div class="app-search">
     <h4 style="color: #fff; float: left;"> Learning Management System Online</h4>
-    <a href="https://localhost/Online_Learning_Management_System/home" target="" class="btn btn-outline-light ml-3">Visit Website</a>
+
 </div>
 </div>
 </div>
