@@ -1,53 +1,30 @@
-<html lang="en" class=" sizes customelements history pointerevents postmessage webgl websockets cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside flexbox picture srcset webworkers"><head>
+
 {% include 'header/student_header.html' %}
-<head>
-
-			<title>User Profile | Learning Management System Online</title>
 
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="author" content="Learning Management System Online" />
+    <!-- all the meta tags -->
+<div class="content-page">
+                <div class="content">
+                    <!-- BEGIN PlACE PAGE CONTENT HERE -->
+                    <div class="row ">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="page-title"> <i class="mdi mdi-apple-keyboard-command title_icon"></i> Profile
+                </h4>
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
 
 
 
-</head>
-
-<body class="gray-bg">
-<section class="user-dashboard-area">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="user-dashboard-box">
-                    <div class="user-dashboard-sidebar">
-                        <form action = "{{url_for('change_photo')}}" method = "post" enctype="multipart/form-data">
-                        <div class="user-box">
-                            {% if student.student_profile!=None %}
-                            <img src={{url_for('static',filename=student.student_profile)}} alt="" class="img-fluid">
-                            {% else %}
-                            <img src={{url_for('static',filename='img/profile_images/default_profile.png')}} alt="" class="img-fluid">
-                            {% endif %}
-
-                             <input type="file"  id="file" accept="image/*" name="change_profile"  onchange="javascript:this.form.submit();" hidden/>
-                              <label for="file" class="btn btn-primary btn-sm" type="button" >Change Photo</label></form>
-                            <div class="name">
-                                <div class="name">{{student.student_name}}</div>
-                            </div>
-                        </div>
-                        <div class="user-dashboard-menu">
-                            <ul>
-                                <li class="active"><a href="http://localhost/Online_Learning_Management_System/home/profile/user_profile">Profile</a></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="user-dashboard-content">
-                        <div class="content-title-box">
-                            <div class="title">Profile</div>
-                            <div class="subtitle">Add Information About Yourself To Share On Your Profile.</div>
-                        </div>
-                        <form action="{{url_for('student_profile')}}" method="post">
+<div class="row ">
+	<div class="col-xl-7">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="header-title mb-3">Basic Info</h4>
+									  <form action="{{url_for('student_profile')}}" method="post">
                             <div class="content-box">
                                 <div class="basic-group">
                                     <div class="form-group">
@@ -81,46 +58,282 @@
                                 </div>
 
                             </div>
-                            <div class="content-update-box">
-                                <button type="submit" class="btn">Save</button>
-                            </div>
-                        </form>
-                    </div>
+
+
+
+					<div class="row justify-content-center">
+						<button type="submit" class="btn btn-primary" style="background-color:SlateBlue;border-color:SlateBlue;">Update Profile</button>
+					</div>
+				</form>
+
+
+	</div> <!-- end card body-->
+</div> <!-- end card -->
+</div>
+<!--<div class="col-xl-5">-->
+<!--	<div class="card">-->
+<!--		<div class="card-body">-->
+<!--							<form action="http://localhost/Online_Learning_Management_System/admin/manage_profile/change_password/1" class="form-horizontal form-groups-bordered validate" target="_top" method="post" accept-charset="utf-8">-->
+<!--				<div class="form-group">-->
+<!--					<label>Current Password</label>-->
+<!--					<input type="password" class="form-control" name="current_password" value="" required="">-->
+<!--				</div>-->
+<!--				<div class="form-group">-->
+<!--					<label>New Password</label>-->
+<!--					<input type="password" class="form-control" name="new_password" value="" required="">-->
+<!--				</div>-->
+<!--				<div class="form-group">-->
+<!--					<label>Confirm New Password</label>-->
+<!--					<input type="password" class="form-control" name="confirm_password" value="" required="">-->
+<!--				</div>-->
+<!--				<div class="row justify-content-center">-->
+<!--					<button type="submit" class="btn btn-info" style="background-color:DodgerBlue;border-color:DodgerBlue;">Update Password</button>-->
+<!--				</div>-->
+<!--			</form>-->
+<!--					</div>-->
+<!--	</div>-->
+<!--</div>-->
+</div>
+                    <!-- END PLACE PAGE CONTENT HERE -->
                 </div>
             </div>
+            <!-- END CONTENT -->
         </div>
     </div>
-</section>
-        <footer class="footer-area">
-            <div class="container-xl">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="copyright-text">
-                            <a href=""><img src="http://localhost/Online_Learning_Management_System/uploads/system/logo-dark.png" alt="" class="d-inline-block" width="110"></a>
-                            <a href="http://lms.com/" target="_blank"></a>
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="nav justify-content-md-end footer-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/about_us">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/privacy_policy">Privacy Policy</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/terms_and_condition">Terms & Condition</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="http://localhost/Online_Learning_Management_System/home/login">
-                                    Login                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
-
-
-
+    <!-- all the js files -->
+    <!-- bundle -->
 </body>
+</html>
+
+<!-- Dashboard chart's data is coming from this file -->
+
+ <script type="text/javascript">
+ ! function(o) {
+     "use strict";
+     var t = function() {
+         this.$body = o("body"), this.charts = []
+     };
+     t.prototype.respChart = function(r, a, n, e) {
+         Chart.defaults.global.defaultFontColor = "#8391a2", Chart.defaults.scale.gridLines.color = "#8391a2";
+         var i = r.get(0).getContext("2d"),
+             s = o(r).parent();
+         return function() {
+             var t;
+             switch (r.attr("width", o(s).width()), a) {
+                 case "Line":
+                     t = new Chart(i, {
+                         type: "line",
+                         data: n,
+                         options: e
+                     });
+                     break;
+                 case "Doughnut":
+                     t = new Chart(i, {
+                         type: "doughnut",
+                         data: n,
+                         options: e
+                     })
+             }
+             return t
+         }()
+     }, t.prototype.initCharts = function() {
+         var t = [];
+         if (0 < o("#task-area-chart").length) {
+             t.push(this.respChart(o("#task-area-chart"), "Line", {
+                 labels: [
+                                          "January",
+                                        "February",
+                                        "March",
+                                        "April",
+                                        "May",
+                                        "June",
+                                        "July",
+                                        "August",
+                                        "September",
+                                        "October",
+                                        "November",
+                                        "December",
+                                     ],
+                 datasets: [{
+                     label: "This Year",
+                     backgroundColor: "rgba(114, 124, 245, 0.3)",
+                     borderColor: "#727cf5",
+                     data: [
+                                                 "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                                "0",
+                                             ]
+                 }]
+             }, {
+                 maintainAspectRatio: !1,
+                 legend: {
+                     display: !1
+                 },
+                 tooltips: {
+                     intersect: !1
+                 },
+                 hover: {
+                     intersect: !0
+                 },
+                 plugins: {
+                     filler: {
+                         propagate: !1
+                     }
+                 },
+                 scales: {
+                     xAxes: [{
+                         reverse: !0,
+                         gridLines: {
+                             color: "rgba(0,0,0,0.05)"
+                         }
+                     }],
+                     yAxes: [{
+                         ticks: {
+                             stepSize: 10,
+                             display: !1
+                         },
+                         min: 10,
+                         max: 100,
+                         display: !0,
+                         borderDash: [5, 5],
+                         gridLines: {
+                             color: "rgba(0,0,0,0)",
+                             fontColor: "#fff"
+                         }
+                     }]
+                 }
+             }))
+         }
+         if (0 < o("#project-status-chart").length) {
+             t.push(this.respChart(o("#project-status-chart"), "Doughnut", {
+                 labels: ["Active Course", "Pending Course"],
+                 datasets: [{
+                     data: [0, 0],
+                     backgroundColor: ["#0acf97", "#FFC107"],
+                     borderColor: "transparent",
+                     borderWidth: "2"
+                 }]
+             }, {
+                 maintainAspectRatio: !1,
+                 cutoutPercentage: 80,
+                 legend: {
+                     display: !1
+                 }
+             }))
+         }
+         return t
+     }, t.prototype.init = function() {
+         var r = this;
+         Chart.defaults.global.defaultFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif', r.charts = this.initCharts(), o(window).on("resize", function(t) {
+             o.each(r.charts, function(t, r) {
+                 try {
+                     r.destroy()
+                 } catch (t) {}
+             }), r.charts = r.initCharts()
+         })
+     }, o.ChartJs = new t, o.ChartJs.Constructor = t
+ }(window.jQuery),
+ function(t) {
+     "use strict";
+     window.jQuery.ChartJs.init()
+ }();
+
+ </script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(function() {
+       $('.icon-picker').iconpicker();
+     });
+  });
+</script>
+
+<!-- Toastr and alert notifications scripts -->
+<script type="text/javascript">
+function notify(message) {
+  $.NotificationApp.send("Heads Up!", message ,"top-right","rgba(0,0,0,0.2)","info");
+}
+
+function success_notify(message) {
+  $.NotificationApp.send("Congratulations!", message ,"top-right","rgba(0,0,0,0.2)","success");
+}
+
+function error_notify(message) {
+  $.NotificationApp.send("Oh Snap!", message ,"top-right","rgba(0,0,0,0.2)","error");
+}
+
+function error_required_field() {
+  $.NotificationApp.send("Oh Snap!", "Please Fill All The Required Fields" ,"top-right","rgba(0,0,0,0.2)","error");
+}
+</script>
+
+<script>
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>
+
+<script type="text/javascript">
+  $.NotificationApp.send("Congratulations!", 'Welcom admin admin' ,"top-right","rgba(0,0,0,0.2)","success");
+</script><div class="jq-toast-wrap top-right"><div class="jq-toast-single jq-has-icon jq-icon-success" style="text-align: left; display: none;"><span class="jq-toast-loader jq-toast-loaded" style="-webkit-transition: width 2.6s ease-in;                       -o-transition: width 2.6s ease-in;                       transition: width 2.6s ease-in;                       background-color: rgba(0,0,0,0.2);"></span><span class="close-jq-toast-single">×</span><h2 class="jq-toast-heading">Congratulations!</h2>Welcom admin admin</div></div>
+    <script type="text/javascript">
+function showAjaxModal(url, header)
+{
+    // SHOWING AJAX PRELOADER IMAGE
+    jQuery('#scrollable-modal .modal-body').html('<div style="text-align:center;margin-top:200px;"><img src="http://localhost/Online_Learning_Management_System/assets/global/bg-pattern-light.svg" /></div>');
+    jQuery('#scrollable-modal .modal-title').html('...');
+    // LOADING THE AJAX MODAL
+    jQuery('#scrollable-modal').modal('show', {backdrop: 'true'});
+
+    // SHOW AJAX RESPONSE ON REQUEST SUCCESS
+    $.ajax({
+        url: url,
+        success: function(response)
+        {
+            jQuery('#scrollable-modal .modal-body').html(response);
+            jQuery('#scrollable-modal .modal-title').html(header);
+        }
+    });
+}
+function showLargeModal(url, header)
+{
+    // SHOWING AJAX PRELOADER IMAGE
+    jQuery('#large-modal .modal-body').html('<div style="text-align:center;margin-top:200px;"><img src="http://localhost/Online_Learning_Management_System/assets/global/bg-pattern-light.svg" height = "50px" /></div>');
+    jQuery('#large-modal .modal-title').html('...');
+    // LOADING THE AJAX MODAL
+    jQuery('#large-modal').modal('show', {backdrop: 'true'});
+
+    // SHOW AJAX RESPONSE ON REQUEST SUCCESS
+    $.ajax({
+        url: url,
+        success: function(response)
+        {
+            jQuery('#large-modal .modal-body').html(response);
+            jQuery('#large-modal .modal-title').html(header);
+        }
+    });
+}
+</script>
+
+
+
+
+</body></html>

@@ -12,7 +12,6 @@ def student_login():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('select * from student_details where student_password=%s and account_status =%s and student_contact =%s or student_email =%s',(pwd,'allow',username,username))
         student = cursor.fetchone()
-           
 
         status='yes'
         find = ['@']
@@ -135,14 +134,37 @@ def student_school_register():
 ##################################   Student dashboard ########################################################################
 @app.route("/student/home",methods=["POST", "GET"])
 def home():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'student_id' in session and session.get("user_type") == 'student':
         id=session.get('student_id')
         if request.method =='POST':
-           filter_subject=tuple(request.form.getlist('filter_subject'))
+           filter_subject=request.form['subject']
+           status=request.form['status']
+           print(filter_subject)
+           print(status)
+           if status =='all' and filter_subject =='all':
+               cursor.execute('select subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where subject.subject_id=course_details.subject_id ')
+               courses = cursor.fetchall()
+               current=['All','All']
+           elif status =='all' and filter_subject!='all':
+               print('hi')
+               cursor.execute('select distinct subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where course_details.subject_id and subject.subject_id = %s and course_details.subject_id=subject.subject_id',[filter_subject])
+               courses = cursor.fetchall()
+               current = [courses[0]['subject_name'], 'All']
+           elif status !='all' and filter_subject=='all':
+               cursor.execute('select subject.subject_name,subject.subject_id,course_details.course_id,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status,course_enroll_details.course_id from course_details, course_enroll_details,subject where course_details.course_id=course_enroll_details.course_id and subject.subject_id=course_details.subject_id and  course_enroll_details.student_id=%s',[id])
+               courses = cursor.fetchall()
+               current = ['All', 'Enrolled']
 
-           cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-           cursor.execute('select distinct subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where course_details.subject_id and subject.subject_id in %s and course_details.subject_id=subject.subject_id',[filter_subject])
-           courses = cursor.fetchall()
+           else:
+               cursor.execute('select subject.subject_name,subject.subject_id,course_details.course_id,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status,course_enroll_details.course_id from course_details, course_enroll_details,subject where course_details.course_id=course_enroll_details.course_id and subject.subject_id=course_details.subject_id and  course_enroll_details.student_id=%s and subject.subject_id = %s',(id,filter_subject))
+               courses = cursor.fetchall()
+               print(courses)
+               if courses:
+                current = [courses[0]['subject_name'], 'Enrolled']
+               current=['None','None']
+
+
 
            cursor.execute('select * from subject')
            subject = cursor.fetchall()
@@ -155,17 +177,17 @@ def home():
            my_course=[]
            for i in range(len(mycourse)):
                my_course.append(mycourse[i]['course_id'])
-           print(my_course)
-           return render_template('students/home.html', courses=courses, len=len(courses), subject=subject,student=student,my_course=my_course)
+
+           return render_template('students/home.html', courses=courses,current=current, len=len(courses), subject=subject,student=student,my_course=my_course)
 
 
 
 
         else:
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('select subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where subject.subject_id=course_details.subject_id ')
+            cursor.execute('select subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where subject.subject_id=course_details.subject_id ')
             courses=cursor.fetchall()
-            print(courses)
+
             cursor.execute('select * from subject')
             subject=cursor.fetchall()
 
@@ -177,8 +199,9 @@ def home():
             my_course = []
             for i in range(len(mycourse)):
                 my_course.append(mycourse[i]['course_id'])
-            print(my_course)
-            return render_template('students/home.html', courses=courses, len=len(courses), subject=subject,student=student, my_course=my_course)
+            current=['All','All'] # subject and enrollement status
+
+            return render_template('students/home.html', courses=courses, len=len(courses), subject=subject,student=student,current=current ,my_course=my_course)
 
     else:
         return redirect(url_for('student_login'))
@@ -190,13 +213,16 @@ def home():
 def student_profile():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'student_id' in session and session.get("user_type") == 'student':
+        id = session.get('student_id')
         if request.method =='POST':
             username=request.form['username']
             mobile=request.form['mobile']
             whatsapp=request.form['whatsapp']
 
-            cursor.execute('update student_details set student_name=%s,student_contact=%s,student_whatsapp=%s',(username,mobile,whatsapp))
+            cursor.execute('update student_details set student_name=%s,student_contact=%s,student_whatsapp=%s where student_id=%s',(username,mobile,whatsapp,id))
             mysql.connection.commit()
+            return redirect(url_for('student_profile'))
+
 
 
 
@@ -235,7 +261,7 @@ def change_photo():
         cursor.execute('update student_details set student_profile=%s WHERE student_id  = %s', (path, id))
         mysql.connection.commit()
         flash("Profile Image Updated Successfully!")
-        return redirect(url_for('student_profile'))
+        return redirect(url_for('home'))
 
     else:
         return redirect(url_for('student_login'))
