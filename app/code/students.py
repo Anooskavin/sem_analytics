@@ -10,9 +10,8 @@ def student_login():
         username=request.form['username']
         pwd=request.form['pwd']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('select * from student_details where student_password=%s and account_status =%s and student_contact =%s or student_email =%s',(pwd,'yes',username,username))
+        cursor.execute('select * from student_details where student_password=%s and account_status =%s and student_contact =%s or student_email =%s',(pwd,'allow',username,username))
         student = cursor.fetchone()
-
 
         status='yes'
         find = ['@']
