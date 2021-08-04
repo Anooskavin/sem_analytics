@@ -117,7 +117,7 @@
                             <h6>
 							
 							<div class="my-2" style="float:right;">
-                                    <button href="#" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#add_data_Modal">
+                                    <button href="#" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#import_data_Modal">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-check"></i>
                                         </span>
@@ -172,7 +172,7 @@
 										
 											<td>
 
-                                                {% if row.school_status == "approved" and row.school_status == "decline" %}
+                                                {% if row.school_status == "approved" %}
                                                 <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-primary btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>
                                                 {% elif row.school_status == "notapproved" %}
 
@@ -236,23 +236,23 @@
    <div class="modal-body">
     <form method="post" id="insert_form">
 	 <label>Enter School Name</label>
-     <input type="text" name="sname" id="name" class="form-control" />
+     <input type="text" name="school_name" id="name" class="form-control" />
 	 <br />
 	
      <label>Enter School State</label>
-     <input type="text" name="state" id="name" class="form-control" />
+     <input type="text" name="school_state" id="state" class="form-control" />
      <br />
 	 
 	 <label>Enter School District</label>
-      <input type="text" name="district" id="address" class="form-control"/>
+      <input type="text" name="school_district" id="district" class="form-control"/>
      <br />
      
      <label>Enter School Pincode</label>
-     <input type="numbers" name="pincode" id="address" class="form-control"/>
+     <input type="numbers" name="school_pincode" id="pincode" class="form-control"/>
     <br />
 
     <label>Enter School board</label>
-    <select name="school_board" id="mySelect" class="form-control">
+    <select name="board" id="mySelect" class="form-control">
         <option value="CBSE">CBSE</option>
         <option value="STATE BOARD">STATE BOARD</option>
         <option value="ICIC">ICIC</option>
@@ -261,7 +261,7 @@
      <br />
 
      <label>Enter School contact</label>
-      <input type="number" name="contact" id="address" class="form-control"/>
+      <input type="number" name="school_contact" id="contact" class="form-control"/>
      <br />
      
    </div>
@@ -274,6 +274,47 @@
   </div>
  </div>
 </div>
+
+
+		<!-- import modal-->
+        <div id="import_data_Modal" class="modal fade">
+            <div class="modal-dialog">
+             <div class="modal-content">
+              <div class="modal-header">
+               <h4 class="modal-title">import School Details</h4>
+               <button type="button" class="close" data-dismiss="modal">×</button>
+              
+              </div>
+              <div class="modal-body">
+               <form method="post" id="insert_form">
+                <label>Select school Name</label>
+                <select name="school_board" id="mySelect" class="form-control">
+                    <option value="CBSE">CBSE</option>
+                    <option value="STATE BOARD">STATE BOARD</option>
+                    <option value="ICIC">ICIC</option>
+            
+                </select>
+                <br />
+               
+                
+                <label>Import file</label>
+                <button type="button"  class="btn btn-success" >import file</button>
+
+                <br />
+                
+               
+                
+              </div>
+           
+              <div class="modal-footer">
+              <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </form>
+              </div>
+             </div>
+            </div>
+           </div>
+           
 
 
    <!--Update table modal-->
@@ -339,6 +380,69 @@
 	</div>
    </div>
 	
+
+    <!--Update table modal-->
+	
+	<div id="dataModal" class="modal fade">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+   <h4 class="modal-title">School Details</h4>
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    
+   </div>
+   <div class="modal-body">
+      <div class="table-responsive">  
+	  <form method="post" id="update_form" >
+        <table class="table table-bordered">
+            <input type="hidden" class="form-control" name="school_id" id="school_id">
+
+        <tr>  
+            <td width="30%"><label>School Name</label>
+            <td width="70%"><input type="text" name="school_name" class="form-control" id="school_name"></td>  
+        </tr>
+
+        <tr>  
+            <td width="30%"><label>School State</label>
+            <td width="70%"><input type="text" name="school_state" class="form-control" id="school_state"></td>  
+        </tr>
+
+        <tr>  
+            <td width="30%"><label>School District</label>
+            <td width="70%"><input type="text" name="school_district" class="form-control" id="school_district"></td>  
+        </tr>
+        <tr>  
+            <td width="30%"><label>School Pincode</label>
+            <td width="70%"><input type="text" name="school_pincode" class="form-control" id="school_pincode"></td>  
+        </tr>
+
+        <tr>  
+            <td width="30%"><label>School Board</label> 
+            <td width="70%"><input type="text" name="school_board" class="form-control" id="school_board"/></td>    
+        </tr>
+        <tr>  
+            <td width="30%"><label>School Contact</label> 
+            <td width="70%"><input type="number" name="school_contact" class="form-control" id="school_contact"/></td>    
+        </tr>
+        <tr>  
+            <td width="30%"><label>School Approval Status</label> 
+            <td width="70%"><select name="school_status" id="mySelect" class="form-control">
+                <option value="notapproved"> ⭕ Not Approved</option>
+                <option value="approved">✅ Approve</option>
+                <option value="decline">❌ Decline</option>
+
+            </select></td>
+            </tr>
+       
+    </table>
+	 <div class="modal-footer">
+    <input type="submit" name="update" id="update" value="Update" class="btn btn-success" />
+    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+	 </form>
+   </div>
+	
+	</div>
+   </div>
 
    
    <script>
@@ -420,7 +524,7 @@
                     $('#school_pincode').val(data_rs[0]['school_pincode']);
                     $('#school_board').val(data_rs[0]['school_board']);
                     $('#school_contact').val(data_rs[0]['school_contact']);                   
-
+                    console.log(data_rs[0]['school_name'])
                     document.getElementById("mySelect").value = data_rs[0]['school_status'];
 
                 }
