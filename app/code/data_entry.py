@@ -580,11 +580,16 @@ def data_entry_school_details():
         admin_name=session.get('name')
         if request.method == 'POST':      
             adminid=session.get('id')
-            fname = request.form['fname']
-            email = request.form['email']
-            contact = request.form['contact']              
+            school_name = request.form['school_name']
+            school_state = request.form['school_state']
+            school_district = request.form['school_district']
+            school_pincode = request.form['school_pincode']
+            school_board = request.form['school_board']
+            school_contact = request.form['school_contact']
+           
+           
             try:
-                cursor.execute("INSERT INTO faculty_details (faculty_name, faculty_email ,faculty_contact) VALUES (%s, %s, %s)",[fname,email,contact])
+                cursor.execute("INSERT INTO school_details (school_name, school_state ,school_district,school_pincode,school_board,school_contact) VALUES (%s, %s, %s, %s, %s, %s)",[school_name,school_state,school_district,school_pincode,school_board,school_contact])
                 mysql.connection.commit()
                 return jsonify('success')
             except Exception as Ex:
@@ -656,13 +661,16 @@ def data_entry_school_details_select():
 def data_entry_school_change():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method == "POST":        
-        faculty_id = request.form['faculty_id']
-        print("faculty_id"+ faculty_id)
-        faculty_name = request.form['faculty_name']
-        faculty_email = request.form['faculty_email']
-        faculty_contact = request.form['faculty_contact']
+        school_id = request.form['school_id']
+        print("faculty_id"+ school_id)
+        school_name = request.form['school_name']
+        school_state = request.form['school_state']
+        school_district = request.form['school_district']
+        school_pincode = request.form['school_pincode']
+        school_contact = request.form['school_contact']
+        school_status = request.form['school_status']
 
-        cursor.execute('update faculty_details set faculty_name=%s, faculty_email = %s ,faculty_contact=%s where faculty_id=%s', [faculty_name,faculty_email,faculty_contact,faculty_id])
+        cursor.execute('update school_details set school_name=%s, school_state = %s ,school_district=%s,school_pincode=%s,school_contact=%s,school_status=%s where school_id=%s', [school_name,school_state,school_district,school_pincode,school_contact,school_status,school_id])
         mysql.connection.commit()
     return jsonify('success')   
 
