@@ -149,8 +149,11 @@
                                     <td><span class="badge badge-success">Approved</span></td>
                                     {% elif row.course_approval_status == "decline" %}
                                     <td><span class="badge badge-danger">Not Approved</span></td>{% endif %}
-                                    
-                                    <td><a type="button" name="view" value="view" id="{{row.course_id}}" class="btn btn-primary btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>
+
+                                     <td><a type="button" name="view" value="view" id="{{row.course_id}}" class="btn btn-primary btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>
+                                        {% if row.course_approval_status == "approved" %}
+                                        <a type="button" href="/data_entry/course/registered?course_id={{row.course_id}}" class="btn btn-warning btn-xs "><i class="fas fa-arrow-circle-right"></i></a>
+                                        {% endif %}
                                         {% if row.course_approval_status == "decline" %}
                                         <button type="submit" name="delete" value="{{row.course_id}}"
                                             onclick="return validateForm()" class="btn btn-danger "> <i
