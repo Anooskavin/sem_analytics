@@ -13,7 +13,7 @@ def student_login():
         cursor.execute('select * from student_details where student_password=%s and account_status =%s and student_contact =%s or student_email =%s',(pwd,'allow',username,username))
         student = cursor.fetchone()
 
-        status='yes'
+        status='allow'
         find = ['@']
         query=''
 
@@ -38,7 +38,7 @@ def student_login():
         else:
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('select * from student_details where student_password=%s  and account_status =%s and student_contact =%s',(pwd, 'yes', username))
+            cursor.execute('select * from student_details where student_password=%s  and account_status =%s and student_contact =%s',(pwd, 'allow', username))
             student = cursor.fetchone()
             session['student_id'] = student['student_id']
             if student:
@@ -124,7 +124,7 @@ def student_school_register():
         pin=request.form['pin']
         phone=request.form['phone']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('insert into school_details (school_name,school_state,school_district,school_board,school_pincode,school_contact,school_status) values(%s,%s,%s,%s,%s,%s,%s)',(schoolname,state,district,board,pin,phone,'No'))
+        cursor.execute('insert into school_details (school_name,school_state,school_district,school_board,school_pincode,school_contact,school_status) values(%s,%s,%s,%s,%s,%s,%s)',(schoolname,state,district,board,pin,phone,'notapproved'))
         mysql.connection.commit()
         return render_template('students/register_school.html',msg='Registered successfully soon it will be added ')
 

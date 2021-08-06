@@ -53,6 +53,9 @@
  <th data-field="dur" data-sortable="True" >Duration</th>
             <th data-field="sess" data-sortable="True" >No.of.Session</th>
               <th data-field="status" data-sortable="True" >Status</th>
+<th data-field="approval_status" data-sortable="True" >Approval Status</th>
+            <th data-field="action" data-sortable="True" >Action</th>
+
             <th data-field="desc" data-sortable="True" >Course Description</th>
             <th data-field="link" data-sortable="True" >Go to session</th>
 
@@ -114,6 +117,7 @@
         var data = [
         {% for row in course %}
         {
+
         "id": "{{loop.index}}",
         "city": "{{row.subject_name}}",
         "age": "{{row.course_name}}",
@@ -122,6 +126,9 @@
 
         "sess": "{{row.no_of_session}}",
         "status": "{{row.course_status}}",
+        "cid":"{{row.course_id}}",
+        "approval_status":"{% if row.course_approval_status == 'approve' %}<h3 class='btn btn-success'> Approved </h3> {% else %} <h3 class='btn btn-danger'> Declined </h3> {% endif %}",
+        "action":"{% if row.course_approval_status == 'approve' %}<a href={{url_for('admin_approval_course',a=row.course_id,b='decline')}}>Change to decline</a>{% else %}<a href={{url_for('admin_approval_course',a=row.course_id,b='approve')}}>Change to Approve</a>{% endif %}",
         "dur": "{{row.course_duration}}",
         "link": "<a href={{url_for('admin_analytics_session',a=row.course_id,b=row.course_name)}}>Go to {{row.course_name}}</a>",
 
@@ -246,7 +253,23 @@ window.filterCities1=0
 
       </script>
 
+<script>
+    function approve(){
+var a=
+    console.log('ji');
 
+
+    var b = document.getElementById("approval_status").value;
+    const URL = '/admin_analytics/approval_course'
+const xhr = new XMLHttpRequest();
+sender = JSON.stringify([a,b])
+console.log(b);
+xhr.open('POST', URL);
+xhr.send(sender);
+approval_status
+    }
+
+</script>
 
 </body>
 

@@ -20,9 +20,9 @@ def data_entry_home():
         home[2] = len(cursor.fetchall())
         cursor.execute('SELECT * FROM faculty_details')
         home[3] = len(cursor.fetchall())
-        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
-        notifi = cursor.fetchall()
-        return render_template('data_entry/index.html',admin_name=admin_name,count=home,notifi=notifi)
+        # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        # notifi = cursor.fetchall()
+        return render_template('data_entry/index.html',admin_name=admin_name,count=home)
     else:
         return redirect(url_for('login'))
 
@@ -50,9 +50,9 @@ def data_entry_subject():
         
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
-        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
-        notifi = cursor.fetchall()
-        return render_template('data_entry/subject.html',subject=subject,admin_name=admin_name,notifi=notifi)
+        # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        # notifi = cursor.fetchall()
+        return render_template('data_entry/subject.html',subject=subject,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 
@@ -138,9 +138,9 @@ def data_entry_course():
             
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
-        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
-        notifi = cursor.fetchall()
-        return render_template('data_entry/course.html',course=course,subject=subject,count=count,admin_name=admin_name,notifi=notifi)
+        # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        # notifi = cursor.fetchall()
+        return render_template('data_entry/course.html',course=course,subject=subject,count=count,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 
@@ -266,9 +266,9 @@ def data_entry_session():
         faculty = cursor.fetchall()
     
 
-        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
-        notifi = cursor.fetchall()
-        return render_template('data_entry/course session table.html',session=sess,course=course,count=count,faculty=faculty,admin_name=admin_name,notifi=notifi)
+        # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        # notifi = cursor.fetchall()
+        return render_template('data_entry/course session table.html',session=sess,course=course,count=count,faculty=faculty,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 
@@ -360,7 +360,7 @@ def data_entry_attendance():
 
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
-        return render_template('data_entry/attendance_table.html',attendance=attendance,session_name=session_name,admin_name=admin_name,notifi=notifi)
+        return render_template('data_entry/attendance_table.html',attendance=attendance,session_name=session_name,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 
@@ -393,7 +393,7 @@ def data_entry_faculty():
         faculty = cursor.fetchall()
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
-        return render_template('data_entry/Faculty table.html',faculty=faculty,admin_name=admin_name,notifi=notifi)
+        return render_template('data_entry/Faculty table.html',faculty=faculty,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 
@@ -506,9 +506,9 @@ def data_entry_student():
             cursor.execute('SELECT * FROM student_details where account_status="waiting"')
             count[3] = len(cursor.fetchall())
 
-        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
-        notifi = cursor.fetchall()
-        return render_template('data_entry/student details table.html',student=student,count=count,admin_name=admin_name,notifi=notifi)
+        # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        # notifi = cursor.fetchall()
+        return render_template('data_entry/student details table.html',student=student,count=count,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 
@@ -609,9 +609,9 @@ def data_entry_school_details():
         count[2] = len(cursor.fetchall())
         cursor.execute('SELECT * FROM school_details where school_status="notapproved"')
         count[3] = len(cursor.fetchall())
-        cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
-        notifi = cursor.fetchall()
-        return render_template('data_entry/school_details.html',school=school,count=count,admin_name=admin_name,notifi=notifi)
+        # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        # notifi = cursor.fetchall()
+        return render_template('data_entry/school_details.html',school=school,count=count,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
 

@@ -69,9 +69,29 @@ def admin_analytics_course():
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
 
-        return render_template('admin_analytics/course.html',course=course,subject=subject,admin_name=admin_name,)
+        return render_template('admin_analytics/course.html',course=course,subject=subject,admin_name=admin_name)
     else:
         return redirect(url_for('login'))
+
+@app.route("/admin_analytics/approval_course", methods=["POST", "GET"])
+def admin_approval_course():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'admin':
+
+        course_id=int(request.args.get('a'))
+        status=request.args.get('b')
+        print(course_id)
+        print(status)
+        print(type(course_id))
+
+        cursor.execute('update course_details set course_approval_status=%s Where course_id=%s',(status,course_id))
+        mysql.connection.commit()
+        return redirect(url_for('admin_analytics_course'))
+
+
+
+
+
 
 
 
