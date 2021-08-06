@@ -134,7 +134,8 @@
                                 <tr>
 
                                     <td>{{loop.index}}</td>
-                                    <td>{{row.student_name}}</td>
+                                    <td><a name="view" value="view" id="{{row.course_id}}"
+                                            class="view_student">{{row.student_name}}</a></td>
                                     <td>{{row.student_contact}}</td>
                                     <td>{{row.student_email}}</td>
 
@@ -161,6 +162,83 @@
     <!-- End of Main Content -->
 
 
+<!--Update student-->
+
+
+<div id="studentModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Student Details</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <form method="post" id="">
+                        <table class="table table-bordered">
+                            <input type="hidden" name="student_id" class="form-control" id="student_id">
+
+                            <tr>
+                                <td width="30%"><label>Student Name</label></td>
+                                <td width="70%"><input type="text" name="student_name" class="form-control"
+                                        id="student_name"></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>Contact</label></td>
+                                <td width="70%"><input type="numbers" name="student_contact" class="form-control"
+                                        id="student_contact"></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>E-mail</label></td>
+                                <td width="70%"><input type="email" name="student_email" class="form-control"
+                                        id="student_email"></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>Student grade</label></td>
+                                <td width="70%"><input type="numbers" name="student_grade" class="form-control"
+                                        id="student_grade" disabled></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>School Name</label></td>
+                                <td width="70%"><input type="text" name="school_name" class="form-control"
+                                        id="school_name" disabled></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>School Board</label></td>
+                                <td width="70%"><input type="text" name="school_board" class="form-control"
+                                        id="school_board" disabled></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>School Pincode</label></td>
+                                <td width="70%"><input type="numbers" name="school_pincode" class="form-control"
+                                        id="school_pincode" disabled></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>Whatsapp No</label></td>
+                                <td width="70%"><input type="numbers" name="student_whatsapp" class="form-control"
+                                        id="student_whatsapp"></td>
+                            </tr>
+                            <tr>
+                                <td width="30%"><label>Account Status</label></td>
+                                <td width="70%"><input type="numbers" name="status" class="form-control"
+                                        id="status"></td>
+                            </tr>
+                           
+
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- update modal close -->
+
+
 
     </div>
     <!-- End of Content Wrapper -->
@@ -176,7 +254,6 @@
 
 
 
-   
 
     <!-- Add Modal-->
     <div id="add_data_Modal" class="modal fade">
@@ -212,10 +289,10 @@
     </div>
 
 
- <!--Update sms modal-->
+    <!--Update sms modal-->
 
- 
- <div id="sms" class="modal fade">
+
+    <div id="sms" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -224,7 +301,7 @@
 
                 </div>
                 <div class="modal-body">
-                    <form method="post" id="insert_form">
+                    <form method="post" id="">
 
                         <input type="hidden" class="form-control" id="sid" name="sid">
 
@@ -260,7 +337,7 @@
                     <div class="table-responsive">
                         <form method="post" id="update_form">
                             <table class="table table-bordered">
-                                <input type="hidden" class="form-control" id="student_id" name="student_id">
+                                <input type="hidden" class="form-control" id="id_stu" name="id_stu" >
                                 <tr>
                                     <td width="30%"><label>Subject</label></td>
                                     <td width="70%"><input type="text" class="form-control" name="subject" id="subject"
@@ -273,6 +350,8 @@
                                             id="message"></textarea>
                                     </td>
                                 </tr>
+                               
+
                             </table>
                             <div class="modal-footer">
                                 <input type="submit" name="update" id="update" value="send" class="btn btn-success" />
@@ -284,6 +363,8 @@
             </div>
         </div>
     </div>
+
+    
 
 
 
@@ -358,15 +439,47 @@
             });
 
 
+            $(document).on('click', '.view_student', function () {
+                var student_id = $(this).attr("id");
+                $.ajax({
+                    url: "/data_entry/student/select",
+                    method: "POST",
+                    data: {
+                        student_id: student_id
+                    },
+                    success: function (data) {
+                        $('#studentModal').modal('show');
+                        var data_rs = JSON.parse(data);
+                        $('#student_id').val(data_rs[0]['student_id']);
+                        $('#student_name').val(data_rs[0]['student_name']);
+                        $('#student_contact').val(data_rs[0]['student_contact']);
+                        $('#student_email').val(data_rs[0]['student_email']);
+                        $('#student_grade').val(data_rs[0]['student_grade']);
+                        $('#student_whatsapp').val(data_rs[0]['student_whatsapp']);
+                        $('#school_name').val(data_rs[0]['school_name']);
+                        $('#school_board').val(data_rs[0]['school_board']);
+                        $('#school_pincode').val(data_rs[0]['school_pincode']);
+                        $('#status').val(data_rs[0]['account_status']);
+
+                        document.getElementById("mySelect").value = data_rs[0][
+                            'account_status'
+                        ];
+
+                    }
+                });
+            });
+
             $(document).on('click', '.view_mail', function () {
                 var course_id = $(this).attr("id");
-                $('#student_id').val(course_id);
+                $('#id_stu').val(course_id);
+                // $('#subject').val(course_id);
+
                 $('#dataModal').modal('show');
             });
 
             $(document).on('click', '.view_sms', function () {
                 var course_id = $(this).attr("id");
-                 $('#sid').val(course_id);
+                $('#sid').val(course_id);
                 // $('#dataModal').modal('show');
 
                 $('#sms').modal('show');
