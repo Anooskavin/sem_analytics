@@ -381,7 +381,7 @@ def data_entry_session():
             count[1] = len(cursor.fetchall())
             cursor.execute('SELECT * FROM course_session_details,course_details where course_details.course_id=course_session_details.course_id and course_session_details.session_status="close"')
             count[2] = len(cursor.fetchall())
-        cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
+        cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id and course_details.course_approval_status="approved" and course_details.course_status="open"')
         course = cursor.fetchall()
         cursor.execute('SELECT * FROM faculty_details')
         faculty = cursor.fetchall()
