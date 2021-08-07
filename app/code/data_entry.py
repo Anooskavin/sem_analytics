@@ -656,6 +656,7 @@ def data_entry_student_select():
                     'student_email': rs['student_email'],
                     'student_grade': rs['student_grade'],             
                     'student_whatsapp': rs['student_whatsapp'],
+                    'student_profile': rs['student_profile'],
                     'account_status': rs['account_status']
                     }
             employeearray.append(employee_dict)
