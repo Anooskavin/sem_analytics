@@ -115,6 +115,7 @@
   <script src="https://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script type="text/javascript" src="https://cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
 <!--    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>-->
  <script>
         var data = [
@@ -317,6 +318,10 @@ $('#update_form').on("submit", function (event) {
 
                                 $('#course_approval_status').val(data_rs[0]['course_approval_status']);
                                 $('#course_description').val(data_rs[0]['course_description']);
+                                var editor = CKEDITOR.replace( 'course_description' );
+editor.on( 'change', function() {
+  $('#course_description').val(data_rs[0]['course_description']);
+});
 
                             }
                         });
