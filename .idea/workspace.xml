@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d1214c20-aba7-4b9c-ab6f-fc23724ae153" name="Default Changelist" comment="&#10;updated" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1tz7B29rWiUFER2yXLYNClUa84l" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="sem_analytics" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.run" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d1214c20-aba7-4b9c-ab6f-fc23724ae153" name="Default Changelist" comment="" />
+      <created>1623759925180</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623759925180</updated>
+    </task>
+    <task id="LOCAL-00001" summary="updated">
+      <created>1625146444084</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1625146444085</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added course,mycourse and profile page">
+      <created>1626344873597</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1626344873598</updated>
+    </task>
+    <task id="LOCAL-00003" summary="updated student dashboard">
+      <created>1627129850706</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1627129850706</updated>
+    </task>
+    <task id="LOCAL-00004" summary="updated student dashboard">
+      <created>1627557175947</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1627557175947</updated>
+    </task>
+    <task id="LOCAL-00005" summary="updated">
+      <created>1628155516959</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1628155516959</updated>
+    </task>
+    <task id="LOCAL-00006" summary="&#10;updated">
+      <created>1628261486690</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1628261486690</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added course approval">
+      <created>1628345378195</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1628345378195</updated>
+    </task>
+    <task id="LOCAL-00008" summary="&#10;updated">
+      <created>1628515994877</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1628515994877</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="updated1" />
+    <MESSAGE value="Added course,mycourse and profile page" />
+    <MESSAGE value="updated student dashboard" />
+    <MESSAGE value="updated" />
+    <MESSAGE value="updaed" />
+    <MESSAGE value="added course lnk" />
+    <MESSAGE value="added course approval" />
+    <MESSAGE value="&#10;updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="&#10;updated" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="508" y="236" key="#Notifications" timestamp="1625560963420">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="508" y="236" key="#Notifications/0.0.1536.824@0.0.1536.824" timestamp="1625560963420" />
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1628247640717">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1628247640717" />
+    <state width="1515" height="666" key="GridCell.Tab.0.bottom" timestamp="1628345908543">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="666" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1628345908543" />
+    <state width="1515" height="666" key="GridCell.Tab.0.center" timestamp="1628345908543">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="666" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1628345908543" />
+    <state width="1515" height="666" key="GridCell.Tab.0.left" timestamp="1628345908543">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="666" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1628345908543" />
+    <state width="1515" height="666" key="GridCell.Tab.0.right" timestamp="1628345908543">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="666" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1628345908543" />
+    <state x="555" y="128" key="VCS.ChangeListViewerDialog" timestamp="1628261539377">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="555" y="128" key="VCS.ChangeListViewerDialog/0.0.1536.824@0.0.1536.824" timestamp="1628261539377" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1628515997413">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1628515997413" />
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1628515934069">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1628515934069" />
+    <state x="0" y="0" width="1499" height="810" key="dock-window-1" timestamp="1626868745232">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="0" y="0" width="1499" height="810" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1626868745232" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1626102565366">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1626102565366" />
+  </component>
+</project>
