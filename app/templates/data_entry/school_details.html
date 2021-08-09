@@ -162,6 +162,8 @@
                                             <td>{{row.school_contact}}</td>
                                             {% if row.school_status == "approved" %}
                                             <td><span class="badge badge-success">Approved</span></td>
+                                            {% elif row.school_status == "decline" %}
+                                            <td><span class="badge badge-danger">Declined</span></td>
                                             {% elif row.school_status == "notapproved" %}
                                             <td><span class="badge badge-warning">Not Approved</span></td>{% endif %}
 										
@@ -170,12 +172,12 @@
                                                 {% if row.school_status == "approved" %}
                                                 <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-success btn-xs view_data">view</a>
                                              
-                                                <a type="button" data-toggle="modal" data-target="#import_data_Modal" id="{{row.school_id}}" class="btn btn-primary btn-xs view_data"><i class="fas fa-upload"></i></a>
+                                                <a type="button" data-toggle="modal" data-target="#import_data_Modal" id="{{row.school_id}}" class="btn btn-primary btn-xs"><i class="fas fa-upload"></i></a>
 
                                                 {% elif row.school_status == "notapproved" %}
 
 
-                                                <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-success btn-xs view_data"><i class="fas fa-thumbs-up"></i></a>
+                                                <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-warning btn-xs view_data"><i class="fas fa-thumbs-up"></i></a>
                                                 <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-danger btn-xs view_data"><i class="fas fa-thumbs-down"></i></a>
                                                 {% endif %}
 											</td>
@@ -315,69 +317,6 @@
            
 
 
-   <!--Update table modal-->
-	
-	<div id="dataModal" class="modal fade">
- <div class="modal-dialog">
-  <div class="modal-content">
-   <div class="modal-header">
-   <h4 class="modal-title">School Details</h4>
-    <button type="button" class="close" data-dismiss="modal">×</button>
-    
-   </div>
-   <div class="modal-body">
-      <div class="table-responsive">  
-	  <form method="post" id="update_form" >
-        <table class="table table-bordered">
-            <input type="hidden" class="form-control" name="school_id" id="school_id">
-
-        <tr>  
-            <td width="30%"><label>School Name</label>
-            <td width="70%"><input type="text" name="school_name" class="form-control" id="school_name"></td>  
-        </tr>
-
-        <tr>  
-            <td width="30%"><label>School State</label>
-            <td width="70%"><input type="text" name="school_state" class="form-control" id="school_state"></td>  
-        </tr>
-
-        <tr>  
-            <td width="30%"><label>School District</label>
-            <td width="70%"><input type="text" name="school_district" class="form-control" id="school_district"></td>  
-        </tr>
-        <tr>  
-            <td width="30%"><label>School Pincode</label>
-            <td width="70%"><input type="text" name="school_pincode" class="form-control" id="school_pincode"></td>  
-        </tr>
-
-        <tr>  
-            <td width="30%"><label>School Board</label> 
-            <td width="70%"><input type="text" name="school_board" class="form-control" id="school_board"/></td>    
-        </tr>
-        <tr>  
-            <td width="30%"><label>School Contact</label> 
-            <td width="70%"><input type="number" name="school_contact" class="form-control" id="school_contact"/></td>    
-        </tr>
-        <tr>  
-            <td width="30%"><label>School Approval Status</label> 
-            <td width="70%"><select name="school_status" id="mySelect" class="form-control">
-                <option value="notapproved"> ⭕ Not Approved</option>
-                <option value="approved">✅ Approve</option>
-                <option value="decline">❌ Decline</option>
-
-            </select></td>
-            </tr>
-       
-    </table>
-	 <div class="modal-footer">
-    <input type="submit" name="update" id="update" value="Update" class="btn btn-success" />
-    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-	 </form>
-   </div>
-	
-	</div>
-   </div>
-	
 
     <!--Update table modal-->
 	
@@ -424,7 +363,9 @@
         </tr>
         <tr>  
             <td width="30%"><label>School Approval Status</label> 
-            <td width="70%"><select name="school_status" id="mySelect" class="form-control">
+            <td width="70%"><span id="schoolyes" style="display: block;" class="badge badge-success">Course is approved</span>
+
+                <select name="school_status"   style="visibility: visible;"  id="statuss" class="form-control">
                 <option value="notapproved"> ⭕ Not Approved</option>
                 <option value="approved">✅ Approve</option>
                 <option value="decline">❌ Decline</option>
@@ -523,7 +464,20 @@
                     $('#school_board').val(data_rs[0]['school_board']);
                     $('#school_contact').val(data_rs[0]['school_contact']);                   
                     console.log(data_rs[0]['school_name'])
-                    document.getElementById("mySelect").value = data_rs[0]['school_status'];
+
+                    if(data_rs[0]['school_status']=="approved")
+                    { 
+                        document.getElementById("statuss").style.visibility = "hidden";
+                        document.getElementById("schoolyes").style.display = "block";
+                    }
+                    else{
+                        document.getElementById("schoolyes").style.display = "none";
+
+                        document.getElementById("statuss").style.visibility = "visible";
+
+                        document.getElementById("statuss").value = data_rs[0]['school_status'];
+
+                    }
 
                 }
             });

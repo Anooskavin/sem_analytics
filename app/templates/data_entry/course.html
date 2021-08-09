@@ -305,7 +305,9 @@
                                 <tr>
                                     <td width="30%"><label>Course Status</label></td>
                                     <td width="70%">
-                                        <span id="coursenot" style="display: block;" class="badge badge-danger">Course is Not Approved or Rejected</span>
+                                        <span id="coursenot" style="display: block;" class="badge badge-danger">Course is Not Approved or closed</span>
+                                        <span id="courseyes" style="display: block;" class="badge badge-success">Course completed</span>
+
                                     <select name="status" style="visibility: visible;"  id="mySelect" class="form-control">
                                         <option value="open">Opened</option>
                                         <option value="close">Closed</option>
@@ -414,11 +416,21 @@
                                 $('#course_duration').val(data_rs[0]['course_duration']);
                                 $('#no_of_session').val(data_rs[0]['no_of_session']);
                                
-                                if(data_rs[0]['approval_status']=="approved")
+                                if(data_rs[0]['approval_status']=="approved" && data_rs[0]['status']=="open")
                                 {   console.log(data_rs[0]['approval_status'])
 
                                     document.getElementById("mySelect").style.visibility = "visible";
                                     document.getElementById("mySelect").value = data_rs[0]['status'];
+                                    document.getElementById("coursenot").style.display = "none";
+                                    document.getElementById("courseyes").style.display = "none";
+
+
+                                }
+                                else if(data_rs[0]['approval_status']=="approved" && data_rs[0]['status']=="close")
+                                {   console.log(data_rs[0]['approval_status'])
+
+                                    document.getElementById("mySelect").style.visibility = "hidden";
+                                    document.getElementById("courseyes").style.display = "block";
                                     document.getElementById("coursenot").style.display = "none";
 
 
@@ -429,8 +441,10 @@
 
                                     document.getElementById("mySelect").style.visibility = "hidden";
                                     document.getElementById("coursenot").style.display = "block";
+                                    document.getElementById("courseyes").style.display = "none";
 
                                 }
+
                                
                                 // $('#status').val(data_rs[0]['status']);
                                 $('#course_description').val(data_rs[0]['course_description']);

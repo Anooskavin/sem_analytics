@@ -262,7 +262,13 @@
 	  <form method="post" id="update_form">
         <table class="table table-bordered">
             <input type="hidden" name="student_id" class="form-control" id="student_id">
-
+            <tr>  
+                <img src="" id="profile" alt="Avatar" style="width:200px ;  display: flex; border-radius: 50%;">
+                <div id="myModal" class="modal">
+                    <img class="modal-content" id="img01">
+                  </div>
+                  
+            </tr>
         <tr>  
             <td width="30%"><label>Student Name</label></td>  
             <td width="70%"><input type="text" name="student_name" class="form-control" id="student_name"></td>  
@@ -398,6 +404,17 @@
                     $('#school_board').val(data_rs[0]['school_board']);
                     $('#school_pincode').val(data_rs[0]['school_pincode']);
 
+                    if(data_rs[0]['student_profile'])
+                    {
+                        document.getElementById("profile").src = data_rs[0]['student_profile'];
+                        console.log("img set")
+                    }
+                    else
+                    {
+                        document.getElementById("profile").src = "https://www.pinclipart.com/picdir/big/559-5594866_necktie-drawing-vector-round-avatar-user-icon-png.png";
+  
+                    }
+
                     document.getElementById("mySelect").value = data_rs[0]['account_status'];
  
                 }
@@ -405,6 +422,7 @@
         });
     });
 </script>
+
 
 
 

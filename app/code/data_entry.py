@@ -215,30 +215,30 @@ def data_entry_course_registered():
         count = arr.array('i', [0, 0, 0])
         admin_name=session.get('name')
         subject_id = request.args.get('course_id')  
-        if request.method == 'POST':      
-            adminid=session.get('id')
-            subjectid = request.form['subjectid']
-            cname = request.form['cname']
-            grade = request.form['grade']
-            cduration = request.form['duration']
-            nosession = request.form['session']
-            description = request.form['coursedes']                   
-            try:
-                cursor.execute("INSERT INTO course_details (subject_id, course_grade,course_name,course_description,course_duration,no_of_session,admin_id) VALUES (%s, %s, %s, %s, %s, %s, %s)",[subjectid, grade,cname,description,cduration,nosession,adminid])
-                mysql.connection.commit()
-                return jsonify('success')
-            except Exception as Ex:
-                return jsonify('error')
+        # if request.method == 'POST':      
+        #     adminid=session.get('id')
+        #     subjectid = request.form['subjectid']
+        #     cname = request.form['cname']
+        #     grade = request.form['grade']
+        #     cduration = request.form['duration']
+        #     nosession = request.form['session']
+        #     description = request.form['coursedes']                   
+        #     try:
+        #         cursor.execute("INSERT INTO course_details (subject_id, course_grade,course_name,course_description,course_duration,no_of_session,admin_id) VALUES (%s, %s, %s, %s, %s, %s, %s)",[subjectid, grade,cname,description,cduration,nosession,adminid])
+        #         mysql.connection.commit()
+        #         return jsonify('success')
+        #     except Exception as  Ex:
+        #         return jsonify('error')
 
         if subject_id:
             cursor.execute('SELECT * FROM course_enroll_details,student_details Where course_enroll_details.student_id=student_details.student_id and course_enroll_details.course_id=%s',[subject_id,])
             course = cursor.fetchall()
-            cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id and subject.subject_id=%s',[subject_id,])
+            cursor.execute('SELECT * FROM course_enroll_details,student_details Where course_enroll_details.student_id=student_details.student_id and course_enroll_details.course_id=%s',[subject_id,])
             count[0] = len(cursor.fetchall())      
-            cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id and subject.subject_id=%s and course_details.course_status="open"',[subject_id,])
-            count[1] = len(cursor.fetchall())
-            cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id and subject.subject_id=%s and course_details.course_status="close"',[subject_id,])
-            count[2] = len(cursor.fetchall())
+            # cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id and subject.subject_id=%s and course_details.course_status="open"',[subject_id,])
+            # count[1] = len(cursor.fetchall())
+            # cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id and subject.subject_id=%s and course_details.course_status="close"',[subject_id,])
+            # count[2] = len(cursor.fetchall())
        
             
         else:
@@ -246,10 +246,7 @@ def data_entry_course_registered():
             course = cursor.fetchall()
             cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
             count[0] = len(cursor.fetchall())      
-            cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id  and course_details.course_status="open"')
-            count[1] = len(cursor.fetchall())
-            cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id  and course_details.course_status="close"')
-            count[2] = len(cursor.fetchall())
+          
             
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
@@ -266,10 +263,16 @@ def data_entry_course_registered_student_mail():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':     
         if request.method == "POST":      
-            student_id = request.form['student_id']
+            studentid = request.form['id_stu']
+            print(studentid)
             subject = request.form['subject']
+            
+
             message = request.form['message']
-            a=email('kishore.ct19@bitsathy.ac.in',subject,message)
+            cursor.execute('select * from student_details where student_id =%s',[studentid])
+            student = cursor.fetchone()
+            
+            a=email(student['student_email'],subject,message)
                             
             return jsonify('success')
     else:
@@ -378,7 +381,7 @@ def data_entry_session():
             count[1] = len(cursor.fetchall())
             cursor.execute('SELECT * FROM course_session_details,course_details where course_details.course_id=course_session_details.course_id and course_session_details.session_status="close"')
             count[2] = len(cursor.fetchall())
-        cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
+        cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id and course_details.course_approval_status="approved" and course_details.course_status="open"')
         course = cursor.fetchall()
         cursor.execute('SELECT * FROM faculty_details')
         faculty = cursor.fetchall()
@@ -653,6 +656,7 @@ def data_entry_student_select():
                     'student_email': rs['student_email'],
                     'student_grade': rs['student_grade'],             
                     'student_whatsapp': rs['student_whatsapp'],
+                    'student_profile': rs['student_profile'],
                     'account_status': rs['account_status']
                     }
             employeearray.append(employee_dict)
