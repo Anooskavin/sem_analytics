@@ -148,7 +148,7 @@ def home():
                current=['All','All']
            elif status =='all' and filter_subject!='all':
                print('hi')
-               cursor.execute('select distinct subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where course_details.subject_id and subject.subject_id = %s and course_details.subject_id=subject.subject_id',[filter_subject])
+               cursor.execute('select distinct subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where course_details.subject_id and subject.subject_id = %s and course_details.subject_id=subject.subject_id  and course_details.course_approval_status="approved"',[filter_subject])
                courses = cursor.fetchall()
                current = [courses[0]['subject_name'], 'All']
            elif status !='all' and filter_subject=='all':
@@ -157,7 +157,7 @@ def home():
                current = ['All', 'Enrolled']
 
            else:
-               cursor.execute('select subject.subject_name,subject.subject_id,course_details.course_id,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status,course_enroll_details.course_id from course_details, course_enroll_details,subject where course_details.course_id=course_enroll_details.course_id and subject.subject_id=course_details.subject_id and  course_enroll_details.student_id=%s and subject.subject_id = %s',(id,filter_subject))
+               cursor.execute('select subject.subject_name,subject.subject_id,course_details.course_id,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status,course_enroll_details.course_id from course_details, course_enroll_details,subject where course_details.course_id=course_enroll_details.course_id and subject.subject_id=course_details.subject_id and  course_enroll_details.student_id=%s and subject.subject_id = %s  and course_details.course_approval_status="approved"',(id,filter_subject))
                courses = cursor.fetchall()
                print(courses)
                if courses:
@@ -185,7 +185,7 @@ def home():
 
         else:
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('select subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where subject.subject_id=course_details.subject_id ')
+            cursor.execute('select subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where subject.subject_id=course_details.subject_id and course_details.course_approval_status="approved" ')
             courses=cursor.fetchall()
 
             cursor.execute('select * from subject')
