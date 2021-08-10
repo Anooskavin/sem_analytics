@@ -8,7 +8,20 @@ def feedback():
     feedback = cursor.fetchone()
 
     if feedback['session_status']=='open':
-        return render_template('feedback/index.html',feedback=feedback)
+        cursor.execute('select student_details.student_name,student_details.student_email,student_details.student_id,student_details.student_contact,school_details.school_name,school_details.school_pincode  from student_details,school_details where student_details.school_id= school_details.school_id')
+        student = cursor.fetchall()
+    #     array=[]
+    #     for i in student:
+    #         array_dict={
+    #             'student_id': i['student_id'],
+    #             'student_name':i['student_name'],
+    #             'student_email':i['student_email']
+    #         }
+    #
+    #         array.append(array_dict)
+    #     student= json.dumps(array)
+        print(student)
+        return render_template('feedback/index.html',feedback=feedback,student=student)
     else:
         return render_template('feedback/formclosed.html')
 
