@@ -10,16 +10,7 @@ def feedback():
     if feedback['session_status']=='open':
         cursor.execute('select student_details.student_name,student_details.student_email,student_details.student_id,student_details.student_contact,school_details.school_name,school_details.school_pincode  from student_details,school_details where student_details.school_id= school_details.school_id')
         student = cursor.fetchall()
-    #     array=[]
-    #     for i in student:
-    #         array_dict={
-    #             'student_id': i['student_id'],
-    #             'student_name':i['student_name'],
-    #             'student_email':i['student_email']
-    #         }
-    #
-    #         array.append(array_dict)
-    #     student= json.dumps(array)
+
         print(student)
         return render_template('feedback/index.html',feedback=feedback,student=student)
     else:
@@ -28,84 +19,65 @@ def feedback():
 @app.route('/feedback/submit', methods=["POST", "GET"])
 def feedback_submit():
     if request.method=='POST':
-        name=request.form['text1']
-        email = request.form['email']
-        mobile = request.form['mobile']
-        grade = request.form['grade']
-        whatsapp = request.form['whatsapp']
-        schoolname = request.form['schoolname']
-        state=request.form['state']
-        district = request.form['district']
-        pin= request.form['pin']
-        board = request.form['board']
+        student_id=request.form['student_id']
         student_feedback = request.form['feedback']
         choice=request.form['choice']
         session_id=request.form['session_id']
-
+        print(student_id)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM course_session_details where session_id=%s',[session_id])
         feedback = cursor.fetchone()
 
 
         if feedback['session_status']=='open':
+            print("enter")
 
-
-            cursor.execute('SELECT * FROM student_details where student_name=%s and student_contact=%s', (name,mobile))
+            cursor.execute('SELECT * FROM student_details where student_id=%s and account_status="allow"', (student_id))
             student = cursor.fetchone()
             if student:
-                cursor.execute('SELECT * FROM student_attendance where student_id=%s and session_id=%s',
-                               (student['student_id'],session_id))
+                cursor.execute('SELECT * FROM student_attendance where student_id=%s and session_id=%s and satt_present="YES"',
+                               (student_id,session_id))
                 attendance = cursor.fetchone()
 
                 if attendance:
-                    return render_template('feedback/alredyresponded.html')
+                    return jsonify('responded')
                 else:
 
                     try:
 
-                        cursor.execute('insert into student_attendance (student_id,session_id) values(%s,%s) ',(student['student_id'],session_id))
+                        cursor.execute('update student_attendance set satt_present="YES" where student_id =%s and session_id =%s ',(student['student_id'],session_id))
                         mysql.connection.commit()
 
                         cursor.execute('insert into student_session_feedback (student_id,session_id,stu_session_feedback,stu_session_willingness) values(%s,%s,%s,%s) ',
                                        (student['student_id'], session_id,student_feedback,choice))
                         mysql.connection.commit()
 
+                        return jsonify('submit')
 
                     except Exception as Ex:
                         print('Error in Attendance: %s'%(Ex))
-
-                    return render_template('feedback/success.html')
+      
             else:
-                try:
-
-                    cursor.execute('insert into student_details(student_name,student_contact,student_email,school_name,school_grade,school_state,school_district,school_pincode,student_whatsapp,school_board) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ', (name, mobile,email,schoolname,grade,state,district,pin,whatsapp,board))
-                    mysql.connection.commit()
-                    last_id = cursor.lastrowid
-                    cursor.execute('insert into student_attendance (student_id,session_id) values(%s,%s) ',
-                                   (last_id, session_id))
-                    mysql.connection.commit()
-                    cursor.execute(
-                        'insert into student_session_feedback (student_id,session_id,stu_session_feedback,stu_session_willingness) values(%s,%s,%s,%s) ',
-                        (last_id, session_id, student_feedback, choice))
-                    mysql.connection.commit()
-                except Exception as Ex:
-                    print('Error in Student Insertion: %s'%(Ex))
-                return render_template('feedback/success.html')
-
+                return jsonify('close')
         else:
-            return render_template('feedback/formclosed.html')
+            return jsonify('close')
 
 
 
 
+@app.route('/feedback/close')
+def feedback_close():
+    return render_template('feedback/formclosed.html')
 
 
+@app.route('/feedback/alreadyresponded')
+def feedback_responded():
+    return render_template('feedback/alredyresponded.html')
 
 
-
-
-
-
+@app.route('/feedback/submited')
+def feedback_submited():
+    return render_template('feedback/success.html')
 
 
 

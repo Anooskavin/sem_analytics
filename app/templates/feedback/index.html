@@ -1,500 +1,629 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<title>Attendance</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="{{url_for('static',filename='img/icons/favicon.ico')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href=" {{url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fonts/Linearicons-Free-v1.0.0/icon-font.min.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/animate/animate.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/select2/select2.min.css')}}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/util.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/main.css')}}">
-<!--===============================================================================================-->
+    <title>Attendance</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="{{url_for('static',filename='img/icons/favicon.ico')}}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+        href=" {{url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+        href="{{url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+        href="{{url_for('static',filename='fonts/Linearicons-Free-v1.0.0/icon-font.min.css')}}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/animate/animate.css')}}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+        href="{{url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css')}}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/select2/select2.min.css')}}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/util.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/main.css')}}">
+    <!--===============================================================================================-->
 </head>
+
 <body>
 
 
-	<div class="container-contact100" style="background-image: url('static/img/bg-01.jpg');">
-		<div class="wrap-contact100">
-			<form class="contact100-form validate-form" id="form1" name="form1" method="post" action="/feedback/submit">
-				<span class="contact100-form-title">
-					<center>Attendance</center>
-				</span>
-				<br>
-				<input type="hidden" name="session_id" value="{{feedback.session_id}}" />
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-				
-					<span class="label-input100"> Course Name</span>
-					<input class="input100" type="text" id='course' name="course" value="{{feedback.course_name}}" disabled>
-				     
-				</div>
+    <div class="container-contact100" style="background-image: url('static/img/bg-01.jpg');">
+        <div class="wrap-contact100">
+            <form class="contact100-form validate-form" id="insert_form" method="post">
+                <span class="contact100-form-title">
+                    <center>Attendance</center>
+                </span>
+                <br>
+                <input type="hidden" id='student_id' name="student_id">
+                <input type="hidden" name="session_id" value="{{feedback.session_id}}" />
+                <div class="wrap-input100 rs1-wrap-input100 validate-input">
 
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-					<span class="label-input100"> Session Name</span>
-					<input class="input100" type="text" id='session' name="session" value="{{feedback.session_name}}" disabled>
-				    	
-				</div>
-				
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-					<span class="label-input100">Enter your email (eg: murali@gmail.com)*</span>
-					<input class="input100" type="text" name="email" id="email" onkeyup="allmail();allcheckstudent();" placeholder="Enter your email" required oninvalid="this.setCustomValidity('Enter Your Mail id')"
-                                                                                                             oninput="this.setCustomValidity('')">
-					 <span id='message1'></span>
-				</div>
+                    <span class="label-input100"> Course Name</span>
+                    <input class="input100" type="text" id='course' name="course" value="{{feedback.course_name}}"
+                        disabled>
 
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-				
-					<span class="label-input100">Tell us your name (eg: Murali Krishan M) *</span>
-					<input class="input100" type="text" id="student_name" name="text1" placeholder="Enter your name"  required>
-				     <span id='message'></span>	
-				</div>
+                </div>
 
+                <div class="wrap-input100 rs1-wrap-input100 validate-input">
+                    <span class="label-input100"> Session Name</span>
+                    <input class="input100" type="text" id='session' name="session" value="{{feedback.session_name}}"
+                        disabled>
 
-				
-				<div class="wrap-input100" >
-				
-					<span class="label-input100">Mobile no (eg:9456543234)*</span>
-					<input class="input100" type="text" id="mobileno" name="mobile" value="" placeholder="Enter your mobile no" required >
-				     <span id='message2'></span>	
-				</div>
-				
-				
-				<div class="wrap-input100 rs1-wrap-input100 validate-input">
-					<span class="label-input100">School Name (eg:Bannari Amman Vidya Niketan) *</span>
-					<input class="input100" type="text" id="schoolname" name="schoolname"  placeholder="School Name" required  >
-					
-				</div>
-				
-				
-				
-				
-				
-				
-				<div class="wrap-input100 rs1-wrap-input100 validate-input" >
-				
-					<span class="label-input100">Pincode (eg:641659)*</span>
-					<input class="input100" type="number" id='pin' name="pin"  placeholder="Enter your pincode" required >
-				     <span id='message4'></span>	
-				</div>
-				
-				
-				
+                </div>
 
-				<div class="wrap-input100 validate-input">
-					<span class="label-input100">Feedback *</span>
-					<textarea class="input100" name="feedback" placeholder="Your Feedback..." required oninvalid="this.setCustomValidity('Provide your feedback')"
-                                                                                                             oninput="this.setCustomValidity('')"></textarea>
-				</div>
-				
-				<div class="wrap-input100 validate-input">
-					<span class="label-input100">Do you wish to attend future classes</span><br>
-					<input type="radio" id="choice" name="choice" value="yes" required>
-                        <label for="yes">Yes</label>
-                        <input type="radio" id="choice" name="choice" value="no">
-                        <label for="female">No</label>
+                <div class="wrap-input100 rs1-wrap-input100 validate-input">
+                    <span class="label-input100">Enter your email (eg: murali@gmail.com)*</span>
+                    <input class="input100" type="text" name="email" id="email" onkeyup="allmail();allcheckstudent();"
+                        placeholder="Enter your email" required oninvalid="this.setCustomValidity('Enter Your Mail id')"
+                        oninput="this.setCustomValidity('')">
+                    <span id='message1'></span>
+                </div>
 
-				</div>
-				
-				
-				<div class="container-contact100-form-btn">
-					<div class="wrap-contact100-form-btn">
-						<div class="contact100-form-bgbtn"></div>
-						<button class="contact100-form-btn" id="submit-btn" type="submit" name="insert">
-							Submit
-						</button>
-					</div>
-				</div>
-				
-				
-			</form>
-		</div>
+                <div class="wrap-input100 rs1-wrap-input100 validate-input">
 
-		<span class="contact100-more">
-				
-				
-		</span>
-	</div>
+                    <span class="label-input100">Tell us your name (eg: Murali Krishan M) *</span>
+                    <input class="input100" type="text" id="student_name" name="text1" placeholder="Enter your name"
+                        required>
+                    <span id='message'></span>
+                </div>
 
 
 
-	<div id="dropDownSelect1"></div>
+                <div class="wrap-input100">
 
-<!--===============================================================================================-->
-	<script src="{{url_for('static',filename='vendor/jquery/jquery-3.2.1.min.js')}}"></script>
-<!--===============================================================================================-->
-	<script src="{{url_for('static',filename='endor/bootstrap/js/popper.js')}}v"></script>
-	<script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
-<!--===============================================================================================-->
-	<script src="{{url_for('static',filename='vendor/select2/select2.min.js')}}"></script>
-<!--===============================================================================================-->
-	<script src="{{url_for('static',filename='js/main1.js')}}"></script>
+                    <span class="label-input100">Mobile no (eg:9456543234)*</span>
+                    <input class="input100" type="text" id="mobileno" name="mobile" value=""
+                        placeholder="Enter your mobile no" required>
+                    <span id='message2'></span>
+                </div>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-<script>
-function allLetter()
-      { 
-	  document.getElementById("text1").style.textTransform = "uppercase";
-	  var inputtxt = document.getElementById('text1');
-	  console.log(inputtxt);
-      var letters = /^[A-Za-z ]+ [A-Za-z]{1,4}$/;
-      if(inputtxt.value.match(letters))
-      {
-    
-	   document.getElementById('message').innerHTML = '';
-       document.getElementById('submit-btn').disabled = false;
-      }
-      else
-      {
-	  document.getElementById('message').style.color = 'red';
-     
-	   document.getElementById('message').innerHTML = 'Enter your Name with Initial at last Avoid numbers and special characters';
-      document.getElementById('submit-btn').disabled = true;
-      }
-      }
-</script>
-<script>
 
-function allmail()
-      { 
-	  var inputmail = document.getElementById('email');
-	  
-      var email = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-      if(inputmail.value.match(email))
-      {
-    
-	   document.getElementById('message1').innerHTML = '';
-	    document.getElementById('submit-btn').disabled = false;
+                <div class="wrap-input100 rs1-wrap-input100 validate-input">
+                    <span class="label-input100">School Name (eg:Bannari Amman Vidya Niketan) *</span>
+                    <input class="input100" type="text" id="schoolname" name="schoolname" placeholder="School Name"
+                        required>
+
+                </div>
 
 
 
-      
-      }
-      else
-      {
-	  document.getElementById('message1').style.color = 'red';
-     
-	   document.getElementById('message1').innerHTML = 'Enter Valid e-mail';
-      document.getElementById('submit-btn').disabled = true;
-      }
-      }
-</script>
-<script>
-
-function allmobile()
-      { 
-	  var inputmobile = document.getElementById('mobile');
-	  
-      var mobile = /^[6789][0-9]{9}$/;
-      if(inputmobile.value.match(mobile))
-      {
-    
-	   document.getElementById('message2').innerHTML = '';
-	    document.getElementById('submit-btn').disabled = false;
-      
-      }
-      else
-      {
-	  document.getElementById('message2').style.color = 'red';
-     
-	   document.getElementById('message2').innerHTML = 'Enter Valid Mobile no';
-      document.getElementById('submit-btn').disabled = true;
-      }
-      }
-</script>
-<script>
-function allschool()
-{
-
-document.getElementById("schoolname").style.textTransform = "uppercase";
-}
-</script>
-<script>
-function allwhats()
-      { 
-	  var inputwhats = document.getElementById('whatsapp');
-	  
-      var whatsapp = /^[6789][0-9]{9}$/;
-      if(inputwhats.value.match(whatsapp))
-      {
-    
-	   document.getElementById('message3').innerHTML = '';
-	    document.getElementById('submit-btn').disabled = false;
-      
-      }
-      else
-      {
-	  document.getElementById('message3').style.color = 'red';
-     
-	   document.getElementById('message3').innerHTML = 'Enter Valid Mobile no';
-      document.getElementById('submit-btn').disabled = true;
-      }
-      }
-</script>
-<script>
-function allpin()
-      { 
-	  var inputpin = document.getElementById('pin');
-	  
-      var pin = /^[0-9]{6}$/;
-      if(inputpin.value.match(pin))
-      {
-    
-	   document.getElementById('message4').innerHTML = '';
-	    document.getElementById('submit-btn').disabled = false;
-      
-      }
-      else
-      {
-	  document.getElementById('message4').style.color = 'red';
-     
-	   document.getElementById('message4').innerHTML = 'Enter Valid Pin code';
-      document.getElementById('submit-btn').disabled = true;
-      }
-      }
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-23581568-13');
-  
-var AndraPradesh = ["Anantapur","Chittoor","East Godavari","Guntur","Kadapa","Krishna","Kurnool","Prakasam","Nellore","Srikakulam","Visakhapatnam","Vizianagaram","West Godavari"];
-var ArunachalPradesh = ["Anjaw","Changlang","Dibang Valley","East Kameng","East Siang","Kra Daadi","Kurung Kumey","Lohit","Longding","Lower Dibang Valley","Lower Subansiri","Namsai","Papum Pare","Siang","Tawang","Tirap","Upper Siang","Upper Subansiri","West Kameng","West Siang","Itanagar"];
-var Assam = ["Baksa","Barpeta","Biswanath","Bongaigaon","Cachar","Charaideo","Chirang","Darrang","Dhemaji","Dhubri","Dibrugarh","Goalpara","Golaghat","Hailakandi","Hojai","Jorhat","Kamrup Metropolitan","Kamrup (Rural)","Karbi Anglong","Karimganj","Kokrajhar","Lakhimpur","Majuli","Morigaon","Nagaon","Nalbari","Dima Hasao","Sivasagar","Sonitpur","South Salmara Mankachar","Tinsukia","Udalguri","West Karbi Anglong"];
-var Bihar = ["Araria","Arwal","Aurangabad","Banka","Begusarai","Bhagalpur","Bhojpur","Buxar","Darbhanga","East Champaran","Gaya","Gopalganj","Jamui","Jehanabad","Kaimur","Katihar","Khagaria","Kishanganj","Lakhisarai","Madhepura","Madhubani","Munger","Muzaffarpur","Nalanda","Nawada","Patna","Purnia","Rohtas","Saharsa","Samastipur","Saran","Sheikhpura","Sheohar","Sitamarhi","Siwan","Supaul","Vaishali","West Champaran"];
-var Chhattisgarh = ["Balod","Baloda Bazar","Balrampur","Bastar","Bemetara","Bijapur","Bilaspur","Dantewada","Dhamtari","Durg","Gariaband","Janjgir Champa","Jashpur","Kabirdham","Kanker","Kondagaon","Korba","Koriya","Mahasamund","Mungeli","Narayanpur","Raigarh","Raipur","Rajnandgaon","Sukma","Surajpur","Surguja"];
-var Goa = ["North Goa","South Goa"];
-var Gujarat = ["Ahmedabad","Amreli","Anand","Aravalli","Banaskantha","Bharuch","Bhavnagar","Botad","Chhota Udaipur","Dahod","Dang","Devbhoomi Dwarka","Gandhinagar","Gir Somnath","Jamnagar","Junagadh","Kheda","Kutch","Mahisagar","Mehsana","Morbi","Narmada","Navsari","Panchmahal","Patan","Porbandar","Rajkot","Sabarkantha","Surat","Surendranagar","Tapi","Vadodara","Valsad"];
-var Haryana = ["Ambala","Bhiwani","Charkhi Dadri","Faridabad","Fatehabad","Gurugram","Hisar","Jhajjar","Jind","Kaithal","Karnal","Kurukshetra","Mahendragarh","Mewat","Palwal","Panchkula","Panipat","Rewari","Rohtak","Sirsa","Sonipat","Yamunanagar"];
-var HimachalPradesh = ["Bilaspur","Chamba","Hamirpur","Kangra","Kinnaur","Kullu","Lahaul Spiti","Mandi","Shimla","Sirmaur","Solan","Una"];
-var JammuKashmir = ["Anantnag","Bandipora","Baramulla","Budgam","Doda","Ganderbal","Jammu","Kargil","Kathua","Kishtwar","Kulgam","Kupwara","Leh","Poonch","Pulwama","Rajouri","Ramban","Reasi","Samba","Shopian","Srinagar","Udhampur"];
-var Jharkhand = ["Bokaro","Chatra","Deoghar","Dhanbad","Dumka","East Singhbhum","Garhwa","Giridih","Godda","Gumla","Hazaribagh","Jamtara","Khunti","Koderma","Latehar","Lohardaga","Pakur","Palamu","Ramgarh","Ranchi","Sahebganj","Seraikela Kharsawan","Simdega","West Singhbhum"];
-var Karnataka = ["Bagalkot","Bangalore Rural","Bangalore Urban","Belgaum","Bellary","Bidar","Vijayapura","Chamarajanagar","Chikkaballapur","Chikkamagaluru","Chitradurga","Dakshina Kannada","Davanagere","Dharwad","Gadag","Gulbarga","Hassan","Haveri","Kodagu","Kolar","Koppal","Mandya","Mysore","Raichur","Ramanagara","Shimoga","Tumkur","Udupi","Uttara Kannada","Yadgir"];
-var Kerala = ["Alappuzha","Ernakulam","Idukki","Kannur","Kasaragod","Kollam","Kottayam","Kozhikode","Malappuram","Palakkad","Pathanamthitta","Thiruvananthapuram","Thrissur","Wayanad"];
-var MadhyaPradesh = ["Agar Malwa","Alirajpur","Anuppur","Ashoknagar","Balaghat","Barwani","Betul","Bhind","Bhopal","Burhanpur","Chhatarpur","Chhindwara","Damoh","Datia","Dewas","Dhar","Dindori","Guna","Gwalior","Harda","Hoshangabad","Indore","Jabalpur","Jhabua","Katni","Khandwa","Khargone","Mandla","Mandsaur","Morena","Narsinghpur","Neemuch","Panna","Raisen","Rajgarh","Ratlam","Rewa","Sagar","Satna",
-"Sehore","Seoni","Shahdol","Shajapur","Sheopur","Shivpuri","Sidhi","Singrauli","Tikamgarh","Ujjain","Umaria","Vidisha"];
-var Maharashtra = ["Ahmednagar","Akola","Amravati","Aurangabad","Beed","Bhandara","Buldhana","Chandrapur","Dhule","Gadchiroli","Gondia","Hingoli","Jalgaon","Jalna","Kolhapur","Latur","Mumbai City","Mumbai Suburban","Nagpur","Nanded","Nandurbar","Nashik","Osmanabad","Palghar","Parbhani","Pune","Raigad","Ratnagiri","Sangli","Satara","Sindhudurg","Solapur","Thane","Wardha","Washim","Yavatmal"];
-var Manipur = ["Bishnupur","Chandel","Churachandpur","Imphal East","Imphal West","Jiribam","Kakching","Kamjong","Kangpokpi","Noney","Pherzawl","Senapati","Tamenglong","Tengnoupal","Thoubal","Ukhrul"];
-var Meghalaya = ["East Garo Hills","East Jaintia Hills","East Khasi Hills","North Garo Hills","Ri Bhoi","South Garo Hills","South West Garo Hills","South West Khasi Hills","West Garo Hills","West Jaintia Hills","West Khasi Hills"];
-var Mizoram = ["Aizawl","Champhai","Kolasib","Lawngtlai","Lunglei","Mamit","Saiha","Serchhip","Aizawl","Champhai","Kolasib","Lawngtlai","Lunglei","Mamit","Saiha","Serchhip"];
-var Nagaland = ["Dimapur","Kiphire","Kohima","Longleng","Mokokchung","Mon","Peren","Phek","Tuensang","Wokha","Zunheboto"];
-var Odisha = ["Angul","Balangir","Balasore","Bargarh","Bhadrak","Boudh","Cuttack","Debagarh","Dhenkanal","Gajapati","Ganjam","Jagatsinghpur","Jajpur","Jharsuguda","Kalahandi","Kandhamal","Kendrapara","Kendujhar","Khordha","Koraput","Malkangiri","Mayurbhanj","Nabarangpur","Nayagarh","Nuapada","Puri","Rayagada","Sambalpur","Subarnapur","Sundergarh"];
-var Punjab = ["Amritsar","Barnala","Bathinda","Faridkot","Fatehgarh Sahib","Fazilka","Firozpur","Gurdaspur","Hoshiarpur","Jalandhar","Kapurthala","Ludhiana","Mansa","Moga","Mohali","Muktsar","Pathankot","Patiala","Rupnagar","Sangrur","Shaheed Bhagat Singh Nagar","Tarn Taran"];
-var Rajasthan = ["Ajmer","Alwar","Banswara","Baran","Barmer","Bharatpur","Bhilwara","Bikaner","Bundi","Chittorgarh","Churu","Dausa","Dholpur","Dungarpur","Ganganagar","Hanumangarh","Jaipur","Jaisalmer","Jalore","Jhalawar","Jhunjhunu","Jodhpur","Karauli","Kota","Nagaur","Pali","Pratapgarh","Rajsamand","Sawai Madhopur","Sikar","Sirohi","Tonk","Udaipur"];
-var Sikkim = ["East Sikkim","North Sikkim","South Sikkim","West Sikkim"];
-var TamilNadu = ["Ariyalur","Chennai","Coimbatore","Cuddalore","Dharmapuri","Dindigul","Erode","Kanchipuram","Kanyakumari","Karur","Krishnagiri","Madurai","Nagapattinam","Namakkal","Nilgiris","Perambalur","Pudukkottai","Ramanathapuram","Salem","Sivaganga","Thanjavur","Theni","Thoothukudi","Tiruchirappalli","Tirunelveli","Tiruppur","Tiruvallur","Tiruvannamalai","Tiruvarur","Vellore","Viluppuram","Virudhunagar"];
-var Telangana = ["Adilabad","Bhadradri Kothagudem","Hyderabad","Jagtial","Jangaon","Jayashankar","Jogulamba","Kamareddy","Karimnagar","Khammam","Komaram Bheem","Mahabubabad","Mahbubnagar","Mancherial","Medak","Medchal","Nagarkurnool","Nalgonda","Nirmal","Nizamabad","Peddapalli","Rajanna Sircilla","Ranga Reddy","Sangareddy","Siddipet","Suryapet","Vikarabad","Wanaparthy","Warangal Rural","Warangal Urban","Yadadri Bhuvanagiri"];
-var Tripura = ["Dhalai","Gomati","Khowai","North Tripura","Sepahijala","South Tripura","Unakoti","West Tripura"];
-var UttarPradesh = ["Agra","Aligarh","Allahabad","Ambedkar Nagar","Amethi","Amroha","Auraiya","Azamgarh","Baghpat","Bahraich","Ballia","Balrampur","Banda","Barabanki","Bareilly","Basti","Bhadohi","Bijnor","Budaun","Bulandshahr","Chandauli","Chitrakoot","Deoria","Etah","Etawah","Faizabad","Farrukhabad","Fatehpur","Firozabad","Gautam Buddha Nagar","Ghaziabad","Ghazipur","Gonda","Gorakhpur","Hamirpur","Hapur","Hardoi","Hathras","Jalaun","Jaunpur","Jhansi","Kannauj","Kanpur Dehat","Kanpur Nagar","Kasganj","Kaushambi","Kheri","Kushinagar","Lalitpur","Lucknow","Maharajganj","Mahoba","Mainpuri","Mathura","Mau","Meerut","Mirzapur","Moradabad","Muzaffarnagar","Pilibhit","Pratapgarh","Raebareli","Rampur","Saharanpur","Sambhal","Sant Kabir Nagar","Shahjahanpur","Shamli","Shravasti","Siddharthnagar","Sitapur","Sonbhadra","Sultanpur","Unnao","Varanasi"];
-var Uttarakhand  = ["Almora","Bageshwar","Chamoli","Champawat","Dehradun","Haridwar","Nainital","Pauri","Pithoragarh","Rudraprayag","Tehri","Udham Singh Nagar","Uttarkashi"];
-var WestBengal = ["Alipurduar","Bankura","Birbhum","Cooch Behar","Dakshin Dinajpur","Darjeeling","Hooghly","Howrah","Jalpaiguri","Jhargram","Kalimpong","Kolkata","Malda","Murshidabad","Nadia","North 24 Parganas","Paschim Bardhaman","Paschim Medinipur","Purba Bardhaman","Purba Medinipur","Purulia","South 24 Parganas","Uttar Dinajpur"];
-var AndamanNicobar = ["Nicobar","North Middle Andaman","South Andaman"];
-var Chandigarh = ["Chandigarh"];
-var DadraHaveli = ["Dadra Nagar Haveli"];
-var DamanDiu = ["Daman","Diu"];
-var Delhi = ["Central Delhi","East Delhi","New Delhi","North Delhi","North East Delhi","North West Delhi","Shahdara","South Delhi","South East Delhi","South West Delhi","West Delhi"];
-var Lakshadweep = ["Lakshadweep"];
-var Puducherry = ["Karaikal","Mahe","Puducherry","Yanam"];
 
 
-$("#inputState").change(function(){
-  var StateSelected = $(this).val();
-  var optionsList;
-  var htmlString = "";
 
-  switch (StateSelected) {
-    case "Andra Pradesh":
-        optionsList = AndraPradesh;
-        break;
-    case "Arunachal Pradesh":
-        optionsList = ArunachalPradesh;
-        break;
-    case "Assam":
-        optionsList = Assam;
-        break;
-    case "Bihar":
-        optionsList = Bihar;
-        break;
-    case "Chhattisgarh":
-        optionsList = Chhattisgarh;
-        break;
-    case "Goa":
-        optionsList = Goa;
-        break;
-    case  "Gujarat":
-        optionsList = Gujarat;
-        break;
-    case "Haryana":
-        optionsList = Haryana;
-        break;
-    case "Himachal Pradesh":
-        optionsList = HimachalPradesh;
-        break;
-    case "Jammu and Kashmir":
-        optionsList = JammuKashmir;
-        break;
-    case "Jharkhand":
-        optionsList = Jharkhand;
-        break;
-    case  "Karnataka":
-        optionsList = Karnataka;
-        break;
-    case "Kerala":
-        optionsList = Kerala;
-        break;
-    case  "Madya Pradesh":
-        optionsList = MadhyaPradesh;
-        break;
-    case "Maharashtra":
-        optionsList = Maharashtra;
-        break;
-    case  "Manipur":
-        optionsList = Manipur;
-        break;
-    case "Meghalaya":
-        optionsList = Meghalaya ;
-        break;
-    case  "Mizoram":
-        optionsList = Mizoram;
-        break;
-    case "Nagaland":
-        optionsList = Nagaland;
-        break;
-    case  "Orissa":
-        optionsList = Orissa;
-        break;
-    case "Punjab":
-        optionsList = Punjab;
-        break;
-    case  "Rajasthan":
-        optionsList = Rajasthan;
-        break;
-    case "Sikkim":
-        optionsList = Sikkim;
-        break;
-    case  "Tamil Nadu":
-        optionsList = TamilNadu;
-        break;
-    case  "Telangana":
-        optionsList = Telangana;
-        break;
-    case "Tripura":
-        optionsList = Tripura ;
-        break;
-    case  "Uttaranchal":
-        optionsList = Uttaranchal;
-        break;
-    case  "Uttar Pradesh":
-        optionsList = UttarPradesh;
-        break;
-    case "West Bengal":
-        optionsList = WestBengal;
-        break;
-    case  "Andaman and Nicobar Islands":
-        optionsList = AndamanNicobar;
-        break;
-    case "Chandigarh":
-        optionsList = Chandigarh;
-        break;
-    case  "Dadar and Nagar Haveli":
-        optionsList = DadraHaveli;
-        break;
-    case "Daman and Diu":
-        optionsList = DamanDiu;
-        break;
-    case  "Delhi":
-        optionsList = Delhi;
-        break;
-    case "Lakshadeep":
-        optionsList = Lakshadeep ;
-        break;
-    case  "Pondicherry":
-        optionsList = Pondicherry;
-        break;
-}
+                <div class="wrap-input100 rs1-wrap-input100 validate-input">
+
+                    <span class="label-input100">Pincode (eg:641659)*</span>
+                    <input class="input100" type="number" id='pin' name="pin" placeholder="Enter your pincode" required>
+                    <span id='message4'></span>
+                </div>
 
 
-  for(var i = 0; i < optionsList.length; i++){
-    htmlString = htmlString+"<option value='"+ optionsList[i] +"'>"+ optionsList[i] +"</option>";
-  }
-  $("#inputDistrict").html(htmlString);
-
-});
-   
-</script>
-
-<script>
-function allcheckstudent(){
-const aname =[];
-const aemail =[];
-const amobile=[];
-const aschool=[];
-const apin=[];
-const aid=[];
-
-	{% for i in student %}
-	var student_mail='{{i.student_email}}';
-	var name = '{{i.student_name}}';
-	var mobile ='{{i.student_contact}}';
-	var school ='{{i.school_name}}';
-	var pincode ='{{i.school_pincode}}';
-	var id ='{{i.student_id}}';
-	aname.push(name);
-	aemail.push(student_mail);
-	amobile.push(mobile);
-	aschool.push(school);
-	apin.push(pincode);
-	aid.push(id);
-
-{% endfor %}
-
-var inputmail = document.getElementById('email').value;
-for (i=0;i<aname.length;i++){
 
 
-          if (aemail[i] == inputmail ){
-                console.log('hi')
+                <div class="wrap-input100 validate-input">
+                    <span class="label-input100">Feedback *</span>
+                    <textarea class="input100" id="feedback" name="feedback" placeholder="Your Feedback..." required
+                        oninvalid="this.setCustomValidity('Provide your feedback')"
+                        oninput="this.setCustomValidity('')"></textarea>
+                </div>
 
-               document.getElementById('student_name').value = aname[i];
-               document.getElementById('mobileno').value = amobile[i];
-               document.getElementById('schoolname').value = aschool[i];
-               document.getElementById('pin').value = apin[i];
-               document.getElementById('message').style.color = 'green';
+                <div class="wrap-input100 validate-input">
+                    <span class="label-input100">Do you wish to attend future classes</span><br>
+                    <input type="radio" id="choice" name="choice" value="yes" required>
+                    <label for="yes">Yes</label>
+                    <input type="radio" id="choice" name="choice" value="no">
+                    <label for="female">No</label>
 
-	          document.getElementById('message').innerHTML = 'your id '+aid[i];
-               break;
-
-                                      }
-
-          else{
-          document.getElementById('student_name').value = '';
-               document.getElementById('mobileno').value = '';
-               document.getElementById('schoolname').value = '';
-               document.getElementById('pin').value = '';
-               document.getElementById('message').innerHTML='';
+                </div>
 
 
-          }
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn" id="submit-btn" type="submit" name="insert">
+                            Submit
+                        </button>
+                    </div>
+                </div>
 
-}
+
+            </form>
+        </div>
+
+        <span class="contact100-more">
 
 
-	}
+        </span>
+    </div>
 
-</script>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="{{url_for('static',filename='vendor/jquery/jquery-3.2.1.min.js')}}"></script>
+    <!--===============================================================================================-->
+    <script src="{{url_for('static',filename='endor/bootstrap/js/popper.js')}}v"></script>
+    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+    <!--===============================================================================================-->
+    <script src="{{url_for('static',filename='vendor/select2/select2.min.js')}}"></script>
+    <!--===============================================================================================-->
+    <script src="{{url_for('static',filename='js/main1.js')}}"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+    <script>
+        function allLetter() {
+            document.getElementById("text1").style.textTransform = "uppercase";
+            var inputtxt = document.getElementById('text1');
+            console.log(inputtxt);
+            var letters = /^[A-Za-z ]+ [A-Za-z]{1,4}$/;
+            if (inputtxt.value.match(letters)) {
+
+                document.getElementById('message').innerHTML = '';
+                document.getElementById('submit-btn').disabled = false;
+            } else {
+                document.getElementById('message').style.color = 'red';
+
+                document.getElementById('message').innerHTML =
+                    'Enter your Name with Initial at last Avoid numbers and special characters';
+                document.getElementById('submit-btn').disabled = true;
+            }
+        }
+    </script>
+    <script>
+        function allmail() {
+            var inputmail = document.getElementById('email');
+
+            var email = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+            if (inputmail.value.match(email)) {
+
+                document.getElementById('message1').innerHTML = '';
+                document.getElementById('submit-btn').disabled = false;
+
+
+
+
+            } else {
+                document.getElementById('message1').style.color = 'red';
+
+                document.getElementById('message1').innerHTML = 'Enter Valid e-mail';
+                document.getElementById('submit-btn').disabled = true;
+            }
+        }
+    </script>
+    <script>
+        function allmobile() {
+            var inputmobile = document.getElementById('mobile');
+
+            var mobile = /^[6789][0-9]{9}$/;
+            if (inputmobile.value.match(mobile)) {
+
+                document.getElementById('message2').innerHTML = '';
+                document.getElementById('submit-btn').disabled = false;
+
+            } else {
+                document.getElementById('message2').style.color = 'red';
+
+                document.getElementById('message2').innerHTML = 'Enter Valid Mobile no';
+                document.getElementById('submit-btn').disabled = true;
+            }
+        }
+    </script>
+    <script>
+        function allschool() {
+
+            document.getElementById("schoolname").style.textTransform = "uppercase";
+        }
+    </script>
+    <script>
+        function allwhats() {
+            var inputwhats = document.getElementById('whatsapp');
+
+            var whatsapp = /^[6789][0-9]{9}$/;
+            if (inputwhats.value.match(whatsapp)) {
+
+                document.getElementById('message3').innerHTML = '';
+                document.getElementById('submit-btn').disabled = false;
+
+            } else {
+                document.getElementById('message3').style.color = 'red';
+
+                document.getElementById('message3').innerHTML = 'Enter Valid Mobile no';
+                document.getElementById('submit-btn').disabled = true;
+            }
+        }
+    </script>
+    <script>
+        function allpin() {
+            var inputpin = document.getElementById('pin');
+
+            var pin = /^[0-9]{6}$/;
+            if (inputpin.value.match(pin)) {
+
+                document.getElementById('message4').innerHTML = '';
+                document.getElementById('submit-btn').disabled = false;
+
+            } else {
+                document.getElementById('message4').style.color = 'red';
+
+                document.getElementById('message4').innerHTML = 'Enter Valid Pin code';
+                document.getElementById('submit-btn').disabled = true;
+            }
+        }
+    </script>
+    <!-- <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-23581568-13');
+
+        var AndraPradesh = ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Kadapa", "Krishna", "Kurnool",
+            "Prakasam", "Nellore", "Srikakulam", "Visakhapatnam", "Vizianagaram", "West Godavari"
+        ];
+        var ArunachalPradesh = ["Anjaw", "Changlang", "Dibang Valley", "East Kameng", "East Siang", "Kra Daadi",
+            "Kurung Kumey", "Lohit", "Longding", "Lower Dibang Valley", "Lower Subansiri", "Namsai", "Papum Pare",
+            "Siang", "Tawang", "Tirap", "Upper Siang", "Upper Subansiri", "West Kameng", "West Siang", "Itanagar"
+        ];
+        var Assam = ["Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang",
+            "Dhemaji", "Dhubri", "Dibrugarh", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat",
+            "Kamrup Metropolitan", "Kamrup (Rural)", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur",
+            "Majuli", "Morigaon", "Nagaon", "Nalbari", "Dima Hasao", "Sivasagar", "Sonitpur",
+            "South Salmara Mankachar", "Tinsukia", "Udalguri", "West Karbi Anglong"
+        ];
+        var Bihar = ["Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar",
+            "Darbhanga", "East Champaran", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Kaimur", "Katihar",
+            "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur", "Nalanda",
+            "Nawada", "Patna", "Purnia", "Rohtas", "Saharsa", "Samastipur", "Saran", "Sheikhpura", "Sheohar",
+            "Sitamarhi", "Siwan", "Supaul", "Vaishali", "West Champaran"
+        ];
+        var Chhattisgarh = ["Balod", "Baloda Bazar", "Balrampur", "Bastar", "Bemetara", "Bijapur", "Bilaspur",
+            "Dantewada", "Dhamtari", "Durg", "Gariaband", "Janjgir Champa", "Jashpur", "Kabirdham", "Kanker",
+            "Kondagaon", "Korba", "Koriya", "Mahasamund", "Mungeli", "Narayanpur", "Raigarh", "Raipur",
+            "Rajnandgaon", "Sukma", "Surajpur", "Surguja"
+        ];
+        var Goa = ["North Goa", "South Goa"];
+        var Gujarat = ["Ahmedabad", "Amreli", "Anand", "Aravalli", "Banaskantha", "Bharuch", "Bhavnagar", "Botad",
+            "Chhota Udaipur", "Dahod", "Dang", "Devbhoomi Dwarka", "Gandhinagar", "Gir Somnath", "Jamnagar",
+            "Junagadh", "Kheda", "Kutch", "Mahisagar", "Mehsana", "Morbi", "Narmada", "Navsari", "Panchmahal",
+            "Patan", "Porbandar", "Rajkot", "Sabarkantha", "Surat", "Surendranagar", "Tapi", "Vadodara", "Valsad"
+        ];
+        var Haryana = ["Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Gurugram", "Hisar", "Jhajjar",
+            "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Mewat", "Palwal", "Panchkula", "Panipat",
+            "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"
+        ];
+        var HimachalPradesh = ["Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu", "Lahaul Spiti", "Mandi",
+            "Shimla", "Sirmaur", "Solan", "Una"
+        ];
+        var JammuKashmir = ["Anantnag", "Bandipora", "Baramulla", "Budgam", "Doda", "Ganderbal", "Jammu", "Kargil",
+            "Kathua", "Kishtwar", "Kulgam", "Kupwara", "Leh", "Poonch", "Pulwama", "Rajouri", "Ramban", "Reasi",
+            "Samba", "Shopian", "Srinagar", "Udhampur"
+        ];
+        var Jharkhand = ["Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Garhwa", "Giridih",
+            "Godda", "Gumla", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur",
+            "Palamu", "Ramgarh", "Ranchi", "Sahebganj", "Seraikela Kharsawan", "Simdega", "West Singhbhum"
+        ];
+        var Karnataka = ["Bagalkot", "Bangalore Rural", "Bangalore Urban", "Belgaum", "Bellary", "Bidar", "Vijayapura",
+            "Chamarajanagar", "Chikkaballapur", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada", "Davanagere",
+            "Dharwad", "Gadag", "Gulbarga", "Hassan", "Haveri", "Kodagu", "Kolar", "Koppal", "Mandya", "Mysore",
+            "Raichur", "Ramanagara", "Shimoga", "Tumkur", "Udupi", "Uttara Kannada", "Yadgir"
+        ];
+        var Kerala = ["Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode",
+            "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram", "Thrissur", "Wayanad"
+        ];
+        var MadhyaPradesh = ["Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul",
+            "Bhind", "Bhopal", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar",
+            "Dindori", "Guna", "Gwalior", "Harda", "Hoshangabad", "Indore", "Jabalpur", "Jhabua", "Katni",
+            "Khandwa", "Khargone", "Mandla", "Mandsaur", "Morena", "Narsinghpur", "Neemuch", "Panna", "Raisen",
+            "Rajgarh", "Ratlam", "Rewa", "Sagar", "Satna",
+            "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh",
+            "Ujjain", "Umaria", "Vidisha"
+        ];
+        var Maharashtra = ["Ahmednagar", "Akola", "Amravati", "Aurangabad", "Beed", "Bhandara", "Buldhana",
+            "Chandrapur", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur",
+            "Mumbai City", "Mumbai Suburban", "Nagpur", "Nanded", "Nandurbar", "Nashik", "Osmanabad", "Palghar",
+            "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane",
+            "Wardha", "Washim", "Yavatmal"
+        ];
+        var Manipur = ["Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Jiribam", "Kakching",
+            "Kamjong", "Kangpokpi", "Noney", "Pherzawl", "Senapati", "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"
+        ];
+        var Meghalaya = ["East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "North Garo Hills", "Ri Bhoi",
+            "South Garo Hills", "South West Garo Hills", "South West Khasi Hills", "West Garo Hills",
+            "West Jaintia Hills", "West Khasi Hills"
+        ];
+        var Mizoram = ["Aizawl", "Champhai", "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saiha", "Serchhip", "Aizawl",
+            "Champhai", "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saiha", "Serchhip"
+        ];
+        var Nagaland = ["Dimapur", "Kiphire", "Kohima", "Longleng", "Mokokchung", "Mon", "Peren", "Phek", "Tuensang",
+            "Wokha", "Zunheboto"
+        ];
+        var Odisha = ["Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Cuttack", "Debagarh",
+            "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi", "Kandhamal",
+            "Kendrapara", "Kendujhar", "Khordha", "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh",
+            "Nuapada", "Puri", "Rayagada", "Sambalpur", "Subarnapur", "Sundergarh"
+        ];
+        var Punjab = ["Amritsar", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka", "Firozpur",
+            "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", "Ludhiana", "Mansa", "Moga", "Mohali", "Muktsar",
+            "Pathankot", "Patiala", "Rupnagar", "Sangrur", "Shaheed Bhagat Singh Nagar", "Tarn Taran"
+        ];
+        var Rajasthan = ["Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara", "Bikaner", "Bundi",
+            "Chittorgarh", "Churu", "Dausa", "Dholpur", "Dungarpur", "Ganganagar", "Hanumangarh", "Jaipur",
+            "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", "Kota", "Nagaur", "Pali",
+            "Pratapgarh", "Rajsamand", "Sawai Madhopur", "Sikar", "Sirohi", "Tonk", "Udaipur"
+        ];
+        var Sikkim = ["East Sikkim", "North Sikkim", "South Sikkim", "West Sikkim"];
+        var TamilNadu = ["Ariyalur", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode",
+            "Kanchipuram", "Kanyakumari", "Karur", "Krishnagiri", "Madurai", "Nagapattinam", "Namakkal", "Nilgiris",
+            "Perambalur", "Pudukkottai", "Ramanathapuram", "Salem", "Sivaganga", "Thanjavur", "Theni",
+            "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tiruppur", "Tiruvallur", "Tiruvannamalai",
+            "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"
+        ];
+        var Telangana = ["Adilabad", "Bhadradri Kothagudem", "Hyderabad", "Jagtial", "Jangaon", "Jayashankar",
+            "Jogulamba", "Kamareddy", "Karimnagar", "Khammam", "Komaram Bheem", "Mahabubabad", "Mahbubnagar",
+            "Mancherial", "Medak", "Medchal", "Nagarkurnool", "Nalgonda", "Nirmal", "Nizamabad", "Peddapalli",
+            "Rajanna Sircilla", "Ranga Reddy", "Sangareddy", "Siddipet", "Suryapet", "Vikarabad", "Wanaparthy",
+            "Warangal Rural", "Warangal Urban", "Yadadri Bhuvanagiri"
+        ];
+        var Tripura = ["Dhalai", "Gomati", "Khowai", "North Tripura", "Sepahijala", "South Tripura", "Unakoti",
+            "West Tripura"
+        ];
+        var UttarPradesh = ["Agra", "Aligarh", "Allahabad", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya", "Azamgarh",
+            "Baghpat", "Bahraich", "Ballia", "Balrampur", "Banda", "Barabanki", "Bareilly", "Basti", "Bhadohi",
+            "Bijnor", "Budaun", "Bulandshahr", "Chandauli", "Chitrakoot", "Deoria", "Etah", "Etawah", "Faizabad",
+            "Farrukhabad", "Fatehpur", "Firozabad", "Gautam Buddha Nagar", "Ghaziabad", "Ghazipur", "Gonda",
+            "Gorakhpur", "Hamirpur", "Hapur", "Hardoi", "Hathras", "Jalaun", "Jaunpur", "Jhansi", "Kannauj",
+            "Kanpur Dehat", "Kanpur Nagar", "Kasganj", "Kaushambi", "Kheri", "Kushinagar", "Lalitpur", "Lucknow",
+            "Maharajganj", "Mahoba", "Mainpuri", "Mathura", "Mau", "Meerut", "Mirzapur", "Moradabad",
+            "Muzaffarnagar", "Pilibhit", "Pratapgarh", "Raebareli", "Rampur", "Saharanpur", "Sambhal",
+            "Sant Kabir Nagar", "Shahjahanpur", "Shamli", "Shravasti", "Siddharthnagar", "Sitapur", "Sonbhadra",
+            "Sultanpur", "Unnao", "Varanasi"
+        ];
+        var Uttarakhand = ["Almora", "Bageshwar", "Chamoli", "Champawat", "Dehradun", "Haridwar", "Nainital", "Pauri",
+            "Pithoragarh", "Rudraprayag", "Tehri", "Udham Singh Nagar", "Uttarkashi"
+        ];
+        var WestBengal = ["Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Darjeeling",
+            "Hooghly", "Howrah", "Jalpaiguri", "Jhargram", "Kalimpong", "Kolkata", "Malda", "Murshidabad", "Nadia",
+            "North 24 Parganas", "Paschim Bardhaman", "Paschim Medinipur", "Purba Bardhaman", "Purba Medinipur",
+            "Purulia", "South 24 Parganas", "Uttar Dinajpur"
+        ];
+        var AndamanNicobar = ["Nicobar", "North Middle Andaman", "South Andaman"];
+        var Chandigarh = ["Chandigarh"];
+        var DadraHaveli = ["Dadra Nagar Haveli"];
+        var DamanDiu = ["Daman", "Diu"];
+        var Delhi = ["Central Delhi", "East Delhi", "New Delhi", "North Delhi", "North East Delhi", "North West Delhi",
+            "Shahdara", "South Delhi", "South East Delhi", "South West Delhi", "West Delhi"
+        ];
+        var Lakshadweep = ["Lakshadweep"];
+        var Puducherry = ["Karaikal", "Mahe", "Puducherry", "Yanam"];
+
+
+        $("#inputState").change(function () {
+            var StateSelected = $(this).val();
+            var optionsList;
+            var htmlString = "";
+
+            switch (StateSelected) {
+                case "Andra Pradesh":
+                    optionsList = AndraPradesh;
+                    break;
+                case "Arunachal Pradesh":
+                    optionsList = ArunachalPradesh;
+                    break;
+                case "Assam":
+                    optionsList = Assam;
+                    break;
+                case "Bihar":
+                    optionsList = Bihar;
+                    break;
+                case "Chhattisgarh":
+                    optionsList = Chhattisgarh;
+                    break;
+                case "Goa":
+                    optionsList = Goa;
+                    break;
+                case "Gujarat":
+                    optionsList = Gujarat;
+                    break;
+                case "Haryana":
+                    optionsList = Haryana;
+                    break;
+                case "Himachal Pradesh":
+                    optionsList = HimachalPradesh;
+                    break;
+                case "Jammu and Kashmir":
+                    optionsList = JammuKashmir;
+                    break;
+                case "Jharkhand":
+                    optionsList = Jharkhand;
+                    break;
+                case "Karnataka":
+                    optionsList = Karnataka;
+                    break;
+                case "Kerala":
+                    optionsList = Kerala;
+                    break;
+                case "Madya Pradesh":
+                    optionsList = MadhyaPradesh;
+                    break;
+                case "Maharashtra":
+                    optionsList = Maharashtra;
+                    break;
+                case "Manipur":
+                    optionsList = Manipur;
+                    break;
+                case "Meghalaya":
+                    optionsList = Meghalaya;
+                    break;
+                case "Mizoram":
+                    optionsList = Mizoram;
+                    break;
+                case "Nagaland":
+                    optionsList = Nagaland;
+                    break;
+                case "Orissa":
+                    optionsList = Orissa;
+                    break;
+                case "Punjab":
+                    optionsList = Punjab;
+                    break;
+                case "Rajasthan":
+                    optionsList = Rajasthan;
+                    break;
+                case "Sikkim":
+                    optionsList = Sikkim;
+                    break;
+                case "Tamil Nadu":
+                    optionsList = TamilNadu;
+                    break;
+                case "Telangana":
+                    optionsList = Telangana;
+                    break;
+                case "Tripura":
+                    optionsList = Tripura;
+                    break;
+                case "Uttaranchal":
+                    optionsList = Uttaranchal;
+                    break;
+                case "Uttar Pradesh":
+                    optionsList = UttarPradesh;
+                    break;
+                case "West Bengal":
+                    optionsList = WestBengal;
+                    break;
+                case "Andaman and Nicobar Islands":
+                    optionsList = AndamanNicobar;
+                    break;
+                case "Chandigarh":
+                    optionsList = Chandigarh;
+                    break;
+                case "Dadar and Nagar Haveli":
+                    optionsList = DadraHaveli;
+                    break;
+                case "Daman and Diu":
+                    optionsList = DamanDiu;
+                    break;
+                case "Delhi":
+                    optionsList = Delhi;
+                    break;
+                case "Lakshadeep":
+                    optionsList = Lakshadeep;
+                    break;
+                case "Pondicherry":
+                    optionsList = Pondicherry;
+                    break;
+            }
+
+
+            for (var i = 0; i < optionsList.length; i++) {
+                htmlString = htmlString + "<option value='" + optionsList[i] + "'>" + optionsList[i] +
+                    "</option>";
+            }
+            $("#inputDistrict").html(htmlString);
+
+        });
+    </script> -->
+
+    <script>
+        function allcheckstudent() {
+            const aname = [];
+            const aemail = [];
+            const amobile = [];
+            const aschool = [];
+            const apin = [];
+            const aid = [];
+
+            {%for i in student %}
+            var student_mail = '{{i.student_email}}';
+            var name = '{{i.student_name}}';
+            var mobile = '{{i.student_contact}}';
+            var school = '{{i.school_name}}';
+            var pincode = '{{i.school_pincode}}';
+            var id = '{{i.student_id}}';
+            aname.push(name);
+            aemail.push(student_mail);
+            amobile.push(mobile);
+            aschool.push(school);
+            apin.push(pincode);
+            aid.push(id);
+
+            {% endfor %}
+
+            var inputmail = document.getElementById('email').value;
+            for (i = 0; i < aname.length; i++) {
+
+
+                if (aemail[i] == inputmail) {
+                    console.log('hi')
+
+                    document.getElementById('student_name').value = aname[i];
+                    document.getElementById('mobileno').value = amobile[i];
+                    document.getElementById('schoolname').value = aschool[i];
+                    document.getElementById('pin').value = apin[i];
+                    document.getElementById('student_id').value = aid[i];
+
+                    document.getElementById('message').style.color = 'green';
+
+                    document.getElementById('message').innerHTML = 'your id ' + aid[i];
+                    break;
+
+                } else {
+                    document.getElementById('student_name').value = '';
+                    document.getElementById('mobileno').value = '';
+                    document.getElementById('schoolname').value = '';
+                    document.getElementById('pin').value = '';
+                    document.getElementById('message').innerHTML = '';
+
+
+                }
+
+            }
+
+
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#insert_form').on("submit", function (event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: "/feedback/submit",
+                    method: "POST",
+                    data: $('#insert_form').serialize(),
+                    beforeSend: function () {
+                        $('#insert').val("Inserting");
+                    },
+                    success: function (data) {
+                        if (data == 'submit') 
+                        {
+                            window.location.href = "/feedback/submited";
+                          
+                        }
+                        if (data == 'responded') {
+                          
+                            window.location.href = "/feedback/alreadyresponded";
+                        }
+                     if (data == 'close') {
+                          
+                          window.location.href = "/feedback/close";
+                      }
+                    }
+                });
+
+            });
+        });
+    </script>
 </body>
+
 </html>

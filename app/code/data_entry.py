@@ -353,10 +353,8 @@ def data_entry_session():
                 cursor.execute("INSERT INTO course_session_details (course_id, session_duration ,faculty_id,session_name,session_discription,session_date,session_starttime,session_endtime) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",[cname,sduration,fid,sname,desc,sdate,stime,etime])
                 mysql.connection.commit()
                 last_id = cursor.lastrowid
-                cursor.execute('SELECT * FROM course_details Where course_id=%s',[cname])
-                courses = cursor.fetchone()
                 print(last_id)                
-                cursor.execute('INSERT INTO student_attendance (session_id,student_id) SELECT %s,student_id FROM student_details where school_grade=%s'% (last_id,courses['course_grade']))
+                cursor.execute('INSERT INTO student_attendance (session_id,student_id) SELECT %s,student_id FROM course_enroll_details where course_id=%s'% (last_id,cname))
                 mysql.connection.commit()
                 return jsonify('success')
             except Exception as Ex:
