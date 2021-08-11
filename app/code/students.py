@@ -26,11 +26,12 @@ def student_login():
             cursor.execute('select * from student_details where student_password=%s  and account_status =%s and student_email =%s', (pwd,status, username))
             student = cursor.fetchone()
 
-            session['student_id'] = student['student_id']
-            session['user_type']='student'
+
 
 
             if student:
+                session['student_id'] = student['student_id']
+                session['user_type'] = 'student'
                 return redirect(url_for('home'))
             else:
                 return render_template('students/login.html', msg='Invalid Credentials/ Account not Verified')

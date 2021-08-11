@@ -166,7 +166,30 @@ def admin_analytics_session():
     else:
         return redirect(url_for('login'))
 
-
+@app.route('/admin/session/select', methods=['GET', 'POST'])
+def admin_entry_session_select():
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    print("hi")
+    if request.method == 'POST':
+        print('hi1')
+        session_id = request.form['session_id']
+        cur.execute(
+            "SELECT * FROM course_details,course_session_details,faculty_details WHERE course_session_details.course_id=course_details.course_id and course_session_details.faculty_id=faculty_details.faculty_id and session_id = %s",
+            [session_id])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                'session_id': rs['session_id'],
+                'course_name': rs['course_name'],
+                'session_name': rs['session_name'],
+                'faculty_name': rs['faculty_name'],
+                'session_status': rs['session_status'],
+                'session_starttime': rs['session_starttime'],
+                'session_endtime': rs['session_endtime'],
+                'session_discription': rs['session_discription']}
+            employeearray.append(employee_dict)
+        return json.dumps(employeearray)
 ####################################### Session table end ############################################
 
 

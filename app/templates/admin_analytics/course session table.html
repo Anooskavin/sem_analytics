@@ -66,7 +66,7 @@
  <th data-field="date" data-sortable="True" >Date</th>
             <th data-field="start" data-sortable="True" >Start Time</th>
               <th data-field="end" data-sortable="True" >End Time</th>
-
+<th data-field="action" data-sortable="True"  >Action</th>
 <th data-field="desc" data-sortable="True">Session Description</th>
             <th data-field="link" data-sortable="True">Go to attendance</th>
         </tr>
@@ -137,6 +137,7 @@
         "end": "{{row.session_endtime}}",
           "status": "{{row.session_status}}",
  "desc": "{{row.session_discription}}",
+         "action":"<a type='button' name='view' value='view' id='{{row.session_id}}' class='btn btn-primary btn-xs view_data'><i class='fas fa-pencil-alt' style='color:white;'></i></a>  ",
  "link":"<a href={{url_for('attendance',b=row.session_id)}}>Go to  {{row.session_name}}</a>"
 
 
@@ -257,7 +258,174 @@ window.filterCities1=0
 
 
       </script>
+ <script>
+    $(document).ready(function () {
+$('#update_form').on("submit", function (event) {
+                        event.preventDefault();
 
+                        $.ajax({
+                            url: "/admin/course/change",
+                            method: "POST",
+                            data: $('#update_form').serialize(),
+
+                            beforeSend: function () {
+                                $('#update').val("Updating");
+                            },
+                            success: function (data) {
+                                $('#add_data_Modal').modal('hide');
+                                if (data == 'success') {
+                                    console.log('success')
+                                    window.location.href = "/admin_analytics/course";
+                                }
+                            }
+                        });
+
+                    });
+
+
+    $(document).on('click', '.view_data', function () {
+                        var session_id = $(this).attr("id");
+                        $.ajax({
+                            url: "/admin/session/select",
+                            method: "POST",
+                            data: {
+                                session_id: session_id
+                            },
+                            success: function (data) {
+                                $('#dataModal').modal('show');
+                                var data_rs = JSON.parse(data);
+                                $('#session_id').val(data_rs[0]['session_id']);
+
+                                $('#course_name').val(data_rs[0]['course_name']);
+                                $('#session_name').val(data_rs[0]['session_name']);
+                                $('#faculty_name').val(data_rs[0]['faculty_name']);
+                                $('#session_status').val(data_rs[0]['session_status']);
+                                $('#session_date').val(data_rs[0]['session_date']);
+
+<!--                                if(data_rs[0]['course_approval_status']=="approved")-->
+<!--                                {   console.log(data_rs[0]['approval_status'])-->
+
+
+<!--                                    document.getElementById("coursenot").style.display = "none";-->
+
+<!--                                    document.getElementById("courseyes").style.display = "block";-->
+
+
+<!--                                }-->
+<!--                                else-->
+<!--                                    {-->
+<!--                                    console.log(data_rs[0]['course_approval_status'])-->
+
+<!--                                    document.getElementById("courseyes").style.display = "none";-->
+<!--                                    document.getElementById("coursenot").style.display = "block";-->
+
+<!--                                }-->
+
+
+
+                                $('#session_starttime').val(data_rs[0]['session_starttime']);
+                                 $('#session_endtime').val(data_rs[0]['session_endtime']);
+                                $('#session_discription').val(data_rs[0]['session_discription']);
+                                var editor = CKEDITOR.replace( 'course_description' );
+editor.on( 'change', function() {
+  $('#course_description').val(data_rs[0]['course_description']);
+});
+
+                            }
+                        });
+                    });
+                   });
+
+
+
+      </script>
+
+
+
+    <div id="dataModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Course Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <form method="post" id="update_form">
+                            <table class="table table-bordered">
+                                <input type="hidden" class="form-control" id="session_id" name="session_id">
+                                <tr>
+                                    <td width="30%"><label>Course Name</label></td>
+                                    <td width="70%"><input type="text" class="form-control" name="course_name" id="course_name"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label>Subject Name</label></td>
+                                    <td width="70%"><input type="text" class="form-control"  id="session_name" disabled></td>
+                                </tr>
+
+                                <tr>
+                                    <td width="30%"><label>Faculty Name</label></td>
+                                    <td width="70%"><input type="text" class="form-control" name="faculty_name" id="faculty_name" >
+
+
+
+                                    </td>
+                                </tr>
+<!--                                <tr>-->
+<!--                                    <td width="30%"><label>Status</label></td>-->
+<!--                                    <td width="70%"><input type="type" class="form-control" name="session_status" id="session_status">-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+                                 <tr>
+                                    <td width="30%"><label>Date</label></td>
+                                    <td width="70%"><input type="date" class="form-control" name="session_date" id="session_date"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label>Start Time</label></td>
+                                    <td width="70%"><input type="time" class="form-control" name="session_starttime" id="session_starttime"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label>End Time</label></td>
+                                    <td width="70%"><input type="time" class="form-control" name="session_endtime" id="session_endtime"></td>
+                                </tr>
+<!--                                <tr>-->
+<!--                                    <td width="30%"><label>Course Approval Status</label></td>-->
+<!--                                    <td width="70%">-->
+<!--                                        <span id="courseyes" style="display: block;" class="badge badge-success">Course already approved</span>-->
+<!--                                        <span id="coursenot" style="display: block;" class="badge badge-danger">Course not yet approved</span>-->
+<!--                                        <br>-->
+<!--                                    <select name="course_approval_status" style="visibility: visible;"  id="course_approval_status" class="form-control">-->
+<!--                                        <option value="approved">Approve</option>-->
+<!--                                        <option value="decline">Decline</option>-->
+<!--                                </select>-->
+<!--                                        </td>-->
+<!--                                </tr>-->
+                                <tr>
+                                    <td width="30%"><label>Course Approval Status</label></td>
+                                    <td width="70%">
+
+                                    <select name="status" style="visibility: visible;"  id="session_status" name="session_status" class="form-control">
+                                        <option value="open">OPEN</option>
+                                        <option value="close">CLOSE</option>
+                                </select>
+                                        </td>
+                                </tr>
+
+                                <tr>
+                                    <td width="30%"><label>Session Description</label></td>
+                                    <td width="70%"><textarea type="text" class="form-control" name="session_discription" id="session_discription"></textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="modal-footer">
+                                <input type="submit" name="update" id="update" value="Update" class="btn btn-success" />
+                                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
 
 
 </body>
