@@ -137,7 +137,15 @@
 
                                     <td>{{loop.index}}</td>
                                     <td>{{row.subject_name}}</td>
-                                    <td><a style="text-decoration: none;" href="/data_entry/session?session_id={{row.course_id}}">{{row.course_name}}</a></td>
+                                    <td>
+                                        {% if row.course_approval_status == "approved" %}
+                                        <a style="text-decoration: none;" href="/data_entry/session?session_id={{row.course_id}}">{{row.course_name}}</a>
+                                        {% endif %}
+                                        {% if row.course_approval_status == "decline"%}
+                                        {{row.course_name}}
+                                        {% endif %}
+</td>
+
                                     <td>{{row.course_duration}}</td>
                                     <td>{{row.no_of_session}}</td>
                                         {% if row.course_status == "open" %}

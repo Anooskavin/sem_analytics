@@ -2,6 +2,8 @@ from app import *
 
 @app.route("/", methods=["POST", "GET"])
 def login():
+    ip_address = flask.request.remote_addr
+    print(ip_address)
     if request.method == 'POST' and 'admin' in request.form and 'pwd' in request.form:
         user = request.form['admin']
         pwd = request.form['pwd']
