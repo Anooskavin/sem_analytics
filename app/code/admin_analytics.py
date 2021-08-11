@@ -190,6 +190,28 @@ def admin_entry_session_select():
                 'session_discription': rs['session_discription']}
             employeearray.append(employee_dict)
         return json.dumps(employeearray)
+
+@app.route("/admin/session/change", methods=["POST", "GET"])
+def admin_entry_session_change():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":
+        print('hi')
+        session_id = request.form['session_id'],
+        print(session_id)
+        # course_name = request.form['course_name'],
+        session_name = request.form['session_name']
+        # faculty_name = request.form['faculty_name']
+        session_status = request.form['session_status']
+        #status = request.form['status']
+        session_starttime = request.form['session_starttime']
+        session_endtime = request.form['session_endtime']
+        print(session_starttime)
+        session_discription = request.form['session_discription']
+        cursor.execute(
+            'update course_session_details set session_name = %s ,session_status=%s , session_starttime=%s ,session_endtime=%s ,session_discription=%s where session_id=%s',
+            [ session_name, session_status, session_starttime,session_endtime, session_discription, session_id])
+        mysql.connection.commit()
+    return jsonify('success')
 ####################################### Session table end ############################################
 
 
