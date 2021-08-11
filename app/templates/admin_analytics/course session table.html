@@ -264,7 +264,7 @@ $('#update_form').on("submit", function (event) {
                         event.preventDefault();
 
                         $.ajax({
-                            url: "/admin/course/change",
+                            url: "/admin/session/change",
                             method: "POST",
                             data: $('#update_form').serialize(),
 
@@ -275,7 +275,7 @@ $('#update_form').on("submit", function (event) {
                                 $('#add_data_Modal').modal('hide');
                                 if (data == 'success') {
                                     console.log('success')
-                                    window.location.href = "/admin_analytics/course";
+                                    window.location.href = "/admin_analytics/session";
                                 }
                             }
                         });
@@ -357,16 +357,16 @@ editor.on( 'change', function() {
                                 <input type="hidden" class="form-control" id="session_id" name="session_id">
                                 <tr>
                                     <td width="30%"><label>Course Name</label></td>
-                                    <td width="70%"><input type="text" class="form-control" name="course_name" id="course_name"></td>
+                                    <td width="70%"><input type="text" class="form-control"  id="course_name" name="course_name" disabled></td>
                                 </tr>
                                 <tr>
-                                    <td width="30%"><label>Subject Name</label></td>
-                                    <td width="70%"><input type="text" class="form-control"  id="session_name" disabled></td>
+                                    <td width="30%"><label>Session Name</label></td>
+                                    <td width="70%"><input type="text" class="form-control"  id="session_name" name="session_name" ></td>
                                 </tr>
 
                                 <tr>
                                     <td width="30%"><label>Faculty Name</label></td>
-                                    <td width="70%"><input type="text" class="form-control" name="faculty_name" id="faculty_name" >
+                                    <td width="70%"><input type="text" class="form-control" name="faculty_name" id="faculty_name" disabled>
 
 
 
@@ -379,7 +379,7 @@ editor.on( 'change', function() {
 <!--                                </tr>-->
                                  <tr>
                                     <td width="30%"><label>Date</label></td>
-                                    <td width="70%"><input type="date" class="form-control" name="session_date" id="session_date"></td>
+                                    <td width="70%"><input type="date" class="form-control" name="session_date" id="session_date"  placeholder="yyyy-mm-dd"></td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Start Time</label></td>
@@ -405,7 +405,7 @@ editor.on( 'change', function() {
                                     <td width="30%"><label>Course Approval Status</label></td>
                                     <td width="70%">
 
-                                    <select name="status" style="visibility: visible;"  id="session_status" name="session_status" class="form-control">
+                                    <select name="session_status" style="visibility: visible;"  id="session_status"  class="form-control">
                                         <option value="open">OPEN</option>
                                         <option value="close">CLOSE</option>
                                 </select>
