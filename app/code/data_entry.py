@@ -463,6 +463,7 @@ def data_entry_session_change():
 
 @app.route("/data_entry/session/attendance", methods=["POST", "GET"])
 def data_entry_attendance():
+    count = arr.array('i', [0, 0, 0])
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry':
         id=session.get('id')
@@ -474,12 +475,18 @@ def data_entry_attendance():
         if session_ids:
             cursor.execute('SELECT * FROM student_attendance,student_details WHERE student_attendance.student_id=student_details.student_id and student_attendance.session_id=%s',[session_ids,])
             attendance = cursor.fetchall()
+            cursor.execute('SELECT * FROM student_attendance,student_details WHERE student_attendance.student_id=student_details.student_id and student_attendance.session_id=%s',[session_ids,])
+            count[0] = len(cursor.fetchall())      
+            cursor.execute('SELECT * FROM student_attendance,student_details WHERE student_attendance.student_id=student_details.student_id and student_attendance.session_id=%s and student_attendance.satt_present="YES"',[session_ids,])
+            count[1] = len(cursor.fetchall())
+            cursor.execute('SELECT * FROM student_attendance,student_details WHERE student_attendance.student_id=student_details.student_id and student_attendance.session_id=%s and student_attendance.satt_present="NO"',[session_ids,])
+            count[2] = len(cursor.fetchall())
         else:
             return redirect(url_for('login'))  
 
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
-        return render_template('data_entry/attendance_table.html',attendance=attendance,session_name=session_name,admin_name=admin_name)
+        return render_template('data_entry/attendance_table.html',attendance=attendance,session_name=session_name,admin_name=admin_name,count=count)
     else:
         return redirect(url_for('login'))
 

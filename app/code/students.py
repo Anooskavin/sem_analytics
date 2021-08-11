@@ -144,7 +144,7 @@ def home():
            print(filter_subject)
            print(status)
            if status =='all' and filter_subject =='all':
-               cursor.execute('select subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where subject.subject_id=course_details.subject_id ')
+               cursor.execute('select subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where subject.subject_id=course_details.subject_id and course_details.course_approval_status="approved"')
                courses = cursor.fetchall()
                current=['All','All']
            elif status =='all' and filter_subject!='all':
