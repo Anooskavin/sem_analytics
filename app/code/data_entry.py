@@ -252,7 +252,7 @@ def data_entry_course_registered():
         subject = cursor.fetchall()
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
-        return render_template('data_entry/course_registered.html',course=course,subject=subject,count=count,admin_name=admin_name,notifi=notifi)
+        return render_template('data_entry/course_registered.html',course=course,subject=subject,count=count,admin_name=admin_name,notifi=notifi,id=subject_id)
     else:
         return redirect(url_for('login'))
 
@@ -261,7 +261,8 @@ def data_entry_course_registered():
 @app.route("/data_entry/course/registerd/student_mail", methods=["POST", "GET"])
 def data_entry_course_registered_student_mail():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    if 'id' in session and session.get("user_type") == 'data_entry':     
+    if 'id' in session and session.get("user_type") == 'data_entry': 
+
         if request.method == "POST":      
             studentid = request.form['id_stu']
             print(studentid)
@@ -277,6 +278,51 @@ def data_entry_course_registered_student_mail():
             return jsonify('success')
     else:
         return redirect(url_for('login'))
+
+
+
+# @app.route("/data_entry/course/registerd/csv", methods=["POST", "GET"])
+# def data_entry_course_registered_csv():
+#     # if 'id' in session and session.get("user_type") == 'data_entry': 
+#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+#     subject_id = request.args.get('course_id')     
+#     try:        
+       # cursor.execute("SELECT * FROM course_enroll_details,student_details Where course_enroll_details.student_id=student_details.student_id and course_enroll_details.course_id=%s",[subject_id])
+       # result = cursor.fetchall()
+       # output = io.StringIO()
+       # writer = csv.writer(output)
+            
+       # line = ['Emp Id, Emp First Name, Emp Last Name, Emp Designation']
+       # writer.writerow(line)
+       # for row in result:
+          #  line = [str(row['student_id']) + ',' + row['student_name'] + ',' + row['student_name'] + ',' + row['student_email']]
+          #  writer.writerow(line)
+        #output.seek(0)
+		
+       # return Response(output, mimetype="text/csv", headers={"Content-Disposition":"attachment;filename=employee_report.csv"})
+   	# except Exception as e:
+    #     print(e)
+    
+        # try:            
+        #     cursor.execute("SELECT * FROM course_enroll_details,student_details Where course_enroll_details.student_id=student_details.student_id and course_enroll_details.course_id=%s",[subject_id])
+        #     result = cursor.fetchall()
+
+        #     output = io.StringIO()
+        #     writer = csv.writer(output)
+            
+        #     line = ['Emp Id, Emp First Name, Emp Last Name, Emp Designation']
+        #     writer.writerow(line)
+
+        #     for row in result:
+        #         line = [str(row['emp_id']) + ',' + row['emp_first_name'] + ',' + row['emp_last_name'] + ',' + row['emp_designation']]
+        #         writer.writerow(line)
+
+        #     output.seek(0)
+            
+        #     return Response(output, mimetype="text/csv", headers={"Content-Disposition":"attachment;filename=employee_report.csv"})
+	    # except Exception as e:
+		#     print(e)
+    
 
 # @app.route('/data_entry/course/select', methods=['GET', 'POST'])
 # def data_entry_course_select():   
