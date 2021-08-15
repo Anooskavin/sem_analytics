@@ -57,19 +57,20 @@
                 </div>
 
                 <div class="wrap-input100 rs1-wrap-input100 validate-input">
-                    <span class="label-input100">Enter your email (eg: murali@gmail.com)*</span>
+                    <span class="label-input100">Enter your email (eg: murali@gmail.com)* </span>
                     <input class="input100" type="text" name="email" id="email" onkeyup="allmail();allcheckstudent();"
                         placeholder="Enter your email" required oninvalid="this.setCustomValidity('Enter Your Mail id')"
                         oninput="this.setCustomValidity('')">
-                    <span id='message1'></span>
+                    <span id='message1'></span><br>
+                    <span id='message'></span>
                 </div>
 
                 <div class="wrap-input100 rs1-wrap-input100 validate-input">
 
                     <span class="label-input100">Tell us your name (eg: Murali Krishan M) *</span>
-                    <input class="input100" type="text" id="student_name" name="text1" placeholder="Enter your name"
-                        required>
-                    <span id='message'></span>
+                    <input class="input100" type="text" id="student_name" name="text1" placeholder="First enter email it will auto filled"
+                        required disabled>
+
                 </div>
 
 
@@ -78,15 +79,15 @@
 
                     <span class="label-input100">Mobile no (eg:9456543234)*</span>
                     <input class="input100" type="text" id="mobileno" name="mobile" value=""
-                        placeholder="Enter your mobile no" required>
+                        placeholder="First enter email it will auto filled" required disabled>
                     <span id='message2'></span>
                 </div>
 
 
                 <div class="wrap-input100 rs1-wrap-input100 validate-input">
                     <span class="label-input100">School Name (eg:Bannari Amman Vidya Niketan) *</span>
-                    <input class="input100" type="text" id="schoolname" name="schoolname" placeholder="School Name"
-                        required>
+                    <input class="input100" type="text" id="schoolname" name="schoolname" placeholder="First enter email it will auto filled"
+                        required disabled>
 
                 </div>
 
@@ -98,7 +99,7 @@
                 <div class="wrap-input100 rs1-wrap-input100 validate-input">
 
                     <span class="label-input100">Pincode (eg:641659)*</span>
-                    <input class="input100" type="number" id='pin' name="pin" placeholder="Enter your pincode" required>
+                    <input class="input100" type="number" id='pin' name="pin" placeholder="First enter email it will auto filled" required disabled>
                     <span id='message4'></span>
                 </div>
 
@@ -570,10 +571,12 @@
                     document.getElementById('schoolname').value = aschool[i];
                     document.getElementById('pin').value = apin[i];
                     document.getElementById('student_id').value = aid[i];
+                    document.getElementById('submit-btn').disabled = false;
+                    document.getElementById('message').innerHTML = '';
 
-                    document.getElementById('message').style.color = 'green';
 
-                    document.getElementById('message').innerHTML = 'your id ' + aid[i];
+
+
                     break;
 
                 } else {
@@ -582,6 +585,9 @@
                     document.getElementById('schoolname').value = '';
                     document.getElementById('pin').value = '';
                     document.getElementById('message').innerHTML = '';
+                    document.getElementById('submit-btn').disabled = true;
+                    document.getElementById('message').style.color = 'red';
+                    document.getElementById('message').innerHTML = 'Mail id not found';
 
 
                 }

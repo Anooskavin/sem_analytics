@@ -829,6 +829,69 @@ def data_entry_school_details_select():
             employeearray.append(employee_dict)
         return json.dumps(employeearray)
 
+@app.route('/data_entry/school_details/import', methods=['GET', 'POST'])
+def data_entry_school_details_import():
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST':
+        school_id = request.form['school_id']
+        print(school_id)
+        cur.execute("SELECT * FROM school_details where school_id = %s", [school_id])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                'school_id': rs['school_id'],
+                'school_name': rs['school_name']}
+            employeearray.append(employee_dict)
+        return json.dumps(employeearray)
+
+@app.route('/data_entry/school_details/import_student', methods=['GET', 'POST'])
+def data_entry_school_details_import_student():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":
+
+        school_id = request.form['import_school_id']
+        print(school_id)
+        f = request.files['student_import']
+
+        basepath = os.path.dirname(__file__)
+        file_path = os.path.join(basepath, secure_filename(f.filename))
+
+        f.save('temp.csv')
+
+        cols=['student_name','student_contact','student_email','student_grade','student_whatsapp']
+        df = pd.read_csv('temp.csv')
+        result_cols = []
+
+        for col in df.columns:
+            print(col)
+            result_cols.append(col)
+
+        if collections.Counter(cols) == collections.Counter(result_cols):
+            student_name=df['student_name'].to_list()
+            student_contact = df['student_contact'].to_list()
+            student_email = df['student_email'].to_list()
+            student_grade = df['student_grade'].to_list()
+            student_whatsapp = df['student_whatsapp'].to_list()
+
+            for i in range(len(df.student_name)):
+                cursor.execute('insert into student_details (student_name,student_contact,student_email,student_grade,student_whatsapp,student_password,school_id,account_status) values(%s,%s,%s,%s,%s,%s,%s,%s)',(student_name[i],student_contact[i],student_email[i],student_grade[i],student_whatsapp[i],student_contact[i],school_id,'allow'))
+                mysql.connection.commit()
+            return '''Success visit  <a href ="http://127.0.0.1:5000/data_entry/student">click here</a> to see changes'''
+
+
+
+
+
+        else:
+            return '''Import failed check csv file fields and entry'''
+
+
+
+
+
+
+
 
 @app.route("/data_entry/school_details/change", methods=["POST", "GET"])
 def data_entry_school_change():

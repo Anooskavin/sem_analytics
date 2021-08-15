@@ -172,7 +172,7 @@
                                                 {% if row.school_status == "approved" %}
                                                 <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-success btn-xs view_data">view</a>
                                              
-                                                <a type="button" data-toggle="modal" data-target="#import_data_Modal" id="{{row.school_id}}" class="btn btn-primary btn-xs"><i class="fas fa-upload"></i></a>
+                                                <a type="button" data-toggle="modal" name="import" data-target="#import_data_Modal" id="{{row.school_id}}" class="btn btn-primary btn-xs import"><i class="fas fa-upload"></i></a>
 
                                                 {% elif row.school_status == "notapproved" %}
 
@@ -181,7 +181,7 @@
                                                 <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-danger btn-xs view_data"><i class="fas fa-thumbs-down"></i></a>
                                                 {% endif %}
 											</td>
-                                       
+
 											
                                             
                                           
@@ -282,38 +282,31 @@
              <div class="modal-content">
               <div class="modal-header">
                <h4 class="modal-title">import School Details</h4>
-               <button type="button" class="close" data-dismiss="modal">×</button>
+               <button type="button" class="close"  data-dismiss="modal">×</button>
               
               </div>
               <div class="modal-body">
-               <form method="post" id="insert_form">
-                <label>Select school Name</label>
-                <select name="school_board" id="mySelect" class="form-control">
-                    <option value="CBSE">CBSE</option>
-                    <option value="STATE BOARD">STATE BOARD</option>
-                    <option value="ICIC">ICIC</option>
-            
-                </select>
-                <br />
+               <form method="post" action="{{url_for('data_entry_school_details_import_student')}}" enctype = 'multipart/form-data'>
+
+
+
                
-                
-                <label>Import file</label>
-                <button type="button"  class="btn btn-success" >import file</button>
+
+                   <input type="text" name="import_school_id" id="import_school_id" hidden /><br>
+                <label>Import file:</label>
+                <input type="file"  name="student_import" id="student_import" class="btn btn-success" accept=".csv"  required/>
 
                 <br />
-                
-               
-                
-              </div>
            
               <div class="modal-footer">
-              <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
+              <input type="submit" name="insert_import" id="insert_import" value="Insert" class="btn btn-success" />
                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </form>
+              </div>
+               </form>
               </div>
              </div>
             </div>
-           </div>
+        </div>
            
 
 
@@ -482,6 +475,32 @@
                 }
             });
         });
+
+
+        $(document).on('click', '.import', function () {
+            var school_id = $(this).attr("id");
+            $.ajax({
+                url: "/data_entry/school_details/import",
+                method: "POST",
+                data: {
+                    school_id: school_id
+                },
+                success: function (data) {
+                    $('#import_data_Modal').modal('show');
+                    var data_rs = JSON.parse(data);
+                    $('#import_school_id').val(data_rs[0]['school_id']);
+                    $('#import_school_name').val(data_rs[0]['school_name']);
+
+                    console.log(data_rs[0]['school_name'])
+
+
+
+                }
+            });
+        });
+
+
+
 
 
 
