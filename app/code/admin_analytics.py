@@ -142,6 +142,7 @@ def admin_analytics_session():
     if 'id' in session and session.get("user_type") == 'admin':
         admin_name = session.get('name')
         course_id = request.args.get('a')
+        print(course_id)
         course_name = request.args.get('b')
 
         cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
@@ -246,15 +247,19 @@ def admin_analytics_faculty():
 def admin_analytics_student():
     if 'id' in session and session.get("user_type") == 'admin':
         admin_name = session.get('name')
+        course_id = request.args.get('a')
+        print(course_id)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM student_details order by student_name ASC')
+        cursor.execute('SELECT * FROM student_details,school_details where  student_details.school_id =  school_details.school_id   order by student_name ASC')
         student = cursor.fetchall()
+        cursor.execute('SELECT * FROM school_details')
+        school = cursor.fetchall()
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
         cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
         course = cursor.fetchall()
         return render_template('admin_analytics/student details table.html', subject=subject, student=student,
-                               admin_name=admin_name, course=course)
+                               admin_name=admin_name, course=course, school=school)
     else:
         return redirect(url_for('login'))
 
@@ -271,7 +276,7 @@ def attendance():
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(
-            'select DISTINCT student_details.student_name,student_details.student_contact,student_details.school_grade, student_attendance.satt_present,course_session_details.session_name from student_details, course_session_details, course_details, student_attendance where course_session_details.course_id = course_details.course_id and student_details.student_id = student_attendance.student_id and course_session_details.session_id =%s and  student_attendance.session_id=%s',
+            'select DISTINCT student_details.student_name,student_details.student_contact,student_details.student_grade, student_attendance.satt_present,course_session_details.session_name from student_details, course_session_details, course_details, student_attendance where course_session_details.course_id = course_details.course_id and student_details.student_id = student_attendance.student_id and course_session_details.session_id =%s and  student_attendance.session_id=%s',
             (session_id, session_id))
         attendance = cursor.fetchall()
 
