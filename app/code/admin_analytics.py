@@ -248,8 +248,33 @@ def admin_analytics_student():
     if 'id' in session and session.get("user_type") == 'admin':
         admin_name = session.get('name')
         course_id = request.args.get('a')
+        count = arr.array('i', [0, 0, 0, 0])
         print(course_id)
+        school_id = request.args.get('school_id')
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        if school_id:
+            cursor.execute(
+                'SELECT * FROM student_details,school_details where school_details.school_id=student_details.school_id and student_details.school_id=%s',
+                [school_id, ])
+            student = cursor.fetchall()
+            cursor.execute(
+                'SELECT * FROM student_details,school_details where school_details.school_id=student_details.school_id and student_details.school_id=%s',
+                [school_id, ])
+            count[0] = len(cursor.fetchall())
+
+            cursor.execute(
+                'SELECT * FROM student_details,school_details where school_details.school_id=student_details.school_id and student_details.school_id=%s and student_details.account_status="allow"',
+                [school_id, ])
+            count[1] = len(cursor.fetchall())
+            cursor.execute(
+                'SELECT * FROM student_details,school_details where school_details.school_id=student_details.school_id and student_details.school_id=%s and student_details.account_status="block"',
+                [school_id, ])
+            count[2] = len(cursor.fetchall())
+            cursor.execute(
+                'SELECT * FROM student_details,school_details where school_details.school_id=student_details.school_id and student_details.school_id=%s and student_details.account_status="waiting"',
+                [school_id, ])
+            count[3] = len(cursor.fetchall())
+            return render_template('admin_analytics/details_table.html', student=student, count=count,admin_name=admin_name)
         cursor.execute('SELECT * FROM student_details,school_details where  student_details.school_id =  school_details.school_id   order by student_name ASC')
         student = cursor.fetchall()
         cursor.execute('SELECT * FROM school_details')
@@ -265,6 +290,144 @@ def admin_analytics_student():
 
 
 ####################################### Student table end ############################################
+
+
+@app.route('/admin_analytics/student/select', methods=['GET', 'POST'])
+def admin_entry_student_select():
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST':
+        student_id = request.form['student_id']
+        print(student_id)
+        cur.execute("SELECT * FROM student_details,school_details where student_details.school_id=school_details.school_id and student_id = %s", [student_id])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                    'student_id': rs['student_id'],
+                    'student_name': rs['student_name'],
+                    'student_contact': rs['student_contact'],
+                    'school_name': rs['school_name'],
+                    'school_board': rs['school_board'],
+                    'school_pincode': rs['school_pincode'],
+                    'student_email': rs['student_email'],
+                    'student_grade': rs['student_grade'],
+                    'student_whatsapp': rs['student_whatsapp'],
+                    'student_profile': rs['student_profile'],
+                    'account_status': rs['account_status']
+                    }
+            employeearray.append(employee_dict)
+        return json.dumps(employeearray)
+
+
+@app.route("/admin_analytics/student/change", methods=["POST", "GET"])
+def admin_entry_student_change():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":
+        student_id = request.form['student_id']
+        student_name = request.form['student_name']
+        student_contact = request.form['student_contact']
+        student_email = request.form['student_email']
+        student_whatsapp = request.form['student_whatsapp']
+        status = request.form['status']
+
+        cursor.execute(
+            'update student_details set student_name=%s, student_contact = %s ,student_email=%s , student_whatsapp=%s , account_status=%s where student_id=%s',
+            [student_name, student_contact, student_email, student_whatsapp, status, student_id])
+        mysql.connection.commit()
+    return jsonify('success')
+
+
+####################################### school table  ############################################
+@app.route("/admin_analytics/school_details", methods=["POST", "GET"])
+def admin_entry_school_details():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'admin':
+        count = arr.array('i', [0, 0, 0, 0])
+
+        id = session.get('id')
+        status = request.args.get('status')
+
+        admin_name = session.get('name')
+        if request.method == 'POST':
+            adminid = session.get('id')
+            school_name = request.form['school_name']
+            school_state = request.form['school_state']
+            school_district = request.form['school_district']
+            school_pincode = request.form['school_pincode']
+            school_board = request.form['school_board']
+            school_contact = request.form['school_contact']
+
+            try:
+                cursor.execute(
+                    "INSERT INTO school_details (school_name, school_state ,school_district,school_pincode,school_board,school_contact) VALUES (%s, %s, %s, %s, %s, %s)",
+                    [school_name, school_state, school_district, school_pincode, school_board, school_contact])
+                mysql.connection.commit()
+                return jsonify('success')
+            except Exception as Ex:
+                return jsonify('error')
+        if (status):
+            cursor.execute('SELECT * FROM school_details where school_status=%s', [status, ])
+            school = cursor.fetchall()
+
+        else:
+            cursor.execute('SELECT * FROM school_details')
+            school = cursor.fetchall()
+        cursor.execute('SELECT * FROM school_details')
+        count[0] = len(cursor.fetchall())
+        cursor.execute('SELECT * FROM school_details where school_status="approved"')
+        count[1] = len(cursor.fetchall())
+        cursor.execute('SELECT * FROM school_details where school_status="rejected"')
+        count[2] = len(cursor.fetchall())
+        cursor.execute('SELECT * FROM school_details where school_status="notapproved"')
+        count[3] = len(cursor.fetchall())
+        # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        # notifi = cursor.fetchall()
+        return render_template('admin_analytics/school_details.html', school=school, count=count, admin_name=admin_name)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/admin_analytics/school_details/select', methods=['GET', 'POST'])
+def admin_entry_school_details_select():
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST':
+        school_id = request.form['school_id']
+        print(school_id)
+        cur.execute("SELECT * FROM school_details where school_id = %s", [school_id])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                    'school_id': rs['school_id'],
+                    'school_name': rs['school_name'],
+                    'school_state': rs['school_state'],
+                    'school_district': rs['school_district'],
+                    'school_pincode': rs['school_pincode'],
+                    'school_board': rs['school_board'],
+                    'school_contact': rs['school_contact'],
+                    'school_status': rs['school_status']}
+            employeearray.append(employee_dict)
+        return json.dumps(employeearray)
+
+
+@app.route("/admin_analytics/school_details/change", methods=["POST", "GET"])
+def admin_entry_school_change():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":
+        school_id = request.form['school_id']
+        print("faculty_id"+ school_id)
+        school_name = request.form['school_name']
+        school_state = request.form['school_state']
+        school_district = request.form['school_district']
+        school_pincode = request.form['school_pincode']
+        school_contact = request.form['school_contact']
+        school_status = request.form['school_status']
+
+        cursor.execute('update school_details set school_name=%s, school_state = %s ,school_district=%s,school_pincode=%s,school_contact=%s,school_status=%s where school_id=%s', [school_name,school_state,school_district,school_pincode,school_contact,school_status,school_id])
+        mysql.connection.commit()
+    return jsonify('success')
+
+####################################### school table end ############################################
 
 
 #########################################  attendance details ###############################################
