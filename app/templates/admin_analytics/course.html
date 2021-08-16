@@ -317,12 +317,12 @@ $('#update_form').on("submit", function (event) {
 
 
                                 $('#course_approval_status').val(data_rs[0]['course_approval_status']);
-                                $('#course_description').val(data_rs[0]['course_description']);
-                                var editor = CKEDITOR.replace( 'course_description' );
-editor.on( 'change', function() {
-  $('#course_description').val(data_rs[0]['course_description']);
-});
 
+ var editor = CKEDITOR.replace( 'course_description' );
+editor.on( 'change', function() {
+
+});
+$('#course_description').val(data_rs[0]['course_description']);
                             }
                         });
                     });
@@ -408,9 +408,10 @@ editor.on( 'change', function() {
 <!--                                </tr>-->
 
                                 <tr>
-                                    <td width="30%"><label>Course Description</label></td>
+                                    <td width="30%"><label>Course Description ..!</label></td>
                                     <td width="70%"><textarea type="text" class="form-control" name="course_description" id="course_description"></textarea>
                                     </td>
+<!--                                    <textarea id="demo"></textarea>-->
                                 </tr>
                             </table>
                             <div class="modal-footer">
@@ -421,6 +422,13 @@ editor.on( 'change', function() {
 
                 </div>
             </div>
+
+<!--            <script>-->
+<!--                                                var editor = CKEDITOR.replace( 'course_description' );-->
+<!--editor.on( 'change', function() {-->
+
+<!--});-->
+<!--            </script>-->
 </body>
 
 </html>

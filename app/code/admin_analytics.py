@@ -443,14 +443,12 @@ def attendance():
             (session_id, session_id))
         attendance = cursor.fetchall()
 
-        cursor.execute(
-            "SELECT count(satt_present) as present from student_attendance  where satt_present='YES' and  session_id=%s",
-            (session_id))
+        cursor.execute("SELECT count(satt_present) as present from student_attendance  where satt_present='YES' and  session_id=%s",[session_id])
         present = cursor.fetchone()
 
         cursor.execute(
             "SELECT count(satt_present) as absent from student_attendance  where satt_present='NO' and  session_id=%s",
-            (session_id))
+            [session_id])
         absent = cursor.fetchone()
 
         return render_template('admin_analytics/attendance.html', attendance=attendance, admin_name=admin_name,
