@@ -135,7 +135,9 @@
 
         "dur": "{{row.course_duration}}",
 
-        "action":"{% if row.course_approval_status == 'approved' or row.course_approval_status == 'decline' %}<a type='button' name='view' value='view' id='{{row.course_id}}' class='btn btn-primary btn-xs view_data'><i class='fas fa-pencil-alt' style='color:white;'></i></a>  {% endif %}",
+        "action":"{% if row.course_approval_status == 'approved' %}<a type='button'  name='view' value='view' id='{{row.course_id}}' class='btn btn-primary btn-xs view_data'><i class='fas fa-pencil-alt' style='color:white;' ><button hidden name='delete' value='{{row.course_id}}' onclick='return validateForm()' ></button></i></a> <a type='button'  href='/admin_analytics/course/registered?course_id={{row.course_id}}' class='btn btn-warning btn-xs '><i class='fas fa-arrow-circle-right'></i></a> {% elif  row.course_approval_status == 'decline'%}<a type='button'  name='view' value='view' id='{{row.course_id}}' class='btn btn-primary btn-xs view_data'><i class='fas fa-pencil-alt' style='color:white;'></i></a> <a type='submit' onclick='return validateForm()' href='/admin_analytics/course/update?course_id={{row.course_id}}' class='btn btn-danger btn-xs '><i class='fas fa-trash' style='color:white'></i></a>{% endif %}",
+
+
         "link": "<a href={{url_for('admin_analytics_session',a=row.course_id,b=row.course_name)}}>Go to {{row.course_name}}</a>",
 
       },
@@ -393,8 +395,12 @@ editor.on( 'change', function() {
                                     <select name="course_approval_status" style="visibility: visible;"  id="course_approval_status" class="form-control">
                                         <option value="approved">Approve</option>
                                         <option value="decline">Decline</option>
+
+
                                 </select>
                                         </td>
+
+
                                 </tr>
 <!--                                <tr>-->
 <!--                                    <td width="30%"><label>Course Approval Status</label></td>-->

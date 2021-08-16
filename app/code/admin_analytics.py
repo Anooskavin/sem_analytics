@@ -49,6 +49,9 @@ def admin_analytics_subject():
 
 
 ####################################### subject table end ############################################
+
+
+
 @app.route('/admin/course/select', methods=['GET', 'POST'])
 def admin_entry_course_select():
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -97,6 +100,76 @@ def admin_entry_course_change():
 
 
 #########################################  Course Table ###############################################
+
+@app.route("/admin_analytics/course/update", methods=["POST", "GET"])
+def admin_entry_course_update():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'admin':
+        subject_id = request.args.get('course_id')
+        cursor.execute('delete from course_details where course_id=%s;', [subject_id])
+        mysql.connection.commit()
+        flash("Deleted ♥️")
+        return redirect(url_for('admin_analytics_course'))
+    else:
+        return redirect(url_for('login'))
+
+
+
+@app.route("/admin_analytics/course/registered", methods=["POST", "GET"])
+def admin_entry_course_registered():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'admin':
+        id = session.get('id')
+        count = arr.array('i', [0, 0, 0])
+        admin_name = session.get('name')
+        subject_id = request.args.get('course_id')
+        # if request.method == 'POST':
+        #     adminid=session.get('id')
+        #     subjectid = request.form['subjectid']
+        #     cname = request.form['cname']
+        #     grade = request.form['grade']
+        #     cduration = request.form['duration']
+        #     nosession = request.form['session']
+        #     description = request.form['coursedes']
+        #     try:
+        #         cursor.execute("INSERT INTO course_details (subject_id, course_grade,course_name,course_description,course_duration,no_of_session,admin_id) VALUES (%s, %s, %s, %s, %s, %s, %s)",[subjectid, grade,cname,description,cduration,nosession,adminid])
+        #         mysql.connection.commit()
+        #         return jsonify('success')
+        #     except Exception as  Ex:
+        #         return jsonify('error')
+
+        if subject_id:
+            cursor.execute(
+                'SELECT * FROM course_enroll_details,student_details Where course_enroll_details.student_id=student_details.student_id and course_enroll_details.course_id=%s',
+                [subject_id, ])
+            course = cursor.fetchall()
+            cursor.execute(
+                'SELECT * FROM course_enroll_details,student_details Where course_enroll_details.student_id=student_details.student_id and course_enroll_details.course_id=%s',
+                [subject_id, ])
+            count[0] = len(cursor.fetchall())
+            # cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id and subject.subject_id=%s and course_details.course_status="open"',[subject_id,])
+            # count[1] = len(cursor.fetchall())
+            # cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id and subject.subject_id=%s and course_details.course_status="close"',[subject_id,])
+            # count[2] = len(cursor.fetchall())
+
+
+        else:
+            cursor.execute(
+                'SELECT * FROM course_enroll_details,student_details Where course_enroll_details.student_id=student_details.student_id')
+            course = cursor.fetchall()
+            cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
+            count[0] = len(cursor.fetchall())
+
+        cursor.execute('SELECT * FROM subject')
+        subject = cursor.fetchall()
+        cursor.execute(
+            'SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',
+            [id])
+        notifi = cursor.fetchall()
+        return render_template('admin_analytics/course_registered.html', course=course, subject=subject, count=count,
+                               admin_name=admin_name, notifi=notifi, id=subject_id)
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route("/admin_analytics/course", methods=["POST", "GET"])
