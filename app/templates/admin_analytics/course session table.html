@@ -34,19 +34,19 @@
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
+<!--            <div class="card-header py-3">-->
+<!--                <h6 class="m-0 font-weight-bold text-primary">-->
 
-                    <div class="my-2" style="float:right;">
-                        <h6>
-                            <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                            </span>
-                            <span class="text"></span>
-                        </h6>
-                    </div>
-                </h6>
-            </div>
+<!--                    <div class="my-2" style="float:right;">-->
+<!--                        <h6>-->
+<!--                            <span class="icon text-white-50">-->
+<!--                                <i class="fas fa-check"></i>-->
+<!--                            </span>-->
+<!--                            <span class="text"></span>-->
+<!--                        </h6>-->
+<!--                    </div>-->
+<!--                </h6>-->
+<!--            </div>-->
             <div class="card-body">
 
                 <div style="float:right;">Export Data</div>
@@ -138,7 +138,7 @@
           "status": "{{row.session_status}}",
  "desc": "{{row.session_discription}}",
          "action":"<a type='button' name='view' value='view' id='{{row.session_id}}' class='btn btn-primary btn-xs view_data'><i class='fas fa-pencil-alt' style='color:white;'></i></a>  ",
- "link":"<a href={{url_for('attendance',b=row.session_id)}}>Go to  {{row.session_name}}</a>"
+ "link":"<a href={{url_for('attendance',b=row.session_id)}}><i class='fas fa-arrow-circle-right'></i></a>"
 
 
 

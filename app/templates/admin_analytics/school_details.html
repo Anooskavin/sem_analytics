@@ -167,18 +167,18 @@
                                             <td><span class="badge badge-warning">Not Approved</span></td>{% endif %}
 
 											<td>
+                                                        <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-success btn-xs view_data" style="color:white">View</a>
+<!--                                                            {% if row.school_status == "approved" %}-->
+<!--                                                <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-success btn-xs view_data">view</a>-->
 
-                                                {% if row.school_status == "approved" %}
-                                                <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-success btn-xs view_data">view</a>
+<!--                                                -->
 
-                                                <a type="button" data-toggle="modal" name="import" data-target="#import_data_Modal" id="{{row.school_id}}" class="btn btn-primary btn-xs import"><i class="fas fa-upload"></i></a>
-
-                                                {% elif row.school_status == "notapproved" %}
+<!--                                                {% elif row.school_status == "notapproved" %}-->
 
 
-                                                <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-warning btn-xs view_data"><i class="fas fa-thumbs-up"></i></a>
-                                                <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-danger btn-xs view_data"><i class="fas fa-thumbs-down"></i></a>
-                                                {% endif %}
+<!--                                                <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-warning btn-xs view_data"><i class="fas fa-thumbs-up"></i></a>-->
+<!--                                                <a type="button" name="view" value="view" id="{{row.school_id}}" class="btn btn-danger btn-xs view_data"><i class="fas fa-thumbs-down"></i></a>-->
+<!--                                                {% endif %}-->
 											</td>
 
 
@@ -458,17 +458,16 @@
                     $('#school_contact').val(data_rs[0]['school_contact']);
                     console.log(data_rs[0]['school_name'])
 
-                    if(data_rs[0]['school_status']=="approved")
+                    if(data_rs[0]['school_status']=="approved" || data_rs[0]['school_status']=="declined" || data_rs[0]['school_status']=="notapproved" )
                     {
-                        document.getElementById("statuss").style.visibility = "hidden";
-                        document.getElementById("schoolyes").style.display = "block";
-                    }
-                    else{
                         document.getElementById("schoolyes").style.display = "none";
 
                         document.getElementById("statuss").style.visibility = "visible";
 
                         document.getElementById("statuss").value = data_rs[0]['school_status'];
+                    }
+                    else{
+
 
                     }
 
