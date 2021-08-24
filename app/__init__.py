@@ -73,4 +73,29 @@ def email(sender,subject,messages):
     return
 
 
+def email_group(sender, subject, messages):
+    message = MIMEMultipart("alternative")
+    message["Subject"] = subject
+    message["From"] = 'ssig432@gmail.com'
+
+    for j in sender:
+        message["To"] = j
+
+        html = """<html><body><p>""" + messages + """</p>    </body>    </html>"""
+
+        part2 = MIMEText(html, "html")
+
+        # message.attach(part1)
+        message.attach(part2)
+
+        # Create secure connection with server and send email
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login('ssig432@gmail.com', 'sSig432*gmail&user')
+            server.sendmail(
+                'ssig432@gmail.com', sender, message.as_string()
+            )
+        print('mail sent')
+    return
+
 from app.code import login,data_entry,feedback,admin_analytics,students

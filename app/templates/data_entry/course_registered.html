@@ -99,6 +99,7 @@
                 <h6>
 
                     <div class="my-2" style="float:right;">
+
                         <BUTTON href="#" class="btn btn-primary btn-icon-split" data-toggle="modal"
                             data-target="#add_data_Modal">
                             <span class="icon text-white-50">
@@ -130,6 +131,7 @@
                             </thead>
 
                             <tbody>
+
                                 {% for row in course %}
                                 <tr>
 
@@ -224,6 +226,8 @@
                                 <td width="70%"><input type="numbers" name="status" class="form-control"
                                         id="status"></td>
                             </tr>
+
+
                            
 
                         </table>
@@ -265,14 +269,17 @@
 
                 </div>
                 <div class="modal-body">
-                    <form method="post" id="insert_form">
+                    <form method="post" id="group_email">
 
                         <label>Subject</label>
-                        <input type="text" name="cname" id="name" class="form-control" />
+                        <input type="text" name="subject1" id="subject1" class="form-control" />
                         <br />
+                        <input type="text" name="course_id" id="course_id" value={{course[0]['course_id']}}  class="form-control" hidden />
+
+
 
                         <label>Message</label>
-                        <textarea name="coursedes" id="address" class="form-control"></textarea>
+                        <textarea name="message1" id="message1" class="form-control"></textarea>
                         <br />
 
 
@@ -424,6 +431,28 @@
                     url: "/data_entry/course/registerd/student_mail",
                     method: "POST",
                     data: $('#update_form').serialize(),
+                    beforeSend: function () {
+                        $('#update').val("sending..");
+                    },
+                    success: function (data) {
+                        $('#add_data_Modal').modal('hide');
+                        if (data == 'success') {
+                            console.log('success')
+                            window.location.reload();
+                        }
+                    }
+                });
+
+            });
+
+               $('#group_email').on("submit", function (event) {
+               console.log('hi');
+                event.preventDefault();
+
+                $.ajax({
+                    url: "/data_entry/course/registerd/student_mail",
+                    method: "POST",
+                    data: $('#group_email').serialize(),
                     beforeSend: function () {
                         $('#update').val("sending..");
                     },

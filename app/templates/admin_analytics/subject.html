@@ -35,19 +35,7 @@
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
 
-                    <div class="my-2" style="float:right;">
-                        <h6>
-                            <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                            </span>
-                            <span class="text"></span>
-                        </h6>
-                    </div>
-                </h6>
-            </div>
             <div class="card-body">
 
 
@@ -64,6 +52,7 @@
             <th data-field="id"  >S.No</th>
             <th data-field="name" data-sortable="True" data-filter-control="select">Name</th>
             <th data-field="email" data-sortable="True" >Description</th>
+            <th data-field="gotocourse" data-sortable="True">Go To Course</th>
 
         </tr>
 
@@ -127,6 +116,7 @@
         "id": "{{loop.index}}",
         "name": "{{row.subject_name}}",
         "email": "{{row.subject_description}}",
+        "gotocourse":"<a type='button'  href={{url_for('admin_analytics_one_course',a=row.subject_id)}} ><i class='fas fa-arrow-circle-right'></i></a>"
 
 
       },
