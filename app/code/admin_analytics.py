@@ -1,5 +1,8 @@
 from re import sub
-
+from bs4 import BeautifulSoup
+import html2text
+from flask import Markup
+import html
 from MySQLdb.cursors import Cursor
 from app import *
 
@@ -91,10 +94,21 @@ def admin_entry_course_change():
         #status = request.form['status']
         course_approval_status = request.form['course_approval_status']
         print(course_approval_status)
-        course_description = request.form['course_description']
+        course_description = request.form['test']
+        print((course_description))
+        #print(html.escape(u+course_description).encode('ascii','xmlcharrefreplace'))
+        #h = html2text.HTML2Text()
+        #y=h.handle(course_description)
+        # print(y)
+        # g=BeautifulSoup(course_description,"html.parser")
+        # print(g)
+        # res = g.get_text()
+        # res=" "+res1+" "
+        # print()
+
         cursor.execute(
             'update course_details set course_name=%s, course_duration = %s ,course_grade=%s,no_of_session=%s , course_approval_status=%s ,course_description=%s where course_id=%s',
-            [course_name, course_duration,course_grade, no_of_session, course_approval_status, course_description, course_id])
+            [course_name, course_duration,course_grade, no_of_session, course_approval_status, (course_description), course_id])
         mysql.connection.commit()
     return jsonify('success')
 
@@ -178,9 +192,15 @@ def admin_analytics_course():
 
     if 'id' in session and session.get("user_type") == 'admin':
         admin_name = session.get('name')
-
         cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
         course = cursor.fetchall()
+
+        for i in range(len(course)):
+            course[i]['course_description'] = html.unescape(course[i]['course_description'])
+            print(course[i]['course_description'], i)
+        # cursor.execute('SELECT * FROM course_details,subject Where course_id=4')
+        # a=list(cursor.fetchall())
+        # print(a[1]['course_description'])
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
 
