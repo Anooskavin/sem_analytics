@@ -570,12 +570,14 @@ def admin_analytics_user():
             name = request.form['name']
             username = request.form['username']
             passwd = request.form['passwd']
+            password = hashlib.md5(passwd.encode())
+            password.hexdigest()
             user_type = request.form['user_type']
 
             try:
                 cursor.execute(
                     "INSERT INTO admin (admin_name, admin_username ,admin_password,admin_usertype) VALUES (%s, %s, %s,%s)",
-                    [name, username, passwd, user_type])
+                    [name, username,password.hexdigest(), user_type])
                 mysql.connection.commit()
                 return jsonify('success')
             except Exception as Ex:
