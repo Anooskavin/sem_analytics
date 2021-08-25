@@ -56,7 +56,7 @@
 <th data-field="approval_status" data-sortable="True" >Approval Status</th>
 
 
-            <th data-field="desc" data-sortable="True" >Course Description</th>
+<!--            <th data-field="desc"  id="" data-sortable="True" >Course Description</th>-->
             <th data-field="action" data-sortable="True"  >Action</th>
             <th data-field="link" data-sortable="True" >Go to session</th>
 
@@ -116,17 +116,26 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script type="text/javascript" src="https://cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
+
+    {% for row in course %}
+    <b>{{row.course_description}}</b>
+    {% endfor %}
+
 <!--    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>-->
  <script>
         var data = [
+
         {% for row in course %}
+<!--        <h = html2text.HTML2Text()>-->
+<!--        <y=h.handle(row.course_description)>-->
+
         {
 
         "id": "{{loop.index}}",
         "city": "{{row.subject_name}}",
         "age": "{{row.course_name}}",
         "grade": "{{row.course_grade}}",
-        "desc": "{{row.course_description}}"  ,
+        "desc": "{{(row.course_description)}}",
 
         "sess": "{{row.no_of_session}}",
         "status": "{{row.course_status}}",
@@ -138,10 +147,12 @@
         "action":"{% if row.course_approval_status == 'approved' %}<a type='button'  name='view' value='view' id='{{row.course_id}}' class='btn btn-primary btn-xs view_data'><i class='fas fa-pencil-alt' style='color:white;' ><button hidden name='delete' value='{{row.course_id}}' onclick='return validateForm()' ></button></i></a> <a type='button'  href='/admin_analytics/course/registered?course_id={{row.course_id}}' class='btn btn-warning btn-xs '><i class='fas fa-arrow-circle-right'></i></a> {% elif  row.course_approval_status == 'decline'%}<a type='button'  name='view' value='view' id='{{row.course_id}}' class='btn btn-primary btn-xs view_data'><i class='fas fa-pencil-alt' style='color:white;'></i></a> <a type='submit' onclick='return validateForm()' href='/admin_analytics/course/update?course_id={{row.course_id}}' class='btn btn-danger btn-xs '><i class='fas fa-trash' style='color:white'></i></a>{% endif %}",
 
 
-        "link": "<a href={{url_for('admin_analytics_session',a=row.course_id,b=row.course_name)}}>Go to {{row.course_name}}</a>",
+        "link": "<a href={{url_for('admin_analytics_session',a=row.course_id,b=row.course_name)}}><i class='fas fa-arrow-circle-right'></i></a>",
 
       },
+
       {% endfor %}
+
       ];
 $('#subject').bootstrapTable({
           data: data,
@@ -172,11 +183,26 @@ $('#subject').bootstrapTable({
           },
 
        })
-       var $table = $('#subject')
-  $table.bootstrapTable({
-    data: data
-  })
+   console.log($('#subject').find('td').eq(8).text());
+var subject=$('#subject');
+rows=subject.find('tr');
+for (i=0;i<rows.length;i++)
+{
 
+var cells = $(rows[i]).find('td');
+
+var t=$(cells[8]).text();
+
+console.log(t);
+setTimeout(()=>{
+    $(cells[8]).html(t);
+},1000);
+<!--$(cells[8]).html(t);-->
+
+<!--cells=rows[i].getElementsByTagName('td');-->
+<!--console.log(cells[8].html());-->
+<!--cells[8].innerHTML=cells[8].innerText;-->
+}
 
   $('button[name="clearSearch"]').click(function() {
     $('select.bootstrap-table-filter-control-city').multipleSelect('setSelects', [])
@@ -319,10 +345,18 @@ $('#update_form').on("submit", function (event) {
 
 
                                 $('#course_approval_status').val(data_rs[0]['course_approval_status']);
+                                $('#course_description').val(data_rs[0]['course_description'])
 
- var editor = CKEDITOR.replace( $('#course_description').val(data_rs[0]['course_description']) );
-editor.on( 'change', function() {
+setTimeout(()=>{
+console.log('hii');
+console.log($('#course_description').val());
+},1000);
 
+var editor = CKEDITOR.replace( 'course_description' );
+            editor.setData($('#course_description').val());
+editor.on( 'change', function(edittor) {
+
+$('#test').val(edittor.editor.getData());
 });
 
                             }
@@ -415,7 +449,13 @@ editor.on( 'change', function() {
 
                                 <tr>
                                     <td width="30%"><label>Course Description ..!</label></td>
-                                    <td width="70%"><textarea type="text" class="form-control" name="course_description" id="course_description"></textarea>
+                                    <td width="70%"><textarea class="form-control" name="course_description" id="course_description"></textarea>
+                                    </td>
+<!--                                    <textarea id="demo"></textarea>-->
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label>test ..!</label></td>
+                                    <td width="70%"><input type="hidden" class="form-control" name="test" id="test"></input>
                                     </td>
 <!--                                    <textarea id="demo"></textarea>-->
                                 </tr>
@@ -429,12 +469,20 @@ editor.on( 'change', function() {
                 </div>
             </div>
 
-<!--            <script>-->
-<!--                                                var editor = CKEDITOR.replace( 'course_description' );-->
-<!--editor.on( 'change', function() {-->
 
+            <script>
+
+
+
+<!--            var editor = CKEDITOR.replace( 'course_description' );-->
+<!--            editor.setData($('#course_description').val());-->
+<!--editor.on( 'change', function(edittor) {-->
+
+<!--$('#test').val(edittor.editor.getData());-->
 <!--});-->
-<!--            </script>-->
+
+
+            </script>
 </body>
 
 </html>
