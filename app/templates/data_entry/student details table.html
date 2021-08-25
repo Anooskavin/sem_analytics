@@ -310,6 +310,11 @@
             </select>
                 </td>
         </tr>
+
+             <tr>
+                            <td width="30%"><label>Photo Id</label></td>
+          <td width="70%"> <center><img id="photo_id" style="width:150px;height:150px;"></center></td>
+        </tr>
 		
     </table>
 	 <div class="modal-footer">
@@ -416,6 +421,11 @@
                     }
 
                     document.getElementById("mySelect").value = data_rs[0]['account_status'];
+
+                    var id = data_rs[0]['student_idcard'];
+
+
+                     $("#photo_id").attr('src', '/static/'+id);
  
                 }
             });

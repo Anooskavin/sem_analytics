@@ -252,8 +252,11 @@ def data_entry_course_registered():
         subject = cursor.fetchall()
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
+        print(course)
         return render_template('data_entry/course_registered.html',course=course,subject=subject,count=count,admin_name=admin_name,notifi=notifi,id=subject_id)
+
     else:
+
         return redirect(url_for('login'))
 
 
@@ -263,7 +266,7 @@ def data_entry_course_registered_student_mail():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if 'id' in session and session.get("user_type") == 'data_entry': 
 
-        if request.method == "POST":      
+        if request.method == "POST" and 'id_stu' in request.form:
             studentid = request.form['id_stu']
             print(studentid)
             subject = request.form['subject']
@@ -275,6 +278,25 @@ def data_entry_course_registered_student_mail():
             
             a=email(student['student_email'],subject,message)
                             
+            return jsonify('success')
+        elif request.method == "POST" and 'course_id' in request.form:
+            courseid = request.form['course_id']
+            print(courseid)
+            print('vbnm')
+            subject = request.form['subject1']
+
+            message = request.form['message1']
+            cursor.execute('select student_details.student_email , course_enroll_details.course_id from student_details,course_enroll_details where course_enroll_details.student_id = student_details.student_id and course_enroll_details.course_id=%s',[courseid])
+            student = cursor.fetchall()
+            print(student)
+
+            mail_list=[]
+            for i in range (len(student)):
+                mail_list.append(student[i]['student_email'])
+            print(mail_list)
+
+            a = email_group(mail_list, subject, message)
+
             return jsonify('success')
     else:
         return redirect(url_for('login'))
@@ -708,7 +730,10 @@ def data_entry_student_select():
                     'student_grade': rs['student_grade'],             
                     'student_whatsapp': rs['student_whatsapp'],
                     'student_profile': rs['student_profile'],
-                    'account_status': rs['account_status']
+                    'account_status': rs['account_status'],
+                'student_idcard': rs['student_idcard'],
+                'url_path': app.static_url_path
+
                     }
             employeearray.append(employee_dict)
         return json.dumps(employeearray)

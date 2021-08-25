@@ -1,8 +1,5 @@
 from re import sub
-from bs4 import BeautifulSoup
-import html2text
-from flask import Markup
-import html
+
 from MySQLdb.cursors import Cursor
 from app import *
 
@@ -94,21 +91,10 @@ def admin_entry_course_change():
         #status = request.form['status']
         course_approval_status = request.form['course_approval_status']
         print(course_approval_status)
-        course_description = request.form['test']
-        print((course_description))
-        #print(html.escape(u+course_description).encode('ascii','xmlcharrefreplace'))
-        #h = html2text.HTML2Text()
-        #y=h.handle(course_description)
-        # print(y)
-        # g=BeautifulSoup(course_description,"html.parser")
-        # print(g)
-        # res = g.get_text()
-        # res=" "+res1+" "
-        # print()
-
+        course_description = request.form['course_description']
         cursor.execute(
             'update course_details set course_name=%s, course_duration = %s ,course_grade=%s,no_of_session=%s , course_approval_status=%s ,course_description=%s where course_id=%s',
-            [course_name, course_duration,course_grade, no_of_session, course_approval_status, (course_description), course_id])
+            [course_name, course_duration,course_grade, no_of_session, course_approval_status, course_description, course_id])
         mysql.connection.commit()
     return jsonify('success')
 
@@ -189,17 +175,30 @@ def admin_entry_course_registered():
 @app.route("/admin_analytics/course", methods=["POST", "GET"])
 def admin_analytics_course():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
     if 'id' in session and session.get("user_type") == 'admin':
         admin_name = session.get('name')
+
         cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
         course = cursor.fetchall()
+        cursor.execute('SELECT * FROM subject')
+        subject = cursor.fetchall()
 
-        for i in range(len(course)):
-            course[i]['course_description'] = html.unescape(course[i]['course_description'])
-            print(course[i]['course_description'], i)
-        # cursor.execute('SELECT * FROM course_details,subject Where course_id=4')
-        # a=list(cursor.fetchall())
-        # print(a[1]['course_description'])
+        return render_template('admin_analytics/course.html', course=course, subject=subject, admin_name=admin_name)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route("/admin_analytics/one_course", methods=["POST", "GET"])
+def admin_analytics_one_course():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    if 'id' in session and session.get("user_type") == 'admin':
+        admin_name = session.get('name')
+        subject_id=request.args.get('a')
+
+        cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=%s and subject.subject_id=%s',(subject_id,subject_id))
+        course = cursor.fetchall()
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
 
@@ -382,6 +381,8 @@ def admin_analytics_student():
         return redirect(url_for('login'))
 
 
+
+
 ####################################### Student table end ############################################
 
 
@@ -406,7 +407,9 @@ def admin_entry_student_select():
                     'student_grade': rs['student_grade'],
                     'student_whatsapp': rs['student_whatsapp'],
                     'student_profile': rs['student_profile'],
-                    'account_status': rs['account_status']
+                    'account_status': rs['account_status'],
+                   'student_idcard': rs['student_idcard'],
+                    'url_path':app.static_url_path
                     }
             employeearray.append(employee_dict)
         return json.dumps(employeearray)
@@ -567,12 +570,14 @@ def admin_analytics_user():
             name = request.form['name']
             username = request.form['username']
             passwd = request.form['passwd']
+            password = hashlib.md5(passwd.encode())
+            password.hexdigest()
             user_type = request.form['user_type']
 
             try:
                 cursor.execute(
                     "INSERT INTO admin (admin_name, admin_username ,admin_password,admin_usertype) VALUES (%s, %s, %s,%s)",
-                    [name, username, passwd, user_type])
+                    [name, username,password.hexdigest(), user_type])
                 mysql.connection.commit()
                 return jsonify('success')
             except Exception as Ex:
