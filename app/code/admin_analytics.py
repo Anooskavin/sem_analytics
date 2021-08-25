@@ -175,10 +175,29 @@ def admin_entry_course_registered():
 @app.route("/admin_analytics/course", methods=["POST", "GET"])
 def admin_analytics_course():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
     if 'id' in session and session.get("user_type") == 'admin':
         admin_name = session.get('name')
 
         cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
+        course = cursor.fetchall()
+        cursor.execute('SELECT * FROM subject')
+        subject = cursor.fetchall()
+
+        return render_template('admin_analytics/course.html', course=course, subject=subject, admin_name=admin_name)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route("/admin_analytics/one_course", methods=["POST", "GET"])
+def admin_analytics_one_course():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+    if 'id' in session and session.get("user_type") == 'admin':
+        admin_name = session.get('name')
+        subject_id=request.args.get('a')
+
+        cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=%s and subject.subject_id=%s',(subject_id,subject_id))
         course = cursor.fetchall()
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
@@ -362,6 +381,8 @@ def admin_analytics_student():
         return redirect(url_for('login'))
 
 
+
+
 ####################################### Student table end ############################################
 
 
@@ -386,7 +407,9 @@ def admin_entry_student_select():
                     'student_grade': rs['student_grade'],
                     'student_whatsapp': rs['student_whatsapp'],
                     'student_profile': rs['student_profile'],
-                    'account_status': rs['account_status']
+                    'account_status': rs['account_status'],
+                   'student_idcard': rs['student_idcard'],
+                    'url_path':app.static_url_path
                     }
             employeearray.append(employee_dict)
         return json.dumps(employeearray)

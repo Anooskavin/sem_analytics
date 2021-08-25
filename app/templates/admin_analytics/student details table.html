@@ -62,9 +62,10 @@
             <th data-field="email" data-sortable="True" data-filter-control="input">Email</th>
             <th data-field="grade"  data-sortable="True" class="col-sm-2" data-filter-control="select"  >Grade</th>
             <th data-field="scname" data-sortable="True" data-filter-control="input">School Name</th>
-            <th data-field="contact" data-sortable="True" data-filter-control="input">Contact</th>
+            <th data-field="contact" data-sortable="True" data-filter-control="input">Pincode</th>
             <th data-field="city" data-sortable="True" data-filter-control="select">District</th>
              <th data-field="age" data-sortable="True" data-filter-control="select">State</th>
+            <th data-field="details" data-sortable="True" >Details</th>
 
         </tr>
 
@@ -120,6 +121,85 @@
 
     <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
+
+      <!--student view modal-->
+
+	<div id="dataModal" class="modal fade">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+   <h4 class="modal-title">Student Details</h4>
+    <button type="button" class="close" data-dismiss="modal">×</button>
+
+   </div>
+   <div class="modal-body">
+      <div class="table-responsive">
+
+        <table class="table table-bordered">
+            <input type="hidden" name="student_id" class="form-control" id="student_id">
+            <tr>
+                <center>  <img src="" id="profile" alt="Avatar" style="width:200px ;  display: flex; border-radius: 50%;"></center>
+                <div id="myModal" class="modal">
+                    <img class="modal-content" id="img01">
+                  </div>
+
+            </tr>
+        <tr>
+            <td width="30%"><label>Student Name</label></td>
+            <td width="70%"><input type="text" name="student_name" class="form-control" id="student_name" disabled></td>
+        </tr>
+        <tr>
+            <td width="30%"><label>Contact</label></td>
+            <td width="70%"><input type="numbers" name="student_contact" class="form-control" id="student_contact" disabled></td>
+        </tr>
+        <tr>
+            <td width="30%"><label>E-mail</label></td>
+            <td width="70%"><input type="email" name="student_email" class="form-control" id="student_email" disabled></td>
+        </tr>
+        <tr>
+            <td width="30%"><label>Student grade</label></td>
+            <td width="70%"><input type="numbers" name="student_grade" class="form-control" id="student_grade" disabled></td>
+        </tr>
+        <tr>
+            <td width="30%"><label>School Name</label></td>
+            <td width="70%"><input type="text" name="school_name" class="form-control" id="school_name" disabled></td>
+        </tr>
+        <tr>
+            <td width="30%"><label>School Board</label></td>
+            <td width="70%"><input type="text" name="school_board" class="form-control" id="school_board" disabled></td>
+        </tr>
+		 <tr>
+            <td width="30%"><label>School Pincode</label></td>
+            <td width="70%"><input type="numbers" name="school_pincode" class="form-control" id="school_pincode" disabled></td>
+        </tr>
+		 <tr>
+            <td width="30%"><label>Whatsapp No</label></td>
+            <td width="70%"><input type="numbers" name="student_whatsapp" class="form-control" id="student_whatsapp" disabled></td>
+        </tr>
+        <tr>
+            <td width="30%"><label>Account Status</label></td>
+            <td width="70%">
+
+                <input type="text" name="student_status" class="form-control" id="student_status" disabled>
+                </td>
+        </tr>
+
+        <tr>
+                            <td width="30%"><label>Photo Id</label></td>
+          <td width="70%"> <center><img id="photo_id" style="width:150px;height:150px;"></center></td>
+        </tr>
+
+    </table>
+	 <div class="modal-footer">
+
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+   </div>
+
+	</div>
+   </div>
+
+
  <script>
         var data = [
         {% for row in student %}
@@ -129,9 +209,10 @@
         "email": "{{row.student_email}}",
         "grade": "{{row.student_grade}}",
         "scname": "{{row.school_name}}",
-        "contact": "{{row.student_contact}}",
+        "contact": "{{row.school_pincode}}",
         "city": "{{row.school_district}}",
-        "age": "{{row.school_state}}"
+        "age": "{{row.school_state}}",
+        "details":"<a type='button' name='student_details'  class='btn btn-success btn-xs view_data' id='{{row.student_id}}' STYLE='color:white'>VIEW</a>"
 
       },
 
@@ -251,7 +332,66 @@ window.filterCities1=0
 
       </script>
 
+<script>
 
+   $(document).on('click', '.view_data', function () {
+            var student_id = $(this).attr("id");
+            $.ajax({
+                url: "/admin_analytics/student/select",
+                method: "POST",
+                data: {
+                    student_id: student_id
+                },
+                success: function (data) {
+                    $('#dataModal').modal('show');
+                    var data_rs = JSON.parse(data);
+                    $('#student_id').val(data_rs[0]['student_id']);
+                    $('#student_name').val(data_rs[0]['student_name']);
+                    $('#student_contact').val(data_rs[0]['student_contact']);
+                    $('#student_email').val(data_rs[0]['student_email']);
+                    $('#student_grade').val(data_rs[0]['student_grade']);
+                    $('#student_whatsapp').val(data_rs[0]['student_whatsapp']);
+                    $('#school_name').val(data_rs[0]['school_name']);
+                    $('#school_board').val(data_rs[0]['school_board']);
+                    $('#school_pincode').val(data_rs[0]['school_pincode']);
+
+                    if(data_rs[0]['student_profile'])
+                    {
+                        document.getElementById("profile").src = data_rs[0]['student_profile'];
+                        console.log("img set")
+                    }
+                    else
+                    {
+                        document.getElementById("profile").src = "https://www.pinclipart.com/picdir/big/559-5594866_necktie-drawing-vector-round-avatar-user-icon-png.png";
+
+                    }
+
+
+                    if (data_rs[0]['account_status']=='allow')
+                    {
+                    $('#student_status').val(data_rs[0]['account_status']);
+                    $('#student_status').css('color', 'green');
+                     }
+                     else{
+                     $('#student_status').val(data_rs[0]['account_status']);
+                     $('#student_status').css('color', 'red');
+
+                     }
+
+
+
+                     var id = data_rs[0]['student_idcard'];
+
+
+                     $("#photo_id").attr('src', '/static/'+id);
+
+
+
+                }
+            });
+        });
+
+</script>
 
 </body>
 
