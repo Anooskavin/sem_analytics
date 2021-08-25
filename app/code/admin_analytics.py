@@ -91,7 +91,10 @@ def admin_entry_course_change():
         #status = request.form['status']
         course_approval_status = request.form['course_approval_status']
         print(course_approval_status)
-        course_description = request.form['course_description']
+        course_description = request.form['test']
+        course_description=html.escape(course_description)
+        print(course_description)
+
         cursor.execute(
             'update course_details set course_name=%s, course_duration = %s ,course_grade=%s,no_of_session=%s , course_approval_status=%s ,course_description=%s where course_id=%s',
             [course_name, course_duration,course_grade, no_of_session, course_approval_status, course_description, course_id])
@@ -181,6 +184,11 @@ def admin_analytics_course():
 
         cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
         course = cursor.fetchall()
+
+        for i in range(len(course)):
+            course[i]['course_description']=html.unescape(course[i]['course_description'])
+            print(course[i]['course_description'],i)
+
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
 

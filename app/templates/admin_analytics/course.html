@@ -116,17 +116,26 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script type="text/javascript" src="https://cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
+
+    {% for row in course %}
+    {{row.course_description}}
+    {% endfor %}
+
 <!--    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>-->
  <script>
         var data = [
+
         {% for row in course %}
+<!--        <h = html2text.HTML2Text()>-->
+<!--        <y=h.handle(row.course_description)>-->
+
         {
 
         "id": "{{loop.index}}",
         "city": "{{row.subject_name}}",
         "age": "{{row.course_name}}",
         "grade": "{{row.course_grade}}",
-        "desc": "{{row.course_description}}"  ,
+        "desc": "{{(row.course_description)}}",
 
         "sess": "{{row.no_of_session}}",
         "status": "{{row.course_status}}",
@@ -141,6 +150,7 @@
         "link": "<a href={{url_for('admin_analytics_session',a=row.course_id,b=row.course_name)}}>Go to {{row.course_name}}</a>",
 
       },
+
       {% endfor %}
       ];
 $('#subject').bootstrapTable({
@@ -319,10 +329,18 @@ $('#update_form').on("submit", function (event) {
 
 
                                 $('#course_approval_status').val(data_rs[0]['course_approval_status']);
+                                $('#course_description').val(data_rs[0]['course_description'])
 
- var editor = CKEDITOR.replace( $('#course_description').val(data_rs[0]['course_description']) );
-editor.on( 'change', function() {
+setTimeout(()=>{
+console.log('hii');
+console.log($('#course_description').val());
+},1000);
 
+var editor = CKEDITOR.replace( 'course_description' );
+            editor.setData($('#course_description').val());
+editor.on( 'change', function(edittor) {
+
+$('#test').val(edittor.editor.getData());
 });
 
                             }
@@ -415,7 +433,13 @@ editor.on( 'change', function() {
 
                                 <tr>
                                     <td width="30%"><label>Course Description ..!</label></td>
-                                    <td width="70%"><textarea type="text" class="form-control" name="course_description" id="course_description"></textarea>
+                                    <td width="70%"><textarea class="form-control" name="course_description" id="course_description"></textarea>
+                                    </td>
+<!--                                    <textarea id="demo"></textarea>-->
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label>test ..!</label></td>
+                                    <td width="70%"><input type="hidden" class="form-control" name="test" id="test"></input>
                                     </td>
 <!--                                    <textarea id="demo"></textarea>-->
                                 </tr>
@@ -429,12 +453,20 @@ editor.on( 'change', function() {
                 </div>
             </div>
 
-<!--            <script>-->
-<!--                                                var editor = CKEDITOR.replace( 'course_description' );-->
-<!--editor.on( 'change', function() {-->
 
+            <script>
+
+
+
+<!--            var editor = CKEDITOR.replace( 'course_description' );-->
+<!--            editor.setData($('#course_description').val());-->
+<!--editor.on( 'change', function(edittor) {-->
+
+<!--$('#test').val(edittor.editor.getData());-->
 <!--});-->
-<!--            </script>-->
+
+
+            </script>
 </body>
 
 </html>

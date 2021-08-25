@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-{% include 'header/data_entry_header.html' %}
+{% include 'header/analytics_header.html' %}
+
 
 
 <body id="page-top">
@@ -9,173 +10,65 @@
 
     <!-- End of Sidebar -->
 
-    <!-- Content Row -->
-    <div class="container-fluid">
 
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Course Details</h1>
-            <button id="export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</button>
-        </div>
-     <div class="row">
-
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Course</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{count[0]}}</div>
-                        </div>
-                        <div class="col-auto">
-
-                            <i class="fas fa-laptop fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Completed Course</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{count[2]}}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Non Completed Course
-                            </div>
-                            <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{count[1]}}</div>
-                                </div>
-                                <div class="col">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-book-reader fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pending Requests Card Example -->
-        
-    </div>
-    </div>
 
     <!-- Begin Page Content -->
     <div class="container-fluid">
 
         <!-- Page Heading -->
-     
+        <h1 class="h3 mb-2 text-gray-800">Course Table</h1>
+        <p class="mb-4" >Table Analysis on Subject, Course, Session, Attendance and feedback with all sotring and searching with export table option
+
+        </p>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6>
+                <h6 class="m-0 font-weight-bold text-primary">
 
                     <div class="my-2" style="float:right;">
-                        <BUTTON href="#" class="btn btn-primary btn-icon-split" data-toggle="modal"
-                            data-target="#add_data_Modal">
+                        <h6>
                             <span class="icon text-white-50">
                                 <i class="fas fa-check"></i>
                             </span>
-                            <span class="text">Add</span>
-                        </button>
+                            <span class="text"></span>
+                        </h6>
                     </div>
                 </h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <form method="post" action="/data_entry/course/update">
 
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
+
+                        <table class="table table-bordered"  width="100%" cellspacing="0"  data-show-export="true"  id="subject"  data-pagination="True"  data-show-filter-control-switch="true" data-click-to-select="true" data-toggle="Table" data-filter-control="true">
 
                             <thead>
-                                <tr>
-                                    <th>S no</th>
-                                    <th>Subject Name</th>
-                                    <th>Course Name</th>
-                                    <th>Course Duration</th>
-                                    <th>No of Sessions</th>
-                                    <th>Course Status</th>
-                                    <th>Course Approval Status</th>
+        <tr>
 
-                                    <th>Action</th>
-                                 
+            <th data-field="id" >S.No</th>
+            <th data-field="city" data-sortable="True" data-filter-control="select">Subject Name</th>
+            <th data-field="age" data-sortable="True" data-filter-control="select">Course Name</th>
+             <th data-field="grade" data-sortable="True" class="col-sm-2" >Grade</th>
 
-                                </tr>
-                            </thead>
-                        
-                            <tbody>
-                                {% for row in course %}
-                                <tr>
+ <th data-field="dur" data-sortable="True" >Duration</th>
+            <th data-field="sess" data-sortable="True" >No.of.Session</th>
+              <th data-field="status" data-sortable="True" >Status</th>
+<th data-field="approval_status" data-sortable="True" >Approval Status</th>
 
-                                    <td>{{loop.index}}</td>
-                                    <td>{{row.subject_name}}</td>
-                                    <td>
-                                        {% if row.course_approval_status == "approved" %}
-                                        <a style="text-decoration: none;" href="/data_entry/session?session_id={{row.course_id}}">{{row.course_name}}</a>
-                                        {% endif %}
-                                        {% if row.course_approval_status == "decline"%}
-                                        {{row.course_name}}
-                                        {% endif %}
-</td>
 
-                                    <td>{{row.course_duration}}</td>
-                                    <td>{{row.no_of_session}}</td>
-                                        {% if row.course_status == "open" %}
-                                    <td><span class="badge badge-primary">{{row.course_status}}</span></td>
-                                    {% elif row.course_status == "close" %}
-                                    <td><span class="badge badge-success">{{row.course_status}}</span></td>{% endif %}
-                                    
-                                    {% if row.course_approval_status == "approved" %}
-                                    <td><span class="badge badge-success">Approved</span></td>
-                                    {% elif row.course_approval_status == "decline" %}
-                                    <td><span class="badge badge-danger">Not Approved</span></td>{% endif %}
+            <th data-field="desc"  id="" data-sortable="True" >Course Description</th>
+            <th data-field="action" data-sortable="True"  >Action</th>
+            <th data-field="link" data-sortable="True" >Go to session</th>
 
-                                     <td><a type="button" name="view" value="view" id="{{row.course_id}}" class="btn btn-primary btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>
-                                        {% if row.course_approval_status == "approved" %}
-                                        <a type="button" href="/data_entry/course/registered?course_id={{row.course_id}}" class="btn btn-warning btn-xs "><i class="fas fa-arrow-circle-right"></i></a>
-                                        {% endif %}
-                                        {% if row.course_approval_status == "decline" %}
-                                        <button type="submit" name="delete" value="{{row.course_id}}"
-                                            onclick="return validateForm()" class="btn btn-danger "> <i
-                                                class="fas fa-trash"></i> </button></td>
-                                                {% endif %}
-                                    
 
-                                </tr>
-                                {% endfor %}
 
-                            </tbody>
 
-                        </table>
-                    </form>
+        </tr>
+
+        </thead>
+
+                            </table>
+
                 </div>
             </div>
         </div>
@@ -202,79 +95,285 @@
 
 
 
-    <!-- Add Modal-->
-    <div id="add_data_Modal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Insert Course</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-
-                </div>
-                <div class="modal-body">
-                    <form method="post" id="insert_form">
-                        <label>select Subject Name</label>
-                        <!-- <input type="text" name="sname" id="name" class="form-control" /> -->
-                        <select name="subjectid" id="status" class="form-control">
-                            {% for rows in subject %}
-                            <option value="{{rows.subject_id}}">{{rows.subject_name}}</option>
-                            {% endfor %}
-
-                        </select></td>
-                        <br />
-
-                        <label>Enter Course Name</label>
-                        <input type="text" name="cname" id="name" class="form-control" />
-                        <br />
-
-                        <label>select Course Grade</label>
-                        <select name="grade" id="status" class="form-control">
-                            <option value="1">I</option>
-                            <option value="2">II</option>
-                            <option value="3">III</option>
-                            <option value="4">IV</option>
-                            <option value="5">V</option>
-                            <option value="6">VI</option>
-                            <option value="7">VII</option>
-                            <option value="8">VIII</option>
-                            <option value="9">IX</option>
-                            <option value="10">X</option>
-                            <option value="11">XI</option>
-                            <option value="12">XII</option>
-                        </select></td>
-                        <br />
-
-                        <label>Enter Course Duration(in Min)</label>
-                        <input type="number" name="duration" id="name" class="form-control" />
-                        <br />
-
-                        <label>Enter No of Sessions</label>
-                        <input type="number" name="session" id="name" class="form-control" />
-                        <br />
-
-                        <!-- <label>Status</label> 
-                            <select name="status" id="status" class="form-control">
-								<option value="Opened">Opened</option>
-								<option value="closed">Closed</option>
-							</select></td> 
-     <br /> -->
-
-                        <label>Enter Course Description</label>
-                        <textarea name="coursedes" id="address" class="form-control"></textarea>
-                        <br />
-                </div>
-
-                <div class="modal-footer">
-                    <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
-                    <button type="button" class="btn btn-default" onclick="fieldclear('insert_form')" data-dismiss="modal">Close</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
-    <!--Update table modal-->
+
+
+           <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+<script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+
+
+<!--      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.0/bootstrap-table.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/editable/bootstrap-table-editable.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
+  <script src="https://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
+   <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script type="text/javascript" src="https://cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
+
+    {% for row in course %}
+    <b>{{row.course_description}}</b>
+    {% endfor %}
+
+<!--    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>-->
+ <script>
+        var data = [
+
+        {% for row in course %}
+<!--        <h = html2text.HTML2Text()>-->
+<!--        <y=h.handle(row.course_description)>-->
+
+        {
+
+        "id": "{{loop.index}}",
+        "city": "{{row.subject_name}}",
+        "age": "{{row.course_name}}",
+        "grade": "{{row.course_grade}}",
+
+        "desc": "{{(row.course_description)}}",
+
+        "sess": "{{row.no_of_session}}",
+        "status": "{{row.course_status}}",
+        "cid":"{{row.course_id}}",
+        "approval_status":"{% if row.course_approval_status == 'approved' %}<span id='' style='display: block;' class='badge badge-success'>Approved</span>{% else %} <span id='' style='display: block;' class='badge badge-danger'>Not Yet Approved</span> {% endif %}",
+
+        "dur": "{{row.course_duration}}",
+
+        "action":"{% if row.course_approval_status == 'approved' %}<a type='button'  name='view' value='view' id='{{row.course_id}}' class='btn btn-primary btn-xs view_data'><i class='fas fa-pencil-alt' style='color:white;' ><button hidden name='delete' value='{{row.course_id}}' onclick='return validateForm()' ></button></i></a> <a type='button'  href='/admin_analytics/course/registered?course_id={{row.course_id}}' class='btn btn-warning btn-xs '><i class='fas fa-arrow-circle-right'></i></a> {% elif  row.course_approval_status == 'decline'%}<a type='button'  name='view' value='view' id='{{row.course_id}}' class='btn btn-primary btn-xs view_data'><i class='fas fa-pencil-alt' style='color:white;'></i></a> <a type='submit' onclick='return validateForm()' href='/admin_analytics/course/update?course_id={{row.course_id}}' class='btn btn-danger btn-xs '><i class='fas fa-trash' style='color:white'></i></a>{% endif %}",
+
+
+        "link": "<a href={{url_for('admin_analytics_session',a=row.course_id,b=row.course_name)}}>Go to {{row.course_name}}</a>",
+
+      },
+
+      {% endfor %}
+
+      ];
+$('#subject').bootstrapTable({
+          data: data,
+          onCreatedControls () {
+
+            $('select.bootstrap-table-filter-control-city').each(function (index, i) {
+              i.setAttribute('multiple','multiple');
+              $(this).find('option[value=""]').remove();
+              $(this).multipleSelect('destroy').multipleSelect({
+                container: 'body',
+                filter: true,
+                selectAll:true
+
+              })
+            }),
+
+      $('select.bootstrap-table-filter-control-age').each(function (index, i) {
+        i.setAttribute('multiple','multiple');
+        $(this).find('option[value=""]').remove();
+        $(this).multipleSelect('destroy').multipleSelect({
+          container: 'body',
+          filter: true,
+          selectAll:true
+
+        })
+      })
+
+          },
+
+       })
+   console.log($('#subject').find('td').eq(8).text());
+var subject=$('#subject');
+rows=subject.find('tr');
+for (i=0;i<rows.length;i++)
+{
+
+var cells = $(rows[i]).find('td');
+
+var t=$(cells[8]).text();
+
+console.log(t);
+setTimeout(()=>{
+    $(cells[8]).html(t);
+},1000);
+<!--$(cells[8]).html(t);-->
+
+<!--cells=rows[i].getElementsByTagName('td');-->
+<!--console.log(cells[8].html());-->
+<!--cells[8].innerHTML=cells[8].innerText;-->
+}
+
+  $('button[name="clearSearch"]').click(function() {
+    $('select.bootstrap-table-filter-control-city').multipleSelect('setSelects', [])
+    filterData()
+  })
+
+window.filterCities=0,
+window.filterCities1=0
+
+  function customFilter(row,filter){
+     filterCities = filter['cities']
+     console.log(filterCities)
+     console.log(filterCities1)
+    if (filterCities1 == 0 || filterCities1 == []){
+      console.log("1")
+    return filterCities.length == 0 || filterCities.includes(row.city)
+    }
+    else if (filterCities == 0 || filterCities == []){
+      console.log("12")
+    return filterCities1.length == 0 || filterCities1.includes(row.age)
+    }
+    else{
+      console.log("2")
+      return filterCities1.length == 0 || filterCities1.includes(row.age) && filterCities.includes(row.city) || filterCities.length == 0
+    }
+  }
+
+  function filterData() {
+    $table.bootstrapTable('filterBy', {
+      cities: $('select.bootstrap-table-filter-control-city').multipleSelect('getSelects')
+    }, {
+      'filterAlgorithm': customFilter
+    })
+  }
+
+  $('select.bootstrap-table-filter-control-city').change(function () {
+    filterData()
+  })
+
+
+
+  $('button[name="clearSearch"]').click(function() {
+    $('select.bootstrap-table-filter-control-age').multipleSelect('setSelects', [])
+    filterData1()
+  })
+
+  function customFilter1(row,filter){
+     filterCities1 = filter['cities1']
+     console.log(filterCities)
+     console.log(filterCities1)
+     if (filterCities == 0 || filterCities == []){
+      console.log("1")
+    return filterCities1.length == 0 || filterCities1.includes(row.age)
+    }
+    else if (filterCities1 == 0 || filterCities1 == []){
+      console.log("12")
+    return filterCities.length == 0 || filterCities.includes(row.city)
+    }
+    else{
+      console.log("2")
+      return filterCities1.length == 0 || filterCities1.includes(row.age) && filterCities.includes(row.city) || filterCities.length == 0
+    }
+  }
+
+  function filterData1() {
+    $table.bootstrapTable('filterBy', {
+      cities1: $('select.bootstrap-table-filter-control-age').multipleSelect('getSelects')
+    }, {
+      'filterAlgorithm': customFilter1
+    })
+  }
+
+  $('select.bootstrap-table-filter-control-age').change(function () {
+    filterData1()
+  })
+</script>
+
+
+    <script>
+    $(document).ready(function () {
+$('#update_form').on("submit", function (event) {
+                        event.preventDefault();
+
+                        $.ajax({
+                            url: "/admin/course/change",
+                            method: "POST",
+                            data: $('#update_form').serialize(),
+
+                            beforeSend: function () {
+                                $('#update').val("Updating");
+                            },
+                            success: function (data) {
+                                $('#add_data_Modal').modal('hide');
+                                if (data == 'success') {
+                                    console.log('success')
+                                    window.location.href = "/admin_analytics/course";
+                                }
+                            }
+                        });
+
+                    });
+
+
+    $(document).on('click', '.view_data', function () {
+                        var course_id = $(this).attr("id");
+                        $.ajax({
+                            url: "/admin/course/select",
+                            method: "POST",
+                            data: {
+                                course_id: course_id
+                            },
+                            success: function (data) {
+                                $('#dataModal').modal('show');
+                                var data_rs = JSON.parse(data);
+                                $('#course_id').val(data_rs[0]['course_id']);
+
+                                $('#subject_name').val(data_rs[0]['subject_name']);
+                                $('#course_name').val(data_rs[0]['course_name']);
+                                $('#course_grade').val(data_rs[0]['course_grade']);
+                                $('#course_duration').val(data_rs[0]['course_duration']);
+                                $('#no_of_session').val(data_rs[0]['no_of_session']);
+
+                                if(data_rs[0]['course_approval_status']=="approved")
+                                {   console.log(data_rs[0]['approval_status'])
+
+
+                                    document.getElementById("coursenot").style.display = "none";
+
+                                    document.getElementById("courseyes").style.display = "block";
+
+
+                                }
+                                else
+                                    {
+
+
+                                    document.getElementById("courseyes").style.display = "none";
+                                    document.getElementById("coursenot").style.display = "block";
+
+                                }
+
+
+
+                                $('#course_approval_status').val(data_rs[0]['course_approval_status']);
+
+
+                                $('#course_description').val(data_rs[0]['course_description']);
+
+setTimeout(()=>{
+console.log('hii');
+console.log($('#course_description').val());
+},1000);
+
+var editor = CKEDITOR.replace( 'course_description' );
+            editor.setData($('#course_description').val());
+editor.on( 'change', function(edittor) {
+
+$('#test').val(edittor.editor.getData());
+});
+
+                            }
+                        });
+                    });
+                   });
+
+
+
+      </script>
+
+
 
     <div id="dataModal" class="modal fade">
         <div class="modal-dialog">
@@ -299,7 +398,23 @@
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Course Grade</label></td>
-                                    <td width="70%"><input type="number" class="form-control" id="course_grade" disabled></td>
+                                    <td width="70%"><select type="number" class="form-control" name="course_grade" id="course_grade" >
+                                    <option value="1">I</option>
+                            <option value="2">II</option>
+                            <option value="3">III</option>
+                            <option value="4">IV</option>
+                            <option value="5">V</option>
+                            <option value="6">VI</option>
+                            <option value="7">VII</option>
+                            <option value="8">VIII</option>
+                            <option value="9">IX</option>
+                            <option value="10">X</option>
+                            <option value="11">XI</option>
+                            <option value="12">XII</option>
+                                    </select>
+
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><label>Course Duration</label></td>
@@ -311,21 +426,43 @@
                                     <td width="70%"><input type="number" class="form-control" name="no_of_session" id="no_of_session"></td>
                                 </tr>
                                 <tr>
-                                    <td width="30%"><label>Course Status</label></td>
+                                    <td width="30%"><label>Course Approval Status</label></td>
                                     <td width="70%">
-                                        <span id="coursenot" style="display: block;" class="badge badge-danger">Course is Not Approved or closed</span>
-                                        <span id="courseyes" style="display: block;" class="badge badge-success">Course completed</span>
+                                        <span id="courseyes" style="display: block;" class="badge badge-success">Course already approved</span>
+                                        <span id="coursenot" style="display: block;" class="badge badge-danger">Course not yet approved</span>
+                                        <br>
+                                    <select name="course_approval_status" style="visibility: visible;"  id="course_approval_status" class="form-control">
+                                        <option value="approved">Approve</option>
+                                        <option value="decline">Decline</option>
 
-                                    <select name="status" style="visibility: visible;"  id="mySelect" class="form-control">
-                                        <option value="open">Opened</option>
-                                        <option value="close">Closed</option>
+
                                 </select>
                                         </td>
+
+
+                                </tr>
+<!--                                <tr>-->
+<!--                                    <td width="30%"><label>Course Approval Status</label></td>-->
+<!--                                    <td width="70%">-->
+<!--                                        <span id="status" style="display: block;" class="badge badge-danger">Course is Not Approved or Rejected</span>-->
+<!--                                    <select name="status" style="visibility: visible;"  id="Select" class="form-control">-->
+<!--                                        <option value="open">Approve</option>-->
+<!--                                        <option value="close">Decline</option>-->
+<!--                                </select>-->
+<!--                                        </td>-->
+<!--                                </tr>-->
+
+                                <tr>
+                                    <td width="30%"><label>Course Description ..!</label></td>
+                                    <td width="70%"><textarea class="form-control" name="course_description" id="course_description"></textarea>
+                                    </td>
+<!--                                    <textarea id="demo"></textarea>-->
                                 </tr>
                                 <tr>
-                                    <td width="30%"><label>Course Description</label></td>
-                                    <td width="70%"><textarea type="text" class="form-control" name="course_description" id="course_description"></textarea>
+                                    <td width="30%"><label>test ..!</label></td>
+                                    <td width="70%"><input type="hidden" class="form-control" name="test" id="test"></input>
                                     </td>
+<!--                                    <textarea id="demo"></textarea>-->
                                 </tr>
                             </table>
                             <div class="modal-footer">
@@ -336,174 +473,21 @@
 
                 </div>
             </div>
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for message in messages %}
-            <script>
-                swal("{{message}}", "Course Deleted Successfully !", "success");
-            </script>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
+
 
             <script>
-                $(document).ready(function () {
-                    $('#insert_form').on("submit", function (event) {
-                        event.preventDefault();
-
-                        $.ajax({
-                            url: "/data_entry/course",
-                            method: "POST",
-                            data: $('#insert_form').serialize(),
-                            beforeSend: function () {
-                                $('#insert').val("Inserting");
-                            },
-                            success: function (data) {
-                                $('#add_data_Modal').modal('hide');
-                                if (data == 'success') {
-                                    swal("Data is submitted successfully!",
-                                        "New Course is Created", "success");
-
-                                    var delayInMilliseconds = 6500; //1 second
-
-                                    setTimeout(function () {
-                                        window.location.href = "/data_entry/course";
-                                    }, delayInMilliseconds);
-
-                                }
-                                if (data == 'error') {
-                                    console.log('error')
-                                    swal("Data is not Submitted!",
-                                        "Error in submitting Data",
-                                        "error");
-                                    window.location.href = "/data_entry/course";
-                                }
-                            }
-                        });
-
-                    });
-
-                    $('#update_form').on("submit", function (event) {
-                        event.preventDefault();
-
-                        $.ajax({
-                            url: "/data_entry/course/change",
-                            method: "POST",
-                            data: $('#update_form').serialize(),
-                            beforeSend: function () {
-                                $('#update').val("Updating");
-                            },
-                            success: function (data) {
-                                $('#add_data_Modal').modal('hide');
-                                if (data == 'success') {
-                                    console.log('success')
-                                    window.location.href = "/data_entry/course";
-                                }
-                            }
-                        });
-
-                    });
 
 
-                    $(document).on('click', '.view_data', function () {
-                        var course_id = $(this).attr("id");
-                        $.ajax({
-                            url: "/data_entry/course/select",
-                            method: "POST",
-                            data: {
-                                course_id: course_id
-                            },
-                            success: function (data) {
-                                $('#dataModal').modal('show');
-                                var data_rs = JSON.parse(data);
-                                $('#course_id').val(data_rs[0]['course_id']);
 
-                                $('#subject_name').val(data_rs[0]['subject_name']);
-                                $('#course_name').val(data_rs[0]['course_name']);
-                                $('#course_grade').val(data_rs[0]['course_grade']);
-                                $('#course_duration').val(data_rs[0]['course_duration']);
-                                $('#no_of_session').val(data_rs[0]['no_of_session']);
-                               
-                                if(data_rs[0]['approval_status']=="approved" && data_rs[0]['status']=="open")
-                                {   console.log(data_rs[0]['approval_status'])
+<!--            var editor = CKEDITOR.replace( 'course_description' );-->
+<!--            editor.setData($('#course_description').val());-->
+<!--editor.on( 'change', function(edittor) {-->
 
-                                    document.getElementById("mySelect").style.visibility = "visible";
-                                    document.getElementById("mySelect").value = data_rs[0]['status'];
-                                    document.getElementById("coursenot").style.display = "none";
-                                    document.getElementById("courseyes").style.display = "none";
+<!--$('#test').val(edittor.editor.getData());-->
+<!--});-->
 
 
-                                }
-                                else if(data_rs[0]['approval_status']=="approved" && data_rs[0]['status']=="close")
-                                {   console.log(data_rs[0]['approval_status'])
-
-                                    document.getElementById("mySelect").style.visibility = "hidden";
-                                    document.getElementById("courseyes").style.display = "block";
-                                    document.getElementById("coursenot").style.display = "none";
-
-
-                                }
-                                else
-                                    {   
-                                    console.log(data_rs[0]['approval_status'])
-
-                                    document.getElementById("mySelect").style.visibility = "hidden";
-                                    document.getElementById("coursenot").style.display = "block";
-                                    document.getElementById("courseyes").style.display = "none";
-
-                                }
-
-                               
-                                // $('#status').val(data_rs[0]['status']);
-                                $('#course_description').val(data_rs[0]['course_description']);
-                                    
-                            }
-                        });
-                    });
-                });
             </script>
-
-<script>
-    const toCsv = function(table) {
-    // Query all rows
-    const rows = table.querySelectorAll('tr');
-
-    return [].slice.call(rows)
-        .map(function(row) {
-            // Query all cells
-            const cells = row.querySelectorAll('th,td');
-            return [].slice.call(cells)
-                .map(function(cell) {
-                    return cell.textContent;
-                })
-                .join(',');
-        })
-        .join('\n');
-};
-const download = function(text, fileName) {
-    const link = document.createElement('a');
-    link.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURIComponent(text)}`);
-    link.setAttribute('download', fileName);
-
-    link.style.display = 'none';
-    document.body.appendChild(link);
-
-    link.click();
-
-    document.body.removeChild(link);
-};
-const table = document.getElementById('dataTable');
-const exportBtn = document.getElementById('export');
-
-exportBtn.addEventListener('click', function() {
-    // Export to csv
-    const csv = toCsv(table);
-
-    // Download it
-    download(csv, 'download.csv');
-});
-</script>
-
 </body>
 
 </html>

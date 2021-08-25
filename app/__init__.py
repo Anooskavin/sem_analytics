@@ -10,6 +10,7 @@ from mysql import connector
 from werkzeug.utils import secure_filename
 import pandas as pd
 import collections
+import html
 
 #csv export 
 import io
@@ -31,8 +32,8 @@ updir = app.config["IMG_FOLDER"]
 app.url_map.strict_slashes = False
 app.secret_key = 'your secret key'
 
-app.config['MYSQL_HOST'] = '10.30.10.41'
-app.config['MYSQL_PORT'] = 3306
+app.config['MYSQL_HOST'] = '121.200.55.42'
+app.config['MYSQL_PORT'] = 4063
 app.config['MYSQL_USER'] = 'cloud'
 app.config['MYSQL_PASSWORD'] = 'cloud@123'
 app.config['MYSQL_DB'] = 'school_management'
