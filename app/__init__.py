@@ -25,7 +25,9 @@ from email.mime.multipart import MIMEMultipart
 import base64
 
 
-app = Flask(__name__)
+app = Flask(__name__,static_url_path="/static", static_folder="static")
+app.config["IMG_FOLDER"] = "/root_flask_app/static/img/"
+updir = app.config["IMG_FOLDER"]
 app.url_map.strict_slashes = False
 app.secret_key = 'your secret key'
 

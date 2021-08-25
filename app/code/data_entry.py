@@ -731,7 +731,9 @@ def data_entry_student_select():
                     'student_whatsapp': rs['student_whatsapp'],
                     'student_profile': rs['student_profile'],
                     'account_status': rs['account_status'],
-                    'student_idcard':rs['student_idcard']
+                'student_idcard': rs['student_idcard'],
+                'url_path': app.static_url_path
+
                     }
             employeearray.append(employee_dict)
         return json.dumps(employeearray)

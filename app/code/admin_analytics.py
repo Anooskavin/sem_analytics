@@ -408,7 +408,8 @@ def admin_entry_student_select():
                     'student_whatsapp': rs['student_whatsapp'],
                     'student_profile': rs['student_profile'],
                     'account_status': rs['account_status'],
-                   'student_idcard': "{{url_for('static',filename ='img/id_images/Arun e-6765676545.png')}}"
+                   'student_idcard': rs['student_idcard'],
+                    'url_path':app.static_url_path
                     }
             employeearray.append(employee_dict)
         return json.dumps(employeearray)

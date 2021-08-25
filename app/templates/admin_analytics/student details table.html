@@ -146,15 +146,15 @@
             </tr>
         <tr>
             <td width="30%"><label>Student Name</label></td>
-            <td width="70%"><input type="text" name="student_name" class="form-control" id="student_name"></td>
+            <td width="70%"><input type="text" name="student_name" class="form-control" id="student_name" disabled></td>
         </tr>
         <tr>
             <td width="30%"><label>Contact</label></td>
-            <td width="70%"><input type="numbers" name="student_contact" class="form-control" id="student_contact"></td>
+            <td width="70%"><input type="numbers" name="student_contact" class="form-control" id="student_contact" disabled></td>
         </tr>
         <tr>
             <td width="30%"><label>E-mail</label></td>
-            <td width="70%"><input type="email" name="student_email" class="form-control" id="student_email"></td>
+            <td width="70%"><input type="email" name="student_email" class="form-control" id="student_email" disabled></td>
         </tr>
         <tr>
             <td width="30%"><label>Student grade</label></td>
@@ -174,19 +174,19 @@
         </tr>
 		 <tr>
             <td width="30%"><label>Whatsapp No</label></td>
-            <td width="70%"><input type="numbers" name="student_whatsapp" class="form-control" id="student_whatsapp"></td>
+            <td width="70%"><input type="numbers" name="student_whatsapp" class="form-control" id="student_whatsapp" disabled></td>
         </tr>
         <tr>
             <td width="30%"><label>Account Status</label></td>
             <td width="70%">
 
-                <input type="text" name="student_status" class="form-control" id="student_status">
+                <input type="text" name="student_status" class="form-control" id="student_status" disabled>
                 </td>
         </tr>
 
         <tr>
                             <td width="30%"><label>Photo Id</label></td>
-            <td width="70%"><img id="photo_id" style="width:80px;height:100px;"></td>
+          <td width="70%"> <center><img id="photo_id" style="width:150px;height:150px;"></center></td>
         </tr>
 
     </table>
@@ -383,9 +383,10 @@ window.filterCities1=0
                      var id = data_rs[0]['student_idcard'];
 
 
-                     $('#photo_id').attr('src','data:image/png;base64,'+id +'"/>');
-                     console.log(path);
-                     document.getElementById("myImg").src = "hackanm.gif";
+                     $("#photo_id").attr('src', '/static/'+id);
+
+
+
                 }
             });
         });
