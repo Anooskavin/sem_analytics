@@ -6,7 +6,9 @@ def login():
     print(ip_address)
     if request.method == 'POST' and 'admin' in request.form and 'pwd' in request.form:
         user = request.form['admin']
-        pwd = request.form['pwd']
+        passwd = request.form['pwd']
+        password = hashlib.md5(passwd.encode())
+        pwd=password.hexdigest()
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM admin WHERE admin_username = %s AND admin_password= %s and admin_status="yes"',(user,pwd))
         user = cursor.fetchone()
