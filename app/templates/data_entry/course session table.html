@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 {% include 'header/data_entry_header.html' %}
+<script>
+    function feedback(id){
+        
 
+var encodedStringBtoA = btoa(id);
+path="/feedback?id=";
+link=path.concat(encodedStringBtoA);
+window.location.href =link;
+}
+</script>
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -141,7 +150,7 @@
                                     {% if row.session_status == "close" %}<td><span
                                             class="badge badge-success">{{row.session_status}}</span></td>{% endif %}
                                     <td>
-                                        <a href="/feedback?id={{row.session_id}}" class="btn btn-warning "><i
+                                        <a  onclick='feedback({{row.session_id}})' class="btn btn-warning "><i
                                                 class="fas fa-copy"></i></a>
                                     </td>
                                     
@@ -476,7 +485,7 @@
                                 }
                             }
                         });
-
+                       
                     });
 
 

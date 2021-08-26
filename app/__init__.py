@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 import pandas as pd
 import collections
 import html
+import base64
 
 #csv export 
 import io
