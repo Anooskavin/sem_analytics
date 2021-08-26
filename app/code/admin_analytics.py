@@ -290,6 +290,7 @@ def admin_entry_session_select():
                 'session_name': rs['session_name'],
                 'faculty_name': rs['faculty_name'],
                 'session_status': rs['session_status'],
+                'session_date':rs['session_date'],
                 'session_starttime': rs['session_starttime'],
                 'session_endtime': rs['session_endtime'],
                 'session_discription': rs['session_discription']}
@@ -309,12 +310,13 @@ def admin_entry_session_change():
         session_status = request.form['session_status']
         #status = request.form['status']
         session_starttime = request.form['session_starttime']
+        session_date = request.form['session_date']
         session_endtime = request.form['session_endtime']
         print(session_starttime)
         session_discription = request.form['test']
         cursor.execute(
-            'update course_session_details set session_name = %s ,session_status=%s , session_starttime=%s ,session_endtime=%s ,session_discription=%s where session_id=%s',
-            [ session_name, session_status, session_starttime,session_endtime, session_discription, session_id])
+            'update course_session_details set session_date=%s,session_name = %s ,session_status=%s , session_starttime=%s ,session_endtime=%s ,session_discription=%s where session_id=%s',
+            [ session_date,session_name, session_status, session_starttime,session_endtime, session_discription, session_id])
         mysql.connection.commit()
     return jsonify('success')
 ####################################### Session table end ############################################
