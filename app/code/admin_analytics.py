@@ -637,13 +637,16 @@ def admin_analytics_user_change():
         admin_id = request.form['admin_id']
         admin_name = request.form['admin_name']
         admin_username = request.form['admin_username']
+        
         admin_password = request.form['admin_password']
+        password = hashlib.md5(admin_password.encode())
+        pwd=password.hexdigest()
         admin_status = request.form['status']
         admin_usertype = request.form['user_type']
 
         cursor.execute(
             'update admin set admin_name=%s, admin_username = %s ,admin_password=%s ,admin_status=%s , admin_usertype = %s where admin_id=%s',
-            [admin_name, admin_username, admin_password, admin_status, admin_usertype, admin_id])
+            [admin_name, admin_username, pwd, admin_status, admin_usertype, admin_id])
         mysql.connection.commit()
     return jsonify('success')
 

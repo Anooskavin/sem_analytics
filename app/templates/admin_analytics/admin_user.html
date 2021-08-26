@@ -11,8 +11,7 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">User Table</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
+                    <p class="mb-4"> <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p>
 
                     <!-- DataTales Example -->
@@ -39,7 +38,6 @@
                                             <th>S no</th>
                                             <th>Admin Name</th>
 											<th>Admin Username</th>
-                                            <th>Admin Password</th>
 											<th>Account Status</th>
 											<th>Account User Type</th>
                                             <th>Action</th>
@@ -55,7 +53,6 @@
                                             <td>{{loop.index}}</td>
                                             <td>{{row.admin_name}}</td>
 											<td>{{row.admin_username}}</td>
-                                            <td>{{row.admin_password}}</td>
 
                                             {% if row.admin_status == "yes" %}
                                             <td><span class="badge badge-success">VERIFIED</span></td>
@@ -292,7 +289,7 @@
                     $('#admin_id').val(data_rs[0]['admin_id']);
                     $('#admin_name').val(data_rs[0]['admin_name']);
                     $('#admin_username').val(data_rs[0]['admin_username']);
-                    $('#admin_password').val(data_rs[0]['admin_password']);
+                    // $('#admin_password').val(data_rs[0]['admin_password']);
                     document.getElementById("status").value = data_rs[0]['admin_status'];
                     document.getElementById("user_type").value = data_rs[0]['admin_usertype'];
 
