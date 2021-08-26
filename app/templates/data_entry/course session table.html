@@ -129,6 +129,7 @@ window.location.href =link;
                                     <th>Faculty Name</th>
                                     <th>Status</th>
                                     <th>link</th>
+                                    <th>desc</th>
                                     <th style="width: fit-content;">Action</th>
 
 
@@ -153,7 +154,7 @@ window.location.href =link;
                                         <a  onclick='feedback({{row.session_id}})' class="btn btn-warning "><i
                                                 class="fas fa-copy"></i></a>
                                     </td>
-                                    
+                                    <td>{{row.session_discription}}</td>
                                     <td>
                                         <a type="button" name="view" value="view" id="{{row.session_id}}"
                                             class="btn btn-primary btn-xs view_data"><i
@@ -411,9 +412,14 @@ window.location.href =link;
                                 </tr>
                                 <tr>
                                     <td width="30%"><label> Session Description</label>
-                                    <td width="70%"><textarea type="text" name="session_discription"
-                                            class="form-control" id="session_discription"></textarea>
+                                    <td width="70%"><textarea type="text" name="session_discription" class="form-control" id="session_discription"></textarea>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label>test ..!</label></td>
+                                    <td width="70%"><input type="text" class="form-control" name="test" id="test"></input>
+                                    </td>
+  <!--                                    <textarea id="demo"></textarea>-->
                                 </tr>
                             </table>
                             <div class="modal-footer">
@@ -426,7 +432,7 @@ window.location.href =link;
             </div>
 
 
-
+            <script type="text/javascript" src="https://cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
 
             <script>
                 $(document).ready(function () {
@@ -490,7 +496,7 @@ window.location.href =link;
 
 
 
-
+var editor;
 
 
                     $(document).on('click', '.view_data', function () {
@@ -507,9 +513,7 @@ window.location.href =link;
                                 $('#sessio_id').val(data_rs[0]['session_id']);
                                 $('#course_name').val(data_rs[0]['course_name']);
                                 $('#session_name').val(data_rs[0]['session_name']);
-                                $('#session_discription').val(data_rs[0][
-                                    'session_discription'
-                                ]);
+                                
 
                                 $('#session_date').val(data_rs[0]['session_date']);
                                 document.getElementById("mySelect").value = data_rs[0][
@@ -521,15 +525,26 @@ window.location.href =link;
 
                                 $('#session_endtime').val(data_rs[0]['session_endtime']);
                                 $('#faculty_name').val(data_rs[0]['faculty_name']);
-
+                                $('#session_discription').val(data_rs[0]['session_discription']);
+                                // console.log($('#session_discription').val(data_rs[0]['session_discription']));
+                                editor = CKEDITOR.replace( 'session_discription' );
+                                
+                                editor.setData(data_rs[0]['session_discription']);
+                    editor.on( 'change', function(edittor) {
+                    
+                    $('#test').val(edittor.editor.getData());
+                    });
 
                             }
                         });
                     });
-
-
+            
+                    $('#dataModal').on('hide.bs.modal', function () { 
+    editor.destroy()
+                                                        });  
 
                 });
+              
             </script>
             {% with messages = get_flashed_messages() %}
             {% if messages %}

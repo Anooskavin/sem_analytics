@@ -138,6 +138,10 @@ def data_entry_course():
             
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
+        for i in range(len(course)):
+            course[i]['course_description'] = html.unescape(course[i]['course_description'])
+            print(course[i]['course_description'], i)
+
         # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         # notifi = cursor.fetchall()
         return render_template('data_entry/course.html',course=course,subject=subject,count=count,admin_name=admin_name)
@@ -193,7 +197,7 @@ def data_entry_course_change():
         course_duration = request.form['course_duration']
         no_of_session = request.form['no_of_session']
         status = request.form['status']
-        course_description = request.form['course_description']
+        course_description = request.form['test']
         cursor.execute('update course_details set course_name=%s, course_duration = %s ,no_of_session=%s , course_status=%s ,course_description=%s where course_id=%s', [course_name,course_duration,no_of_session,status,course_description,course_id])
         mysql.connection.commit()
     return jsonify('success')   
@@ -452,7 +456,10 @@ def data_entry_session():
         cursor.execute('SELECT * FROM faculty_details')
         faculty = cursor.fetchall()
     
-
+        for i in range(len(sess)):
+            # print(sess)
+            sess[i]['session_discription'] = html.unescape(sess[i]['session_discription'])
+            print(sess[i]['session_discription'], i,"hai")
         # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         # notifi = cursor.fetchall()
         return render_template('data_entry/course session table.html',session=sess,course=course,count=count,faculty=faculty,admin_name=admin_name)
@@ -485,6 +492,10 @@ def data_entry_session_select():
         print(sessio_id)      
         cur.execute("SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id and session_id = %s", [sessio_id])
         rsemployee = cur.fetchall()
+        for i in range(len(rsemployee)):
+            # print(sess)
+            rsemployee[i]['session_discription'] = html.unescape(rsemployee[i]['session_discription'])
+            print(rsemployee[i]['session_discription'], i,"bye")
         employeearray = []
         for rs in rsemployee:
             employee_dict = {
@@ -498,6 +509,7 @@ def data_entry_session_select():
                     'session_endtime': rs['session_endtime'],
                     'faculty_name': rs['faculty_name']}
             employeearray.append(employee_dict)
+        print(employeearray)
         return json.dumps(employeearray)
 
 @app.route("/data_entry/session/change", methods=["POST", "GET"])
@@ -511,7 +523,8 @@ def data_entry_session_change():
         session_starttime = request.form['session_starttime']
         session_endtime = request.form['session_endtime']
         session_status= request.form['status']
-        session_discription = request.form['session_discription']
+        session_discription = request.form['test']
+        print(session_discription)
         cursor.execute('update course_session_details set session_name=%s, session_date = %s ,session_starttime=%s , session_endtime=%s ,session_status=%s ,session_discription = %s where session_id=%s', [session_name,session_date,session_starttime,session_endtime,session_status,session_discription,session_id])
         mysql.connection.commit()
     return jsonify('success')   
