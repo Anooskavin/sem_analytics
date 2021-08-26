@@ -8,7 +8,10 @@ def student_login():
     if request.method == 'POST' and 'username' in request.form and 'pwd' in request.form:
         msg = ''
         username=request.form['username']
-        pwd=request.form['pwd']
+
+        passwd=request.form['pwd']
+        password = hashlib.md5(passwd.encode())
+        pwd=password.hexdigest()
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('select * from student_details where student_password=%s and account_status =%s and student_contact =%s or student_email =%s',(pwd,'allow',username,username))
         student = cursor.fetchone()
@@ -84,7 +87,9 @@ def student_register():
         school_name=request.form['school_name']
 
 
-        password=request.form['password']
+        passwd=request.form['password']
+        passd = hashlib.md5(passwd.encode())
+        password=passd.hexdigest()
 
 
 
