@@ -2,7 +2,10 @@ from app import *
 
 @app.route('/feedback')
 def feedback():
-    id = request.args.get('id')
+    base64_message = request.args.get('id')
+    base64_bytes = base64_message.encode('ascii')
+    message_bytes = base64.b64decode(base64_bytes)
+    id = message_bytes.decode('ascii')
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM course_session_details,course_details where course_details.course_id = course_session_details.course_id and session_id=%s',[id])
     feedback = cursor.fetchone()
@@ -11,7 +14,6 @@ def feedback():
         cursor.execute('select student_details.student_name,student_details.student_email,student_details.student_id,student_details.student_contact,school_details.school_name,school_details.school_pincode  from student_details,school_details where student_details.school_id= school_details.school_id')
         student = cursor.fetchall()
 
-        print(student)
         return render_template('feedback/index.html',feedback=feedback,student=student)
     else:
         return render_template('feedback/formclosed.html')
