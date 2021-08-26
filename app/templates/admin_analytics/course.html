@@ -468,7 +468,15 @@ $('#test').val(edittor.editor.getData());
 
                 </div>
             </div>
-
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <script>
+                swal("{{message}}", "Course Deleted Successfully !", "success");
+            </script>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
 
             <script>
 
