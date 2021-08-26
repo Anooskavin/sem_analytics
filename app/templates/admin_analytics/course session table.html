@@ -67,7 +67,7 @@
             <th data-field="start" data-sortable="True" >Start Time</th>
               <th data-field="end" data-sortable="True" >End Time</th>
 <th data-field="action" data-sortable="True"  >Action</th>
-<th data-field="desc" data-sortable="True">Session Description</th>
+<!-- <th data-field="desc" data-sortable="True">Session Description</th> -->
             <th data-field="link" data-sortable="True">Go to attendance</th>
         </tr>
 
@@ -122,6 +122,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js"></script>
 
     <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script type="text/javascript" src="https://cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
 
  <script>
         var data = [
@@ -136,7 +137,7 @@
         "start": "{{row.session_starttime}}",
         "end": "{{row.session_endtime}}",
           "status": "{{row.session_status}}",
- "desc": "{{row.session_discription}}",
+ "desc": "{{row.session_discription.html}}",
          "action":"<a type='button' name='view' value='view' id='{{row.session_id}}' class='btn btn-primary btn-xs view_data'><i class='fas fa-pencil-alt' style='color:white;'></i></a>  ",
  "link":"<a href={{url_for('attendance',b=row.session_id)}}><i class='fas fa-arrow-circle-right'></i></a>"
 
@@ -326,9 +327,11 @@ $('#update_form').on("submit", function (event) {
                                 $('#session_starttime').val(data_rs[0]['session_starttime']);
                                  $('#session_endtime').val(data_rs[0]['session_endtime']);
                                 $('#session_discription').val(data_rs[0]['session_discription']);
-                                var editor = CKEDITOR.replace( 'course_description' );
-editor.on( 'change', function() {
-  $('#course_description').val(data_rs[0]['course_description']);
+                                var editor = CKEDITOR.replace( 'session_discription' );
+            editor.setData($('#session_discription').val());
+editor.on( 'change', function(edittor) {
+
+$('#test').val(edittor.editor.getData());
 });
 
                             }
@@ -418,6 +421,12 @@ editor.on( 'change', function() {
                                     <td width="70%"><textarea type="text" class="form-control" name="session_discription" id="session_discription"></textarea>
                                     </td>
                                 </tr>
+                                <tr>
+                                  <td width="30%"><label>test ..!</label></td>
+                                  <td width="70%"><input type="hidden" class="form-control" name="test" id="test"></input>
+                                  </td>
+<!--                                    <textarea id="demo"></textarea>-->
+                              </tr>
                             </table>
                             <div class="modal-footer">
                                 <input type="submit" name="update" id="update" value="Update" class="btn btn-success" />
