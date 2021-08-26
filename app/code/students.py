@@ -48,7 +48,7 @@ def student_login():
             if student:
                 return redirect(url_for('home'))
             else:
-                return render_template('students/login.html', msg='Invalid Credentials/ Account not Verified')
+                return render_template('students/login.html', msg='error')
 
 
 
@@ -69,13 +69,11 @@ def student_register():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('select * from school_details')
     school_details=cursor.fetchall()
-
     cursor.execute('select student_email from student_details')
     student = cursor.fetchall()
-    print(student)
     if request.method == 'POST':
         username=request.form['username']
-        email=request.form['email']
+        emails=request.form['email']
         mobile=request.form['mobile']
         grade=request.form['grade']
         whatsapp=request.form['whatsapp']
@@ -92,18 +90,20 @@ def student_register():
         password=passd.hexdigest()
 
 
+        cursor.execute('select * from student_details where student_email=%s ',[emails])
 
-
-        cursor.execute('select * from student_details where student_email=%s ',[email])
         student=cursor.fetchone()
         if student:
-            return render_template('students/register.html', school_details=school_details,msg='Account Already exists')
+            return render_template('students/register.html', school_details=school_details,msg='error')
 
 
         else:
             cursor.execute ('select school_id from school_details where school_name =%s',[school_name])
             school=cursor.fetchone()
 
+            # subject="School event management | registration"
+            # message="Thank You for registering"
+            # email(emails,subject,message)
 
             basepath = os.path.dirname(__file__)
             #file_path = os.path.join(basepath, secure_filename(f.filename))
@@ -111,9 +111,11 @@ def student_register():
             f.save(os.path.join(app.root_path, 'static/img/id_images/{0}-{1}.png'.format(username,mobile)))
             student_id= "img/id_images/{0}-{1}.png".format(username,mobile)
 
-            cursor.execute('insert into student_details (student_name ,student_contact, student_email,student_grade,student_whatsapp,student_password,school_id,account_status,student_idcard) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)',(username,mobile,email,grade,whatsapp,password,school['school_id'],'waiting',student_id) )
+            cursor.execute('insert into student_details (student_name ,student_contact, student_email,student_grade,student_whatsapp,student_password,school_id,account_status,student_idcard) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)',(username,mobile,emails,grade,whatsapp,password,school['school_id'],'No',student_id) )
+
             mysql.connection.commit()
-            return render_template('students/register.html', school_details=school_details,msg='Registered Successfuly Check email/message for verification we will get you soon ')
+            
+            return render_template('students/register.html', school_details=school_details,msg='success')
 
 
 
