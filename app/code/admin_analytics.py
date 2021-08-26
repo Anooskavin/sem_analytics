@@ -91,7 +91,7 @@ def admin_entry_course_change():
         #status = request.form['status']
         course_approval_status = request.form['course_approval_status']
         print(course_approval_status)
-        course_description = request.form['course_description']
+        course_description = request.form['test']
         cursor.execute(
             'update course_details set course_name=%s, course_duration = %s ,course_grade=%s,no_of_session=%s , course_approval_status=%s ,course_description=%s where course_id=%s',
             [course_name, course_duration,course_grade, no_of_session, course_approval_status, course_description, course_id])
@@ -181,6 +181,11 @@ def admin_analytics_course():
 
         cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
         course = cursor.fetchall()
+
+        for i in range(len(course)):
+            course[i]['course_description'] = html.unescape(course[i]['course_description'])
+            print(course[i]['course_description'], i)
+
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
 
@@ -239,6 +244,9 @@ def admin_analytics_session():
 
         cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
         course = cursor.fetchall()
+
+    
+
         cursor.execute('SELECT * FROM faculty_details')
         faculty = cursor.fetchall()
         if course_id == None:
@@ -251,6 +259,10 @@ def admin_analytics_session():
                 'SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=%s and course_session_details.course_id=%s',
                 (course_id, course_id))
             sess = cursor.fetchall()
+
+        for i in range(len(sess)):
+            sess[i]['session_discription'] = html.unescape(sess[i]['session_discription'])
+            print(sess[i]['session_discription'], i)
 
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
@@ -299,7 +311,7 @@ def admin_entry_session_change():
         session_starttime = request.form['session_starttime']
         session_endtime = request.form['session_endtime']
         print(session_starttime)
-        session_discription = request.form['session_discription']
+        session_discription = request.form['test']
         cursor.execute(
             'update course_session_details set session_name = %s ,session_status=%s , session_starttime=%s ,session_endtime=%s ,session_discription=%s where session_id=%s',
             [ session_name, session_status, session_starttime,session_endtime, session_discription, session_id])
@@ -637,13 +649,16 @@ def admin_analytics_user_change():
         admin_id = request.form['admin_id']
         admin_name = request.form['admin_name']
         admin_username = request.form['admin_username']
+        
         admin_password = request.form['admin_password']
+        password = hashlib.md5(admin_password.encode())
+        pwd=password.hexdigest()
         admin_status = request.form['status']
         admin_usertype = request.form['user_type']
 
         cursor.execute(
             'update admin set admin_name=%s, admin_username = %s ,admin_password=%s ,admin_status=%s , admin_usertype = %s where admin_id=%s',
-            [admin_name, admin_username, admin_password, admin_status, admin_usertype, admin_id])
+            [admin_name, admin_username, pwd, admin_status, admin_usertype, admin_id])
         mysql.connection.commit()
     return jsonify('success')
 
