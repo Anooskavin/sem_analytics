@@ -327,6 +327,12 @@
                                     <td width="70%"><textarea type="text" class="form-control" name="course_description" id="course_description"></textarea>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td width="30%"><label>test ..!</label></td>
+                                    <td width="70%"><input type="hidden" class="form-control" name="test" id="test"></input>
+                                    </td>
+  <!--                                    <textarea id="demo"></textarea>-->
+                                </tr>
                             </table>
                             <div class="modal-footer">
                                 <input type="submit" name="update" id="update" value="Update" class="btn btn-success" />
@@ -339,13 +345,14 @@
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             {% for message in messages %}
+            
             <script>
                 swal("{{message}}", "Course Deleted Successfully !", "success");
             </script>
             {% endfor %}
             {% endif %}
             {% endwith %}
-
+            <script type="text/javascript" src="https://cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
             <script>
                 $(document).ready(function () {
                     $('#insert_form').on("submit", function (event) {
@@ -404,7 +411,7 @@
 
                     });
 
-
+                    var editor;
                     $(document).on('click', '.view_data', function () {
                         var course_id = $(this).attr("id");
                         $.ajax({
@@ -456,11 +463,21 @@
                                
                                 // $('#status').val(data_rs[0]['status']);
                                 $('#course_description').val(data_rs[0]['course_description']);
+                                 editor = CKEDITOR.replace( 'course_description' );
+            editor.setData($('#course_description').val());
+editor.on( 'change', function(edittor) {
+
+$('#test').val(edittor.editor.getData());
+});
                                     
                             }
                         });
                     });
+                    $('#dataModal').on('hide.bs.modal', function () { 
+    editor.destroy()
+                                                        }); 
                 });
+
             </script>
 
 <script>
