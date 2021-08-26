@@ -763,6 +763,22 @@ def data_entry_student_change():
         student_whatsapp = request.form['student_whatsapp']
         status = request.form['status']
 
+        cursor.execute('select account_status from student_details where student_id=%s',[student_id])
+        stu_status=cursor.fetchone()
+        if(stu_status['account_status']!=status):
+            if (status=='allow'):
+                subject='Account verified !!!!!'
+                message='Your account now verified you can login now'
+                a= email(student_email,subject,message)
+
+            elif (status=='block'):
+                subject = 'Account blocked  !!!!!'
+                message = 'Your account have been blocked due to sucpicious actvities'
+                a = email(student_email, subject, message)
+
+
+
+
 
         
        
