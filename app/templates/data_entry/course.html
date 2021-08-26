@@ -262,6 +262,8 @@
                         <label>Enter Course Description</label>
                         <textarea name="coursedes" id="address" class="form-control"></textarea>
                         <br />
+
+                        <input type="hidden" class="form-control" name="test1" id="test1"></input>
                 </div>
 
                 <div class="modal-footer">
@@ -327,12 +329,14 @@
                                     <td width="70%"><textarea type="text" class="form-control" name="course_description" id="course_description"></textarea>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td width="30%"><label>test ..!</label></td>
-                                    <td width="70%"><input type="hidden" class="form-control" name="test" id="test"></input>
+                                <tr hidden>
+                                    <td hidden width="30%">
+                                        <!-- <label>test ..!</label> -->
+                                    </td>
+                                    <td hidden width="70%"><input type="hidden" class="form-control" name="test" id="test"></input>
                                     </td>
   <!--                                    <textarea id="demo"></textarea>-->
-                                </tr>
+                                </tr hidden>
                             </table>
                             <div class="modal-footer">
                                 <input type="submit" name="update" id="update" value="Update" class="btn btn-success" />
@@ -520,6 +524,16 @@ exportBtn.addEventListener('click', function() {
     download(csv, 'download.csv');
 });
 </script>
+
+<script>
+    var edit = CKEDITOR.replace( 'address' );
+
+edit.on( 'change', function(evt) {
+// console.log(evt.editor.getData());
+$('#test1').val(evt.editor.getData());
+});
+</script>
+
 
 </body>
 

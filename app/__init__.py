@@ -70,7 +70,7 @@ def email(sender,subject,messages):
     # Create secure connection with server and send email
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-        server.login('ssig432@gmail.com', 'Ssig@1234')
+        server.login('ssig432@gmail.com', 'sSig432*gmail&user')
         server.sendmail(
             'ssig432@gmail.com', sender, message.as_string()
         )

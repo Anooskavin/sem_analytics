@@ -107,7 +107,7 @@ def data_entry_course():
             grade = request.form['grade']
             cduration = request.form['duration']
             nosession = request.form['session']
-            description = request.form['coursedes']                   
+            description = request.form['test1']                   
             try:
                 cursor.execute("INSERT INTO course_details (subject_id, course_grade,course_name,course_description,course_duration,no_of_session,admin_id) VALUES (%s, %s, %s, %s, %s, %s, %s)",[subjectid, grade,cname,description,cduration,nosession,adminid])
                 mysql.connection.commit()
@@ -276,7 +276,7 @@ def data_entry_course_registered_student_mail():
             subject = request.form['subject']
             
 
-            message = request.form['message']
+            message = request.form['test']
             cursor.execute('select * from student_details where student_id =%s',[studentid])
             student = cursor.fetchone()
             
@@ -289,7 +289,7 @@ def data_entry_course_registered_student_mail():
             print('vbnm')
             subject = request.form['subject1']
 
-            message = request.form['message1']
+            message = request.form['groupmail']
             cursor.execute('select student_details.student_email , course_enroll_details.course_id from student_details,course_enroll_details where course_enroll_details.student_id = student_details.student_id and course_enroll_details.course_id=%s',[courseid])
             student = cursor.fetchall()
             print(student)
@@ -412,7 +412,8 @@ def data_entry_session():
             cname = request.form['cname']
             sduration = request.form['sduration']
             sname = request.form['sname']
-            desc = request.form['desc']
+            desc = request.form['test1']
+            print(desc,"******")
             sdate = request.form['sdate']
             stime = request.form['stime']
             etime = request.form['etime']          
@@ -459,7 +460,7 @@ def data_entry_session():
         for i in range(len(sess)):
             # print(sess)
             sess[i]['session_discription'] = html.unescape(sess[i]['session_discription'])
-            print(sess[i]['session_discription'], i,"hai")
+            print(sess[i]['session_discription'], i)
         # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         # notifi = cursor.fetchall()
         return render_template('data_entry/course session table.html',session=sess,course=course,count=count,faculty=faculty,admin_name=admin_name)

@@ -282,6 +282,13 @@
                         <textarea name="message1" id="message1" class="form-control"></textarea>
                         <br />
 
+                       
+                            <label hidden>test ..!</label>
+                            <input hidden type="text" class="form-control" name="groupmail" id="groupmail"></input>
+                            
+<!--                                    <textarea id="demo"></textarea>-->
+                        
+
 
 
                 </div>
@@ -357,7 +364,14 @@
                                             id="message"></textarea>
                                     </td>
                                 </tr>
-                               
+
+                                <tr hidden>
+                                    <td hidden width="30%"><label>test ..!</label></td>
+                                    <td hidden width="70%"><input type="text" class="form-control" name="test" id="test"></input>
+                                    </td>
+  <!--                                    <textarea id="demo"></textarea>-->
+                                </tr>
+                                
 
                             </table>
                             <div class="modal-footer">
@@ -386,7 +400,7 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
-
+    <script type="text/javascript" src="https://cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
     <script>
         $(document).ready(function () {
             $('#insert_form').on("submit", function (event) {
@@ -556,6 +570,23 @@
             download(csv, 'download.csv');
         });
     </script>
+
+<script>
+    var edit = CKEDITOR.replace( 'message1' );
+
+edit.on( 'change', function(evt) {
+// console.log(evt.editor.getData());
+$('#groupmail').val(evt.editor.getData());
+});
+</script>
+<script>
+    var edit = CKEDITOR.replace( 'message' );
+
+edit.on( 'change', function(evt) {
+// console.log(evt.editor.getData());
+$('#test').val(evt.editor.getData());
+});
+</script>
 
 </body>
 

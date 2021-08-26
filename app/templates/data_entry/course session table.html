@@ -129,7 +129,7 @@ window.location.href =link;
                                     <th>Faculty Name</th>
                                     <th>Status</th>
                                     <th>link</th>
-                                    <th>desc</th>
+                                    <!-- <th>desc</th> -->
                                     <th style="width: fit-content;">Action</th>
 
 
@@ -154,7 +154,7 @@ window.location.href =link;
                                         <a  onclick='feedback({{row.session_id}})' class="btn btn-warning "><i
                                                 class="fas fa-copy"></i></a>
                                     </td>
-                                    <td>{{row.session_discription}}</td>
+                                    <!-- <td>{{row.session_discription}}</td> -->
                                     <td>
                                         <a type="button" name="view" value="view" id="{{row.session_id}}"
                                             class="btn btn-primary btn-xs view_data"><i
@@ -239,6 +239,9 @@ window.location.href =link;
                         <label>Enter Session Description</label>
                         <textarea name="desc" id="address" class="form-control"></textarea>
                         <br />
+
+                        <!-- <label type="hidden">test ..!</label></td> -->
+                        <input type="hidden" class="form-control" name="test1" id="test1"></input>
 
                         <label>Enter Session Date</label>
                         <input type="date" name="sdate" id="name" class="form-control" />
@@ -558,6 +561,15 @@ var editor;
             {% endif %}
             {% endwith %}
 
+
+            <script>
+                 var edit = CKEDITOR.replace( 'address' );
+            
+edit.on( 'change', function(evt) {
+// console.log(evt.editor.getData());
+$('#test1').val(evt.editor.getData());
+});
+            </script>
 
 </body>
 
