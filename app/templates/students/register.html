@@ -17,6 +17,7 @@ background:#2d2d2d;}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link name="favicon" type="image/x-icon" href="{{url_for('static',filename='img/favicon.png')}}" rel="shortcut icon">
@@ -38,10 +39,23 @@ background:#2d2d2d;}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.css">
 
      <script src="{{url_for('static',filename='assets/backend/js/jquery-3.3.1.min.js')}}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 </head>
 <body class="gray-bg">
+    <script>
+        {% if msg == 'success' %}
+    
+            swal("Registered Successfully !!", "Check email/message for verification we will get you soon ! !", "success");
+         {% endif %}
+        </script>
+        <script>
+        {% if msg == 'error' %}
+    
+            swal("Registration Failed !!", "Entered Details Already exists ! !", "error");
+         {% endif %}
+        </script>
 
 <section class="category-header-area">
     <div class="container-lg">
@@ -219,13 +233,10 @@ background:#2d2d2d;}
 
 
 
- <script>
-    {% if msg != '' %}
 
-        alert("{{msg}}");
-     {% endif %}
-    </script>
 
+
+   
 
 <script>
 function allLetter()
