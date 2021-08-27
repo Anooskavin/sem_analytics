@@ -101,9 +101,9 @@ def student_register():
             cursor.execute ('select school_id from school_details where school_name =%s',[school_name])
             school=cursor.fetchone()
 
-            # subject="School event management | registration"
-            # message="Thank You for registering"
-            # email(emails,subject,message)
+            subject="School event management | registration"
+            message="Thank You for registering"
+            a=email(emails,subject,message)
 
             basepath = os.path.dirname(__file__)
             #file_path = os.path.join(basepath, secure_filename(f.filename))
