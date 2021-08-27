@@ -1,3 +1,8 @@
-student_name,student_contact,student_email,student_grade,student_whatsapp
-sam,7687672657,sam@gmail.com,9,6767676762
-kathir,9878983678,kathir@gmail.com,10,9876787676
+﻿"S no","Course Name","Session Name","Session Date","Session Start Time","Session End Time","Faculty Name","Status"
+"1","Trigonometry","trignomenty session 1","2021-05-28","05:30 AM","05:30 AM","anooshkavin","open"
+"2","Trigonometry","session 2","2021-06-11","05:30 AM","02:00 PM","Kishore","close"
+"3","c++","session 2","2021-06-11","07:00 AM","09:00 AM","anooshkavin","open"
+"4","Trigonometry","asd","2021-06-12","06:00 AM","01:00 PM","anooshkavin","close"
+"5","probability","Introduction -1","2021-06-19","06:30 AM","08:00 AM","Kishore","open"
+"6","probability","session 2","2021-08-10","07:30 AM","09:30 AM","anooshkavin","close"
+"7","c++","CSE","2021-08-27","08:35","21:39","anooshkavin","open"
