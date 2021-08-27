@@ -37,7 +37,7 @@ def student_login():
                 session['user_type'] = 'student'
                 return redirect(url_for('home'))
             else:
-                return render_template('students/login.html', msg='Invalid Credentials/ Account not Verified')
+                return render_template('students/login.html', msg='error')
 
         else:
 
@@ -310,17 +310,28 @@ def add_courses():
     else:
         return redirect(url_for('student_login'))
 
+
+
 ######################################## student_forget_password #######################################################
+
+
 @app.route("/student/forget_password",methods=["POST", "GET"])
 def student_forget_password():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method=='POST':
-        email=request.form['username']
+        emailid=request.form['username']
 
-        cursor.execute('select * from student_details where student_email=%s',[email])
+        cursor.execute('select * from student_details where student_email=%s and account_status="allow"',[emailid])
         student=cursor.fetchone()
         if student:
-
+            message_bytes = emailid.encode('ascii')
+            base64_bytes = base64.b64encode(message_bytes)
+            mail = base64_bytes.decode('ascii')
+            
+            subject="forgot password"
+            message="<a href='http://127.0.0.1:5000/student/forget_password/verify?code={0}'</a>click here </a>".format(mail)
+            print(message)
+            email(emailid,subject,message)
 
             return render_template('/students/forget_password.html',msg='success')
 
@@ -330,7 +341,50 @@ def student_forget_password():
 
     return render_template('/students/forget_password.html',msg='')
 
-###################################### change password #######################################3
+
+
+
+
+######################################## student_forget_password change password #######################################################
+
+
+@app.route("/student/forget_password/verify",methods=["POST", "GET"])
+def student_forget_password_verify():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    if request.method=='POST':
+        password=request.form['password']
+        email=request.form['email']
+        passwd = hashlib.md5(password.encode())
+        pwd=passwd.hexdigest()
+        
+        print(email)
+        print(pwd)
+        cursor.execute('update student_details set student_password=%s where student_email=%s',[pwd,email])
+        mysql.connection.commit()
+        return render_template('students/login.html', msg='success')
+
+
+
+    code=request.args.get('code')
+    base64_bytes = code.encode('ascii')
+    mail = base64.b64decode(base64_bytes)
+    emailid = mail.decode('ascii')
+    return render_template('/students/forget_password_change.html',emailid=emailid,msg='')
+
+
+
+
+
+
+
+
+
+
+###################################### change password ########################################
+
+
+
 @app.route("/student/change_password",methods=["POST", "GET"])
 def change_password():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)

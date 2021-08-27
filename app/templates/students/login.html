@@ -60,7 +60,7 @@
             <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
           </ul>
 
-          <a  class="navbar-brand" href="#"><img src="{{url_for('static',filename='img/banner.png')}}" alt="" height="35" ></a>
+          <a  class="navbar-brand" href=""><img src="{{url_for('static',filename='img/banner.png')}}" alt="" height="35" ></a>
 
 
           <div class="main-nav-wrap">
@@ -193,12 +193,19 @@
 
 
    <script>
-    {% if msg != '' %}
+    {% if msg == 'error' %}
 
         swal("Wrong Credentials !!", "Please check your Username and Password !", "error");
 
      {% endif %}
     </script>
+     <script>
+      {% if msg == 'success' %}
+  
+      swal("Password Update !!", "New password updated successfully !", "success");
+  
+       {% endif %}
+      </script>
 
 <script>
 	$(".toggle-password").click(function() {

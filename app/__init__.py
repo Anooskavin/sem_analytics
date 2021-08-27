@@ -58,9 +58,10 @@ def email(sender,subject,messages):
     message["Subject"] = subject
     message["From"] = 'ssig432@gmail.com'
     message["To"] = sender
-
+    print(sender)
+    
     html = """<html><body><p>"""+messages+"""</p>    </body>    </html>"""
-
+    print(html)
    
     part2 = MIMEText(html, "html")
 
@@ -72,7 +73,7 @@ def email(sender,subject,messages):
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
         server.login('ssig432@gmail.com', 'sSig432*gmail&user')
         server.sendmail(
-            'cloud@bitsathy.ac.in', sender, message.as_string()
+            'ssig432@gmail.com', sender, message.as_string()
         )
     print('mail sent')
     return
