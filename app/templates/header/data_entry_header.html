@@ -52,6 +52,7 @@
 
     <!-- Custom styles for this page -->
     <link href=" {{url_for('static',filename='vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 </head>
 <div id="wrapper">
@@ -417,9 +418,10 @@
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
                             </a>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item"   data-toggle="modal"
+                            data-target="#change_password_Modal">
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
+                                Change Password
                             </a>
                             <a class="dropdown-item" href="#">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -460,6 +462,77 @@
 
 
 
+            <div id="change_password_Modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Change Password</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{{url_for('change_dataentry_password')}}">
+
+                        <!-- <input type="text" name="sname" id="name" class="form-control" /> -->
+
+
+                        <label>Enter New Password</label><i style="float:right;" toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" ></i>
+                        <input type="password" name="password" id="password" class="form-control" value="" required/>
+
+                        <br />
+
+                        <label>Confirm Password</label>
+                        <input type="password" name="confirm_password" id="confirm_password" onkeyup='check();' class="form-control" />
+                        <span id="message5"></span>
+                        <br />
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" name="insert" id="btn btn-info" value="Submit" class="btn btn-success" />
+                    <button type="button" class="btn btn-default" onclick="fieldclear('insert_form')" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+	$(".toggle-password").click(function() {
+
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $($(this).attr("toggle"));
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+  }
+});
+</script>
+  <script>
+    var check = function () {
+
+
+      if (document.getElementById('password').value ==
+        document.getElementById('confirm_password').value    && document.getElementById('password').value!=null ) {
+        document.getElementById('message5').style.color = 'green';
+        document.getElementById('message5').innerHTML = 'Password matching';
+      } else {
+        document.getElementById('message5').style.color = 'red';
+        document.getElementById('message5').innerHTML = 'Password not matching';
+      }
+      if (document.getElementById('password').value ==
+        document.getElementById('confirm_password').value ) {
+        document.getElementById('btn btn-info').disabled = false;
+      } else {
+        document.getElementById('btn btn-info').disabled = true;
+      }
+    }
+
+
+  </script>
+
+
             <script src="{{url_for('static',filename='vendor/jquery/jquery.min.js')}}"></script>
             <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
@@ -483,7 +556,17 @@
             <script src="{{url_for('static',filename='js/demo/datatables-demo.js')}}"></script>
 
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
 
+    {% for category, message in messages %}
+        <script>
+             swal("{{ message }}","Password updated successfully!!", "{{ category }}");
+        </script>
+
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
 
 

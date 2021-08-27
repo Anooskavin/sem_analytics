@@ -971,3 +971,17 @@ def data_entry_school_change():
 
 ####################################### Faculty table end ############################################
 
+@app.route("/data_entry/password/change", methods=["POST", "GET"])
+def change_dataentry_password():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'data_entry':
+        id = session.get('id')
+        passwd = request.form['password']
+        passd = hashlib.md5(passwd.encode())
+        password = passd.hexdigest()
+
+        cursor.execute('update admin set admin_password =%s where admin_id=%s',(password,id))
+        mysql.connection.commit()
+        flash('Password updated', 'success')
+
+        return redirect(url_for('data_entry_home'))

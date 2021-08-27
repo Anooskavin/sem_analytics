@@ -160,8 +160,10 @@
 */
 @media (max-width:767px){
     .navbar-brand {
-        margin-right: auto;
-        margin-left: auto;
+         margin-right: 1;
+       margin-left: 29;
+       height:auto;
+       width: auto;
     }
 
     .mobile-main-nav > li.has-children > a{
