@@ -901,13 +901,15 @@ def data_entry_school_details_import():
             employeearray.append(employee_dict)
         return json.dumps(employeearray)
 
+
+        ### import function ###
+
 @app.route('/data_entry/school_details/import_student', methods=['GET', 'POST'])
 def data_entry_school_details_import_student():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method == "POST":
 
         school_id = request.form['import_school_id']
-        print(school_id)
         f = request.files['student_import']
 
         basepath = os.path.dirname(__file__)
@@ -931,16 +933,26 @@ def data_entry_school_details_import_student():
             student_whatsapp = df['student_whatsapp'].to_list()
 
             for i in range(len(df.student_name)):
-                cursor.execute('insert into student_details (student_name,student_contact,student_email,student_grade,student_whatsapp,student_password,school_id,account_status) values(%s,%s,%s,%s,%s,%s,%s,%s)',(student_name[i],student_contact[i],student_email[i],student_grade[i],student_whatsapp[i],student_contact[i],school_id,'allow'))
-                mysql.connection.commit()
-            return '''Success visit  <a href ="http://127.0.0.1:5000/data_entry/student">click here</a> to see changes'''
+                    cursor.execute("SELECT * FROM student_details where student_email = %s", [student_email[i],])
+                    data = cursor.fetchall()
+                    if(data):
+                        flash('Duplicate Data', 'error')
 
+                        return redirect(url_for('data_entry_school_details'))
+                    else:
+                        cursor.execute('insert into student_details (student_name,student_contact,student_email,student_grade,student_whatsapp,student_password,school_id,account_status) values(%s,%s,%s,%s,%s,%s,%s,%s)',(student_name[i].upper(),student_contact[i],student_email[i],student_grade[i],student_whatsapp[i],student_contact[i],school_id,'allow'))
+                        mysql.connection.commit()
 
+                
+            flash('Inserted success', 'success')
 
-
+            return redirect(url_for('data_entry_school_details'))
+            #return '''Success visit  <a href ="http://127.0.0.1:5000/data_entry/student">click here</a> to see changes'''
 
         else:
-            return '''Import failed check csv file fields and entry'''
+            flash('Invalid File', 'error')
+            return redirect(url_for('data_entry_school_details'))
+            #return '''Import failed check csv file fields and entry'''
 
 
 
