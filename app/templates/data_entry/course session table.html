@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 {% include 'header/data_entry_header.html' %}
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
 <script>
     function feedback(id){
         
@@ -20,8 +22,10 @@ window.location.href =link;
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Session Details</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+            <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+                    <button class="export-btn"><i class="fa fa-file-excel-o"></i> Export to Excel</button>
+
         </div>
      <div class="row">
 
@@ -128,9 +132,9 @@ window.location.href =link;
                                     <th>Session End Time</th>
                                     <th>Faculty Name</th>
                                     <th>Status</th>
-                                    <th>link</th>
+                                    <th class="link">link</th>
                                     <!-- <th>desc</th> -->
-                                    <th style="width: fit-content;">Action</th>
+                                    <th style="width: fit-content;" class="action">Action</th>
 
 
                                 </tr>
@@ -150,12 +154,12 @@ window.location.href =link;
                                     <td><span class="badge badge-primary">{{row.session_status}}</span></td>{% endif %}
                                     {% if row.session_status == "close" %}<td><span
                                             class="badge badge-success">{{row.session_status}}</span></td>{% endif %}
-                                    <td>
+                                    <td class="link">
                                         <a  onclick='feedback({{row.session_id}})' class="btn btn-warning "><i
                                                 class="fas fa-copy"></i></a>
                                     </td>
                                     <!-- <td>{{row.session_discription}}</td> -->
-                                    <td>
+                                    <td class="action">
                                         <a type="button" name="view" value="view" id="{{row.session_id}}"
                                             class="btn btn-primary btn-xs view_data"><i
                                                 class="fas fa-pencil-alt"></i></a>&nbsp;
@@ -434,9 +438,23 @@ window.location.href =link;
                 </div>
             </div>
 
+            <script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>
 
+<script>
+
+    $(document).ready(function(){
+$(".export-btn").click(function(){
+$("#dataTable").tableHTMLExport({
+
+ type:'csv',
+ filename:'Corseregistered.csv',
+ ignoreColumns:'.action,.link',
+});
+});
+});
+</script>
             <script type="text/javascript" src="https://cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
-
+            
             <script>
                 $(document).ready(function () {
                     $('#insert_form').on("submit", function (event) {
@@ -570,6 +588,11 @@ edit.on( 'change', function(evt) {
 $('#test1').val(evt.editor.getData());
 });
             </script>
+
+
+
+
+
 
 </body>
 
