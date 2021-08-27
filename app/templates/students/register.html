@@ -44,6 +44,67 @@ background:#2d2d2d;}
 
 </head>
 <body class="gray-bg">
+<section class="menu-area">
+  <div class="container-xl">
+    <div class="row">
+      <div class="col">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" >
+
+          <ul class="mobile-header-buttons">
+            <li><a class="mobile-nav-trigger" href="#mobile-primary-nav">Menu<span></span></a></li>
+            <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
+          </ul>
+
+          <a  class="navbar-brand" href="#"><img src="{{url_for('static',filename='img/banner.png')}}" alt="" height="35" ></a>
+
+
+          <div class="main-nav-wrap">
+  <div class="mobile-overlay"></div>
+
+  <ul class="mobile-main-nav">
+    <div class="mobile-menu-helper-top"></div>
+
+    <li class="has-children">
+      <a href="">
+        <i class="fas fa-th d-inline"></i>
+        <span>Courses</span>
+        <span class="has-sub-category"><i class="fas fa-angle-right"></i></span>
+      </a>
+
+</li>
+
+<div class="mobile-menu-helper-bottom"></div>
+</ul>
+</div>
+<form class="inline-form" action="" method="get" style="width: 100%;">
+            <div style="padding-top: 15px" class="input-group search-box mobile-search">
+              <input type="text" name = 'query' class="form-control" placeholder="Search For Courses">
+              <div class="input-group-append">
+                <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </form>
+
+
+
+
+
+          <span class="signin-box-move-desktop-helper"></span>
+
+          <div class="sign-in-box btn-group" >
+
+            <a href="{{url_for('student_login')}}" class="btn btn-sign-in" >Log In</a>
+
+            <a href="{{url_for('student_register')}}" class="btn btn-sign-up">Sign Up</a>
+
+          </div> <!--  sign-in-box end -->
+
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+
     <script>
         {% if msg == 'success' %}
     

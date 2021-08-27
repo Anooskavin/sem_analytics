@@ -310,6 +310,43 @@ def add_courses():
     else:
         return redirect(url_for('student_login'))
 
+######################################## student_forget_password #######################################################
+@app.route("/student/forget_password",methods=["POST", "GET"])
+def student_forget_password():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method=='POST':
+        email=request.form['username']
+
+        cursor.execute('select * from student_details where student_email=%s',[email])
+        student=cursor.fetchone()
+        if student:
+
+
+            return render_template('/students/forget_password.html',msg='success')
+
+
+        else:
+            return render_template('/students/forget_password.html',msg='error')
+
+    return render_template('/students/forget_password.html',msg='')
+
+###################################### change password #######################################3
+@app.route("/student/change_password",methods=["POST", "GET"])
+def change_password():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'student_id' in session and session.get("user_type") == 'student':
+        email=request.form['email']
+        passwd = request.form['password']
+        passd = hashlib.md5(passwd.encode())
+        password = passd.hexdigest()
+        cursor.execute('update student_details set student_password=%s WHERE student_email = %s', (password, email))
+        mysql.connection.commit()
+
+        return redirect(url_for('student_profile'))
+
+
+
+
 
 
 ######################################## logout #######################################################
