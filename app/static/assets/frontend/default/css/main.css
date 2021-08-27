@@ -214,7 +214,7 @@ select + .select2-container{
 
 .search-box{
     margin-right: 50px;
-    padding: 10px 0;
+    padding: 0px 0;
 }
 .search-box input{
     background-color: #f2f3f5;
