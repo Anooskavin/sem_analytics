@@ -371,7 +371,7 @@
                                 $('#insert').val("Inserting");
                             },
                             success: function (data) {
-                                $('#add_data_Modal').modal('hide');
+                                $('#add_data_Modal').modal('hide').trigger('reset');
                                 if (data == 'success') {
                                     swal("Data is submitted successfully!",
                                         "New Course is Created", "success");
@@ -406,7 +406,7 @@
                                 $('#update').val("Updating");
                             },
                             success: function (data) {
-                                $('#add_data_Modal').modal('hide');
+                                $('#add_data_Modal').modal('hide').trigger('reset');
                                 if (data == 'success') {
                                     console.log('success')
                                     window.location.href = "/data_entry/course";
@@ -552,9 +552,12 @@ $('#test1').val(evt.editor.getData());
   });
 });
      </script>
-
-
-
+<script>
+$('#add_data_Modal').on('hidden.bs.modal', function () {
+    $(this).find('insert_form').trigger('reset');
+    console.log("hi");
+})
+</script>
 </body>
 
 </html>
