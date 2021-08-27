@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% include 'header/data_entry_header.html' %}
-
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- End of Sidebar -->
 
        
@@ -10,15 +10,17 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Faculty Table</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
-
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Faculty Details</h1>
+                        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+                                <button class="export-btn"><i class="fa fa-file-excel-o"></i> Export to Excel</button>
+                    </div>
+                            
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Faculty Table
+                            <h6 class="m-0 font-weight-bold text-primary">
 							
 							<div class="my-2" style="float:right;">
                                     <BUTTON href="#" class="btn btn-info btn-icon-split" data-toggle="modal" data-target="#add_data_Modal">
@@ -40,28 +42,14 @@
                                             <th>Faculty Name</th>
 											<th>Faculty E-mail</th>
                                             <th>Faculty Contact</th>
-											<th>Update</th>
-											<th>Delete</th>
+											<th class="update">Update</th>
+											<th class="delete">Delete</th>
 											
 											
                                            
                                         </tr>
                                     </thead>
-                                    <tfoot>
-
-                                        <tr>
-                                            <th>S no</th>
-                                            <th>Faculty Name</th>
-											<th>Faculty E-mail</th>
-                                            <th>Faculty Contact</th>
-											<th>Update</th>
-											<th>Delete</th>
-
-
-
-                                        </tr>
-
-                                    </tfoot>
+                                    
                                     <tbody>
                                          {% for row in faculty %}
                                         <tr>
@@ -69,7 +57,7 @@
                                             <td>{{row.faculty_name}}</td>
 											<td>{{row.faculty_email}}</td>
                                             <td>{{row.faculty_contact}}</td>
-											<td>
+											<td class="update">
 											
 											
                                                 <a type="button" name="view" value="view" id="{{row.faculty_id}}" class="btn btn-success btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>
@@ -77,7 +65,7 @@
                                             </button>
 											
 											</td>
-											<td>
+											<td class="delete">
                                                 <button type="submit" class="btn btn-danger " value="{{row.faculty_id}}"
                                                 name="delete" id='deletecheck' onclick="return validateForm()"><i
                                                     class="fas fa-trash"></i></button>
@@ -202,7 +190,21 @@
 	</div>
    </div>
 	
+   <script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>
 
+   <script>
+
+    $(document).ready(function(){
+$(".export-btn").click(function(){
+$("#dataTable").tableHTMLExport({
+
+ type:'csv',
+ filename:'Faculty.csv',
+ ignoreColumns:'.update,.delete',
+});
+});
+});
+</script>
    
    <script>
     $(document).ready(function () {

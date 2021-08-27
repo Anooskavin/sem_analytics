@@ -246,8 +246,9 @@ def data_entry_course_registered():
        
             
         else:
-            cursor.execute('SELECT * FROM course_enroll_details,student_details Where course_enroll_details.student_id=student_details.student_id')
+            cursor.execute('SELECT * FROM school_management.course_details,school_management.course_enroll_details,school_management.student_details Where course_details.course_id=course_enroll_details.course_id and course_enroll_details.student_id=student_details.student_id')
             course = cursor.fetchall()
+            print(course)
             cursor.execute('SELECT * FROM course_details,subject Where course_details.subject_id=subject.subject_id')
             count[0] = len(cursor.fetchall())      
           

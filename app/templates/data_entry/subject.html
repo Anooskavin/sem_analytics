@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% include 'header/data_entry_header.html' %}
-
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -13,11 +13,18 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
 
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">School Details</h1>
+<!--                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i-->
+<!--                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+            <button class="export-btn"><i class="fa fa-file-excel-o"></i> Export to Excel</button>
+        </div>
+
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Subject Details</h1>
+        <!-- <h1 class="h3 mb-2 text-gray-800">Subject Details</h1>
             <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                 For more information about DataTables, please visit the <a target="_blank"
-                    href="https://datatables.net">official DataTables documentation</a>.</p>
+                    href="https://datatables.net">official DataTables documentation</a>.</p> -->
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
@@ -43,7 +50,7 @@
                                 <th>S no</th>
                                 <th>Subject Name</th>
                                 <th>Suject Description</th>
-                                <th>update</th>
+                                <th class="action">update</th>
 
                             </tr>
                         </thead>
@@ -58,7 +65,7 @@
                                         class="btn btn-success btn-xs view_data"><i class="fas fa-pencil-alt"></i></a>
                                 </td> -->
 
-                                <td><a type="button" name="view" value="view" id="{{row.subject_id}}" class="btn btn-success btn-xs view_data" ><i class="fas fa-pencil-alt"></i></a></td>
+                                <td class="action"><a type="button" name="view" value="view" id="{{row.subject_id}}" class="btn btn-success btn-xs view_data" ><i class="fas fa-pencil-alt"></i></a></td>
                                 </button></td>
                             </tr>
                             {% endfor %}
@@ -256,6 +263,23 @@
         });
     </script>
 
+
+<script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>
+
+
+     <script>
+
+         $(document).ready(function(){
+   $(".export-btn").click(function(){
+     $("#dataTable").tableHTMLExport({
+
+      type:'csv',
+      filename:'subjectDetails.csv',
+      ignoreColumns:'.action',
+    });
+  });
+});
+     </script>
 
 
 </body>

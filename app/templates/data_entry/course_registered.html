@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% include 'header/data_entry_header.html' %}
-
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 <body id="page-top">
 
@@ -15,8 +15,9 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Course Registed Student Details</h1>
-            <button id="export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</button>
+            <!-- <button id="export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</button> -->
+                    <button class="export-btn"><i class="fa fa-file-excel-o"></i> Export to Excel</button>
         </div>
         <div class="row">
 
@@ -124,7 +125,7 @@
                                     <th>Student Email</th>
 
 
-                                    <th>Action</th>
+                                    <th class="action">Action</th>
 
 
                                 </tr>
@@ -137,11 +138,11 @@
 
                                     <td>{{loop.index}}</td>
                                     <td><a name="view" value="view" id="{{row.student_id}}"
-                                            class="view_student">{{row.student_name}}</a></td>
+                                            class="view_student">{{row.student_name}} </a></td>
                                     <td>{{row.student_contact}}</td>
                                     <td>{{row.student_email}}</td>
 
-                                    <td><a type="button" name="view" value="view" id="{{row.student_id}}"
+                                    <td class="action"><a type="button" name="view" value="view" id="{{row.student_id}}"
                                             class="btn btn-primary btn-xs view_mail"><i
                                                 class="fas fa-envelope"></i></a>&nbsp;
                                         <a type="button" name="view" value="view" id="{{row.student_id}}"
@@ -149,6 +150,7 @@
                                 </tr>
                                 {% endfor %}
 
+                                
                             </tbody>
 
                         </table>
@@ -587,6 +589,25 @@ edit.on( 'change', function(evt) {
 $('#test').val(evt.editor.getData());
 });
 </script>
+
+
+<script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>
+
+
+     <script>
+
+         $(document).ready(function(){
+   $(".export-btn").click(function(){
+     $("#dataTable").tableHTMLExport({
+
+      type:'csv',
+      filename:'codehim-html-table-to-excel.csv',
+      ignoreColumns:'.action',
+    });
+  });
+});
+     </script>
+
 
 </body>
 

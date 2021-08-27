@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 {% include 'header/data_entry_header.html' %}
-
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- End of Sidebar -->
         <div class="container-fluid">
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Student Details</h1>
-                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+                        <button class="export-btn"><i class="fa fa-file-excel-o"></i> Export to Excel</button>
             </div>
          <div class="row">
     
@@ -131,7 +132,7 @@
                                             <th>Grade</th>
 											<th>Whatsapp</th>
                                             <th>Account Status</th>
-											<th>Action</th>
+											<th class="action">Action</th>
 											
                                            
                                         </tr>
@@ -154,7 +155,7 @@
                                             <td><span class="badge badge-danger">BLOCKED</span></td>{% endif %}
 											
 											
-											<td>
+											<td class="action">
 											
                                                 <a type="button" name="view" value="view" id="{{row.student_id}}" class="btn btn-success btn-xs view_data">View</a>
 											
@@ -326,7 +327,21 @@
 	</div>
    </div>
 
+   <script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>
 
+   <script>
+
+    $(document).ready(function(){
+$(".export-btn").click(function(){
+$("#dataTable").tableHTMLExport({
+
+ type:'csv',
+ filename:'Students.csv',
+ ignoreColumns:'.action',
+});
+});
+});
+</script>
 
    <script>
     $(document).ready(function () {
