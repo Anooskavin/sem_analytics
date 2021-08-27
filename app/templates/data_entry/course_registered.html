@@ -267,7 +267,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Send Email</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <button type="button" class="close" onclick="fieldclear('group_email')" data-dismiss="modal">×</button>
 
                 </div>
                 <div class="modal-body">
@@ -297,7 +297,7 @@
 
                 <div class="modal-footer">
                     <input type="submit" name="insert" id="insert" value="send" class="btn btn-success" />
-                    <button type="reset" class="btn btn-default" value="Reset" data-dismiss="modal">Close</button>
+                    <button type="reset" class="btn btn-default" value="Reset" onclick="fieldclear('group_email')" data-dismiss="modal">Close</button>
                     </form>
                 </div>
             </div>
@@ -346,7 +346,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Send Individual Mail</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <button type="button" class="close" onclick="fieldclear('id_stu')" data-dismiss="modal">×</button>
 
                 </div>
                 <div class="modal-body">
@@ -378,7 +378,7 @@
                             </table>
                             <div class="modal-footer">
                                 <input type="submit" name="update" id="update" value="send" class="btn btn-success" />
-                                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-info" onclick="fieldclear('id_stu')" data-dismiss="modal">Close</button>
                         </form>
                     </div>
 
@@ -529,7 +529,12 @@
 
                 $('#sms').modal('show');
             });
+
+
+
         });
+
+        
     </script>
 
     <script>

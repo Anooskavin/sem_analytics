@@ -329,20 +329,7 @@
 
    <script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>
 
-   <script>
-
-    $(document).ready(function(){
-$(".export-btn").click(function(){
-$("#dataTable").tableHTMLExport({
-
- type:'csv',
- filename:'Students.csv',
- ignoreColumns:'.action',
-});
-});
-});
-</script>
-
+   
    <script>
     $(document).ready(function () {
         // $('#insert_form').on("submit", function (event) {
@@ -450,6 +437,19 @@ $("#dataTable").tableHTMLExport({
 
 
 
+<script>
+
+    $(document).ready(function(){
+$(".export-btn").click(function(){
+$("#dataTable").tableHTMLExport({
+
+ type:'csv',
+ filename:'Students.csv',
+ ignoreColumns:'.action',
+});
+});
+});
+</script>
 
     <!-- Bootstrap core JavaScript-->
 
