@@ -50,3 +50,17 @@ def logout():
 
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+
+    app.logger.info(f"Page not found: {request.url}")
+
+    return redirect(url_for('login'))
+
+
+@app.errorhandler(403)
+def page_not_founds(e):
+
+    app.logger.info(f"Page not found: {request.url}")
+
+    return redirect(url_for('login'))
