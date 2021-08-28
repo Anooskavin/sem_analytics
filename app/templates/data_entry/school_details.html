@@ -11,7 +11,8 @@
                 <h1 class="h3 mb-0 text-gray-800">School Details</h1>
 <!--                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i-->
 <!--                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
-                <button class="export-btn"><i class="fa fa-file-excel-o"></i> Export to Excel</button>
+<a  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm export-btn" style="color: white;"><i
+    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
             </div>
          <div class="row">
 
@@ -295,7 +296,7 @@
 
                    <input type="text" name="import_school_id" id="import_school_id" hidden /><br>
                 <label>Import file:</label>
-                <input type="file"  name="student_import" id="student_import" class="btn btn-success" accept=".csv"  required/>
+                <input type="file"  name="student_import" id="student_import" class="" accept=".csv"  required/>
 
                 <br />
 
@@ -511,19 +512,23 @@
 
 
 </script>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<script>
-
-swal("{{message}}", "Faculty Deleted Successfully !", "success");
-
-</script>
 
 
-{% endfor %}
-{% endif %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+
+    <Script>
+         swal("{{ message }}","Import Function","{{ category }}");
+
+      
+    </Script>
+
+    {% endfor %}
+  {% endif %}
 {% endwith %}
+
 
 
 <script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% include 'header/data_entry_header.html' %}
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 <body id="page-top">
 
@@ -11,8 +12,8 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Attendance Details</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+            <a  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm export-btn" style="color: white;"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
         </div>
      <div class="row">
 
@@ -117,6 +118,8 @@
                                     <th>student Contact</th>
                                    
                                     <th>Attendance</th>
+                                    <th>Willingness</th>
+                                    <th>Feedback</th>
                                     <th>Timestamp</th>
                                    
 
@@ -136,8 +139,10 @@
                                     <td><span class="badge badge-success">PRESENT</span></td>{% endif %}
                                     {% if row.satt_present == "NO" %}<td><span
                                             class="badge badge-danger">ABSENT</span></td>{% endif %}
+                                            <td>{{row.stu_session_willingness}}</td>
+                                            <td>{{row.stu_session_feedback}}</td>
+                                            <td>{{row.stu_session_timestamp}}</td>
                                     
-                                            <td>{{row.satt_timestamp}}</td>
 
 
                                 </tr>
@@ -177,7 +182,21 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    <script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>
 
+    <script>
+    
+        $(document).ready(function(){
+    $(".export-btn").click(function(){
+    $("#dataTable").tableHTMLExport({
+    
+     type:'csv',
+     filename:'Attendance.csv',
+     ignoreColumns:'.action,.link',
+    });
+    });
+    });
+    </script>
 
 
 

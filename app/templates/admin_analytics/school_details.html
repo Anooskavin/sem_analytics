@@ -9,7 +9,8 @@
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">School Details</h1>
-                <button class="export-btn"><i class="fa fa-file-excel-o"></i> Export to Excel</button>
+                <a  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm export-btn" style="color: white;"><i
+                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
             </div>
          <div class="row">
 
@@ -533,7 +534,7 @@ swal("{{message}}", "Faculty Deleted Successfully !", "success");
      $("#dataTable").tableHTMLExport({
 
       type:'csv',
-      filename:'codehim-html-table-to-excel.csv',
+      filename:'School-Details.csv',
     });
   });
 });
