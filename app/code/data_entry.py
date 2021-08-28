@@ -768,13 +768,17 @@ def data_entry_student_change():
         stu_status=cursor.fetchone()
         if(stu_status['account_status']!=status):
             if (status=='allow'):
-                subject='Account verified !!!!!'
-                message='Your account now verified you can login now'
+                cursor.execute('select * from email_content where emailc_id = 2')
+                email_mail= cursor.fetchone()
+                subject= email_mail['email_subject']
+                message= email_mail['email_message']
                 a= email(student_email,subject,message)
 
             elif (status=='block'):
-                subject = 'Account blocked  !!!!!'
-                message = 'Your account have been blocked due to sucpicious actvities'
+                cursor.execute('select * from email_content where emailc_id = 3')
+                email_mail = cursor.fetchone()
+                subject = email_mail['email_subject']
+                message = email_mail['email_message']
                 a = email(student_email, subject, message)
 
 
@@ -971,6 +975,9 @@ def data_entry_school_change():
 
 ####################################### Faculty table end ############################################
 
+
+#######################################data entry pssword change ###################################
+
 @app.route("/data_entry/password/change", methods=["POST", "GET"])
 def change_dataentry_password():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -985,3 +992,45 @@ def change_dataentry_password():
         flash('Password updated', 'success')
 
         return redirect(url_for('data_entry_home'))
+
+################################end of data entry password change############################
+
+
+################################email category ####################################
+@app.route("/data_entry/email_category", methods=["POST", "GET"])
+def data_entry_email_category():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method=='POST':
+        print('123')
+        cemail =request.form['cemail']
+        subject = request.form['subject']
+        message = request.form['test1']
+        # message=html.unescape(message)
+
+        cursor.execute('update email_content set email_subject =%s , email_message =%s where emailc_id=%s',(subject,message,cemail))
+        mysql.connection.commit()
+        return jsonify('success')
+    elif 'id' in session and session.get("user_type") == 'data_entry':
+        id = session.get('id')
+
+        home = arr.array('i', [0, 0, 0, 0])
+
+        admin_name = session.get('name')
+
+        # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
+        # notifi = cursor.fetchall()
+
+        cursor.execute('select * from email_content')
+        email=cursor.fetchall()
+        for i in range(len(email)):
+            email[i]['email_message'] = html.unescape(email[i]['email_message'])
+            print(email[i]['email_message'], i)
+
+
+        return render_template('data_entry/email.html', admin_name=admin_name,email=email,len=len(email))
+
+
+
+
+    else:
+        return redirect(url_for('login'))

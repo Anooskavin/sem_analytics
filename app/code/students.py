@@ -1,8 +1,14 @@
 from app import *
+#####################   Student Home ####################################################
+@app.route("/student",methods=["POST", "GET"])
+def student_home():
+    return render_template('students/index.html', msg='')
 
 #####################     Student login  ####################################################
 
-@app.route("/student",methods=["POST", "GET"])
+
+
+@app.route("/student_login",methods=["POST", "GET"])
 def student_login():
     msg=''
     if request.method == 'POST' and 'username' in request.form and 'pwd' in request.form:
@@ -59,7 +65,7 @@ def student_login():
         if (session.get("user_type") == 'student'):
             return redirect(url_for('home'))
 
-    return render_template('students/login.html',msg='')
+    return render_template('students/login.html', msg='')
 
 ################################################### Student Register ##############################################################
 
@@ -101,8 +107,11 @@ def student_register():
             cursor.execute ('select school_id from school_details where school_name =%s',[school_name])
             school=cursor.fetchone()
 
-            subject="School event management | registration"
-            message="Thank You for registering"
+            cursor.execute('select * from email_content where emailc_id =1') # student register id
+            email_mail = cursor.fetchone()
+            subject = email_mail['email_subject']
+            message = email_mail['email_message']
+
             a=email(emails,subject,message)
 
             basepath = os.path.dirname(__file__)
@@ -111,7 +120,7 @@ def student_register():
             f.save(os.path.join(app.root_path, 'static/img/id_images/{0}-{1}.png'.format(username,mobile)))
             student_id= "img/id_images/{0}-{1}.png".format(username,mobile)
 
-            cursor.execute('insert into student_details (student_name ,student_contact, student_email,student_grade,student_whatsapp,student_password,school_id,account_status,student_idcard) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)',(username,mobile,emails,grade,whatsapp,password,school['school_id'],'No',student_id) )
+            cursor.execute('insert into student_details (student_name ,student_contact, student_email,student_grade,student_whatsapp,student_password,school_id,account_status,student_idcard) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)',(username,mobile,emails,grade,whatsapp,password,school['school_id'],'waiting',student_id) )
 
             mysql.connection.commit()
             
@@ -327,9 +336,13 @@ def student_forget_password():
             message_bytes = emailid.encode('ascii')
             base64_bytes = base64.b64encode(message_bytes)
             mail = base64_bytes.decode('ascii')
-            
-            subject="forgot password"
-            message="<a href='http://127.0.0.1:5000/student/forget_password/verify?code={0}'</a>click here </a>".format(mail)
+
+            cursor.execute('select * from email_content where emailc_id = 4')
+            email_mail = cursor.fetchone()
+            subject = email_mail['email_subject']
+            message = email_mail['email_message']
+
+            message=message+": <a href='http://127.0.0.1:5000/student/forget_password/verify?code={0}'</a>click here </a>".format(mail)
             print(message)
             email(emailid,subject,message)
 
@@ -408,6 +421,8 @@ def change_password():
 def student_logout():
     session.clear()
     return redirect(url_for('student_login'))
+
+
 
 
 

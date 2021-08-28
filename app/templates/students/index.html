@@ -1,0 +1,243 @@
+
+<html lang="en" class=" sizes customelements history pointerevents postmessage webgl websockets cssanimations csscolumns csscolumns-width csscolumns-span csscolumns-fill csscolumns-gap csscolumns-rule csscolumns-rulecolor csscolumns-rulestyle csscolumns-rulewidth csscolumns-breakbefore csscolumns-breakafter csscolumns-breakinside flexbox picture srcset webworkers"><head>
+
+			<title>Login | Learning Management System Online</title>
+
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link name="favicon" type="image/x-icon" href="{{url_for('static',filename='img/favicon.png')}}" rel="shortcut icon">
+	<link rel="favicon" href="{{url_for('static',filename='assets/frontend/default/img/icons/favicon.ico')}}">
+<link rel="apple-touch-icon" href="{{url_for('static',filename='assets/frontend/default/img/icons/icon.png')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/jquery.webui-popover.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/slick.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/slick-theme.css')}}">
+<!-- font awesome 5 -->
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/fontawesome-all.min.css')}}">
+
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/bootstrap-tagsinput.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/main.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/frontend/default/css/responsive.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700" rel="stylesheet">
+<link rel="stylesheet" href="{{url_for('static',filename='assets/global/toastr/toastr.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.css">
+     <script src="{{url_for('static',filename='assets/backend/js/jquery-3.3.1.min.js')}}"></script>
+
+<style>
+      .input-icons i {
+            position: absolute;
+        }
+
+        .input-icons {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .icon {
+            padding: 10px;
+            min-width: 40px;
+        }
+
+</style>
+</head>
+<body class="gray-bg">
+<section class="menu-area">
+  <div class="container-xl">
+    <div class="row">
+      <div class="col">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" >
+
+          <ul class="mobile-header-buttons">
+            <li><a class="mobile-nav-trigger" href="#mobile-primary-nav">Menu<span></span></a></li>
+            <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
+          </ul>
+
+          <a  class="navbar-brand" href=""><img src="{{url_for('static',filename='img/banner.png')}}" alt="" height="35" ></a>
+
+
+          <div class="main-nav-wrap">
+  <div class="mobile-overlay"></div>
+
+  <ul class="mobile-main-nav">
+    <div class="mobile-menu-helper-top"></div>
+
+    <li class="has-children">
+      <a href="">
+        <i class="fas fa-th d-inline"></i>
+        <span>Courses</span>
+        <span class="has-sub-category"><i class="fas fa-angle-right"></i></span>
+      </a>
+
+</li>
+
+<div class="mobile-menu-helper-bottom"></div>
+</ul>
+</div>
+<form class="inline-form" action="" method="get" style="width: 100%;">
+            <div style="padding-top: 15px" class="input-group search-box mobile-search">
+              <input type="text" name = 'query' class="form-control" placeholder="Search For Courses">
+              <div class="input-group-append">
+                <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </form>
+
+
+
+
+
+          <span class="signin-box-move-desktop-helper"></span>
+
+          <div class="sign-in-box btn-group" >
+
+            <a href="{{url_for('student_login')}}" class="btn btn-sign-in" >Log In</a>
+
+            <a href="{{url_for('student_register')}}" class="btn btn-sign-up">Sign Up</a>
+
+          </div> <!--  sign-in-box end -->
+
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="home-banner-area">
+    <div class="container-lg">
+        <div class="row">
+            <div class="col">
+                <div class="home-banner-wrap">
+                    <h2>Learn on your schedule</h2>
+                    <p>Study any topic, anytime. Explore thousands of courses for the lowest price ever!</p>
+                    <form class="" action="" method="get">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name = "query" placeholder="What Do You Want To Learn?">
+                            <div class="input-group-append">
+                                <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="home-fact-area">
+    <div class="container-lg">
+        <div class="row">
+                        <div class="col-md-4 d-flex">
+                <div class="home-fact-box mr-md-auto ml-auto mr-auto">
+                    <i class="fas fa-bullseye float-left"></i>
+                    <div class="text-box">
+                        <h4>1 Online Courses</h4>
+                        <p>Explore A Variety Of Fresh Topics</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 d-flex">
+                <div class="home-fact-box mr-md-auto ml-auto mr-auto">
+                    <i class="fa fa-check float-left"></i>
+                    <div class="text-box">
+                        <h4>Expert Instruction</h4>
+                        <p>Find The Right Course For You</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 d-flex">
+                <div class="home-fact-box mr-md-auto ml-auto mr-auto">
+                    <i class="fa fa-clock float-left"></i>
+                    <div class="text-box">
+                        <h4>Lifetime Access</h4>
+                        <p>Learn On Your Schedule</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+        <footer class="footer-area">
+            <div class="container-xl">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="copyright-text">
+                            <a href=""><img src="{{url_for('static',filename='img/banner.png')}}" alt="" class="d-inline-block" width="210"></a>
+
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+   <script>
+    {% if msg == 'error' %}
+
+        swal("Wrong Credentials !!", "Please check your Username and Password !", "error");
+
+     {% endif %}
+    </script>
+     <script>
+      {% if msg == 'success' %}
+
+      swal("Password Update !!", "New password updated successfully !", "success");
+
+       {% endif %}
+      </script>
+
+<script>
+	$(".toggle-password").click(function() {
+
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $($(this).attr("toggle"));
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+  }
+});
+</script>
+
+
+<!-- FORGET Password Modal -->
+
+
+
+         <script src="{{url_for('static',filename='assets/backend/js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/vendor/modernizr-3.5.0.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/vendor/jquery-3.2.1.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/popper.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/slick.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/select2.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/tinymce.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/multi-step-modal.js')}}"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/jquery.webui-popover.min.js')}}"></script>
+<script src="https://content.jwplatform.com/libraries/O7BMTay5.js"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/main.js')}}"></script>
+<script src="{{url_for('static',filename='assets/global/toastr/toastr.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/bootstrap-tagsinput.min.js')}}assets/frontend/default/js/bootstrap-tagsinput.min.js"></script>
+<script src="{{url_for('static',filename='assets/frontend/default/js/custom.js')}}"></script>
+
+<!-- SHOW TOASTR NOTIFIVATION -->
+
+
+
+
+
+
+</body></html>
