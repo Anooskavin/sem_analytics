@@ -111,7 +111,7 @@ def student_register():
             f.save(os.path.join(app.root_path, 'static/img/id_images/{0}-{1}.png'.format(username,mobile)))
             student_id= "img/id_images/{0}-{1}.png".format(username,mobile)
 
-            cursor.execute('insert into student_details (student_name ,student_contact, student_email,student_grade,student_whatsapp,student_password,school_id,account_status,student_idcard) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)',(username,mobile,emails,grade,whatsapp,password,school['school_id'],'No',student_id) )
+            cursor.execute('insert into student_details (student_name ,student_contact, student_email,student_grade,student_whatsapp,student_password,school_id,account_status,student_idcard) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)',(username,mobile,emails,grade,whatsapp,password,school['school_id'],'waiting',student_id) )
 
             mysql.connection.commit()
             

@@ -12,9 +12,8 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Attendance Details</h1>
-            <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
-                    <button class="export-btn" style="color:white;background-color:#4E73DF"><i class="fa fa-file-excel-o"></i> Export to Excel</button>
+            <a  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm export-btn" style="color: white;"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
         </div>
      <div class="row">
 
@@ -119,6 +118,8 @@
                                     <th>student Contact</th>
                                    
                                     <th>Attendance</th>
+                                    <th>Willingness</th>
+                                    <th>Feedback</th>
                                     <th>Timestamp</th>
                                    
 
@@ -138,8 +139,10 @@
                                     <td><span class="badge badge-success">PRESENT</span></td>{% endif %}
                                     {% if row.satt_present == "NO" %}<td><span
                                             class="badge badge-danger">ABSENT</span></td>{% endif %}
+                                            <td>{{row.stu_session_willingness}}</td>
+                                            <td>{{row.stu_session_feedback}}</td>
+                                            <td>{{row.stu_session_timestamp}}</td>
                                     
-                                            <td>{{row.satt_timestamp}}</td>
 
 
                                 </tr>
