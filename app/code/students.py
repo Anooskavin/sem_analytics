@@ -1,6 +1,6 @@
 from app import *
 #####################   Student Home ####################################################
-@app.route("/student",methods=["POST", "GET"])
+@app.route("/",methods=["POST", "GET"])
 def student_home():
     return render_template('students/index.html', msg='')
 
@@ -8,7 +8,7 @@ def student_home():
 
 
 
-@app.route("/student_login",methods=["POST", "GET"])
+@app.route("/student/login",methods=["POST", "GET"])
 def student_login():
     msg=''
     if request.method == 'POST' and 'username' in request.form and 'pwd' in request.form:

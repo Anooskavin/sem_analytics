@@ -1,6 +1,6 @@
 from app import *
 
-@app.route("/", methods=["POST", "GET"])
+@app.route("/admin/login", methods=["POST", "GET"])
 def login():
     ip_address = flask.request.remote_addr
     print(ip_address)
