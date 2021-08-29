@@ -6,8 +6,8 @@ import flask
 from flask_mysqldb import MySQL
 import array as arr
 import os
-import mysql.connector
-from mysql import connector
+# import mysql.connector
+# from mysql import connector
 from werkzeug.utils import secure_filename
 import pandas as pd
 import collections
