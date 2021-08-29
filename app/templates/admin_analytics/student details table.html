@@ -357,8 +357,9 @@ window.filterCities1=0
 
                     if(data_rs[0]['student_profile'])
                     {
-                        document.getElementById("profile").src = data_rs[0]['student_profile'];
-                        console.log("img set")
+                       
+                        $("#profile").attr('src', '/static/'+data_rs[0]['student_profile']);
+                        console.log(data_rs[0]['student_profile']);
                     }
                     else
                     {

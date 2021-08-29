@@ -183,7 +183,7 @@ def admin_analytics_course():
         course = cursor.fetchall()
 
         for i in range(len(course)):
-            course[i]['course_description'] = html.unescape(course[i]['course_description'])
+            # course[i]['course_description'] = html.unescape(course[i]['course_description'])
             print(course[i]['course_description'], i)
 
         cursor.execute('SELECT * FROM subject')
@@ -261,7 +261,7 @@ def admin_analytics_session():
             sess = cursor.fetchall()
 
         for i in range(len(sess)):
-            sess[i]['session_discription'] = html.unescape(sess[i]['session_discription'])
+            # sess[i]['session_discription'] = html.unescape(sess[i]['session_discription'])
             print(sess[i]['session_discription'], i)
 
         cursor.execute('SELECT * FROM subject')
@@ -549,10 +549,12 @@ def attendance():
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(
-            'select DISTINCT student_details.student_name,student_details.student_contact,student_details.student_grade, student_attendance.satt_present,course_session_details.session_name from student_details, course_session_details, course_details, student_attendance where course_session_details.course_id = course_details.course_id and student_details.student_id = student_attendance.student_id and course_session_details.session_id =%s and  student_attendance.session_id=%s',
-            (session_id, session_id))
+            'select sa.*,sd.*,ssf.* from student_attendance sa left join student_details sd on sd.student_id = sa.student_id left join student_session_feedback ssf on ssf.student_id = sa.student_id where sa.session_id =%s',
+            [session_id])
         attendance = cursor.fetchall()
-
+        cursor.execute("SELECT  sd.session_name from course_session_details sd  where  session_id=%s",[session_id])
+        course = cursor.fetchall()
+        print(attendance)    
         cursor.execute("SELECT count(satt_present) as present from student_attendance  where satt_present='YES' and  session_id=%s",[session_id])
         present = cursor.fetchone()
 
@@ -562,7 +564,7 @@ def attendance():
         absent = cursor.fetchone()
 
         return render_template('admin_analytics/attendance.html', attendance=attendance, admin_name=admin_name,
-                               present=present, absent=absent)
+                               course = course ,present=present, absent=absent)
     else:
         return redirect(url_for('login'))
 

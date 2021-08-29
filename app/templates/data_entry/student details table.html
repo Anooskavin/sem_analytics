@@ -265,9 +265,9 @@
         <table class="table table-bordered">
             <input type="hidden" name="student_id" class="form-control" id="student_id">
             <tr>  
-                <img src="" id="profile" alt="Avatar" style="width:200px ;  display: flex; border-radius: 50%;">
+                <center><img src="" id="profile" alt="Avatar" style="width:200px ;  display: flex; border-radius: 50%;"></center>
                 <div id="myModal" class="modal">
-                    <img class="modal-content" id="img01">
+                <center><img class="modal-content" id="img01"></center>
                   </div>
                   
             </tr>
@@ -414,8 +414,8 @@
 
                     if(data_rs[0]['student_profile'])
                     {
-                        document.getElementById("profile").src = data_rs[0]['student_profile'];
-                        console.log("img set")
+                        $("#profile").attr('src', '/static/'+data_rs[0]['student_profile']);
+                        console.log(data_rs[0]['student_profile']);
                     }
                     else
                     {

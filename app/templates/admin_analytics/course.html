@@ -352,7 +352,7 @@ console.log('hii');
 console.log($('#course_description').val());
 },1000);
 
-var editor = CKEDITOR.replace( 'course_description' );
+editor = CKEDITOR.replace( 'course_description' );
             editor.setData($('#course_description').val());
 editor.on( 'change', function(edittor) {
 
@@ -362,6 +362,9 @@ $('#test').val(edittor.editor.getData());
                             }
                         });
                     });
+                    $('#dataModal').on('hide.bs.modal', function () { 
+    editor.destroy()
+                                                        }); 
                    });
 
 
