@@ -55,7 +55,7 @@ def page_not_found(e):
 
     app.logger.info("Page not found: {request.url}")
 
-    return redirect(url_for('login'))
+    return redirect(url_for('student_home'))
 
 
 @app.errorhandler(403)
@@ -63,4 +63,4 @@ def page_not_founds(e):
 
     app.logger.info("Page not found: {request.url}")
 
-    return redirect(url_for('login'))
+    return redirect(url_for('student_home'))

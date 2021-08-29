@@ -389,7 +389,7 @@
                                     swal("Data is not Submitted!",
                                         "Error in submitting Data",
                                         "error");
-                                    window.location.href = "/data_entry/course";
+                                        window.location.reload();
                                 }
                             }
                         });
@@ -410,7 +410,7 @@
                                 $('#add_data_Modal').modal('hide').trigger('reset');
                                 if (data == 'success') {
                                     console.log('success')
-                                    window.location.href = "/data_entry/course";
+                                    window.location.reload();
                                 }
                             }
                         });

@@ -118,12 +118,11 @@
                         <li class="breadcrumb-item"><i class="fas fa-home"></i></li>
                         <li class="breadcrumb-item">
 
-                                Login
+                                Student Login
                         </li>
                     </ol>
                 </nav>
-                <h1 class="category-name">
-                    Registered User                </h1>
+                
             </div>
         </div>
     </div>
@@ -139,7 +138,7 @@
                           <div class="title">Login</div>
                           <div class="subtitle">Provide Your Valid Login Credentials.</div>
                       </div>
-                      <form action="{{url_for('student_login')}}" method="post">
+                      <form id="student_login" method="post">
                           <div class="content-box">
                               <div class="basic-group">
                                   <div class="form-group">
@@ -153,7 +152,7 @@
                               </div>
                           </div>
                           <div class="content-update-box">
-                              <button type="submit" class="btn">Login</button>
+                              <button type="submit" id="login" class="btn">Login</button>
                           </div>
                           <div class="forgot-pass text-center">
                               <span>or</span>
@@ -174,7 +173,7 @@
 </section>
 
 
-        <footer class="footer-area">
+        <!-- <footer class="footer-area">
             <div class="container-xl">
                 <div class="row">
                     <div class="col-md-6">
@@ -188,17 +187,47 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer> -->
 
 
 
-   <script>
-    {% if msg == 'error' %}
+        <script type="text/javascript">
+           $('#student_login').on("submit", function (event) {
+                        event.preventDefault();
 
-        swal("Wrong Credentials !!", "Please check your Username and Password !", "error");
+                        $.ajax({
+                            url: "/student/login",
+                            method: "POST",
+                            data: $('#student_login').serialize(),
+                            beforeSend: function () {
+                                $('#login').val("validating");
+                            },
+                            success: function (data) {
+                               
+                                if (data == 'success') {
+                                    console.log('success')
+                                    window.location.href="/student/home";
+                                }
+                                if (data == 'error') {
+                                    console.log('error')
+                                    swal("Wrong Credentials !!", "Please check your Username and Password !", "error");
+                                }
+                            }
+                        });
 
-     {% endif %}
-    </script>
+                    });
+      
+      
+      
+      
+      
+      
+      
+        </script>
+
+
+
+
      <script>
       {% if msg == 'success' %}
   

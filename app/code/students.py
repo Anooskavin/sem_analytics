@@ -11,50 +11,46 @@ def student_home():
 @app.route("/student/login",methods=["POST", "GET"])
 def student_login():
     msg=''
-    if request.method == 'POST' and 'username' in request.form and 'pwd' in request.form:
+    if request.method == 'POST':
         msg = ''
         username=request.form['username']
-
         passwd=request.form['pwd']
         password = hashlib.md5(passwd.encode())
         pwd=password.hexdigest()
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('select * from student_details where student_password=%s and account_status =%s and student_contact =%s or student_email =%s',(pwd,'allow',username,username))
-        student = cursor.fetchone()
-
+        
         status='allow'
         find = ['@']
         query=''
 
         results = [item for item in find if item in username]
 
-        if (results):
-
+        if results:
+            print(results)
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
-            cursor.execute('select * from student_details where student_password=%s  and account_status =%s and student_email =%s', (pwd,status, username))
+            cursor.execute('select * from student_details where student_password=%s and account_status =%s and student_contact =%s or student_email =%s',(pwd,'allow',username,username))
             student = cursor.fetchone()
-
-
-
-
+            print(student)
             if student:
                 session['student_id'] = student['student_id']
                 session['user_type'] = 'student'
-                return redirect(url_for('home'))
+                return jsonify('success')
             else:
-                return render_template('students/login.html', msg='error')
+                return jsonify('error')
 
         else:
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('select * from student_details where student_password=%s  and account_status =%s and student_contact =%s',(pwd, 'allow', username))
             student = cursor.fetchone()
-            session['student_id'] = student['student_id']
             if student:
-                return redirect(url_for('home'))
+                session['student_id'] = student['student_id']
+                session['user_type'] = 'student'
+                return jsonify('success')
+
             else:
-                return render_template('students/login.html', msg='error')
+                return jsonify('error')
 
 
 
@@ -65,7 +61,7 @@ def student_login():
         if (session.get("user_type") == 'student'):
             return redirect(url_for('home'))
 
-    return render_template('students/login.html', msg='')
+    return render_template('students/login.html',msg='')
 
 ################################################### Student Register ##############################################################
 

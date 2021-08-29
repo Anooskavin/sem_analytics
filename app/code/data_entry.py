@@ -164,7 +164,7 @@ def data_entry_course_update():
                 id = result["delete"]
                 cursor.execute('delete from course_details where course_id=%s;', [id])
                 mysql.connection.commit()
-                flash("Deleted ♥️")                
+                flash("Deleted")                
                 return redirect(url_for('data_entry_course'))
     else:
         return redirect(url_for('login'))
@@ -481,7 +481,7 @@ def data_entry_session_update():
                 id = result["delete"]
                 cursor.execute('delete from course_session_details where session_id=%s;', [id])
                 mysql.connection.commit()
-                flash("Deleted ♥️")                                         
+                flash("Deleted")                                         
                 return redirect(url_for('data_entry_session'))
     else:
         return redirect(url_for('login'))
@@ -619,7 +619,7 @@ def data_entry_faculty_update():
                 id = result["delete"]
                 cursor.execute('delete from faculty_details where faculty_id=%s;', [id])
                 mysql.connection.commit()
-                flash("Deleted ♥️")                                         
+                flash("Deleted")                                         
                 return redirect(url_for('data_entry_faculty'))
     else:
         return redirect(url_for('login'))
@@ -861,7 +861,7 @@ def data_entry_school_details():
 #                 id = result["delete"]
 #                 cursor.execute('delete from faculty_details where faculty_id=%s;', [id])
 #                 mysql.connection.commit()
-#                 flash("Deleted ♥️")                                         
+#                 flash("Deleted")                                         
 #                 return redirect(url_for('data_entry_faculty'))
 #     else:
 #         return redirect(url_for('login'))
@@ -1003,9 +1003,8 @@ def change_dataentry_password():
 
         cursor.execute('update admin set admin_password =%s where admin_id=%s',(password,id))
         mysql.connection.commit()
-        flash('Password updated', 'success')
-
-        return redirect(url_for('data_entry_home'))
+        
+    return jsonify('success')
 
 ################################end of data entry password change############################
 

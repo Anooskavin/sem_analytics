@@ -6,9 +6,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    rel="stylesheet">
-    <link rel = "icon" href = "{{url_for('static',filename='/img/favicon.png')}}" type = "image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="{{url_for('static',filename='/img/favicon.png')}}" type="image/x-icon">
 
     <title>Data_entry</title>
 
@@ -20,7 +19,7 @@
 
             var txt;
             if (confirm("Press a button!")) {
-                txt = "You pressed OK!";
+                txt = "If you want to delete the data !!";
             } else {
                 return false;
             }
@@ -30,12 +29,12 @@
 
 
 
-<script>
-    function fieldclear(x){
-        document.getElementById(x).reset();
+    <script>
+        function fieldclear(x) {
+            document.getElementById(x).reset();
 
-    }
-</script>
+        }
+    </script>
 
 
 
@@ -52,7 +51,7 @@
 
     <!-- Custom styles for this page -->
     <link href=" {{url_for('static',filename='vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 </head>
 <div id="wrapper">
@@ -132,8 +131,7 @@
                 <i class="fas fa-fw  fa-user-graduate"></i>
                 <span>Students Details</span>
             </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingUtilities"
-                data-parent="#accordionSidebar">
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Utilities:</h6>
                     <a class="collapse-item" href="{{url_for('data_entry_student')}}">Student Details</a>
@@ -142,7 +140,7 @@
                 </div>
             </div>
         </li>
-      
+
         <li class="nav-item">
             <a class="nav-link" href="{{url_for('data_entry_faculty')}}">
                 <i class="fas fa-fw fa-chalkboard-teacher"></i>
@@ -151,33 +149,34 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider">
-  <!-- Heading -->
-  <div class="sidebar-heading">
-    School Details
-</div>
-
-<!-- Nav Item - Utilities Collapse Menu -->
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseUtilities">
-        <i class="fas fa-fw  fa-school"></i>
-        <span>School Details</span>
-    </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-        data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">School Details</h6>
-            <a class="collapse-item" href="/data_entry/school_details">School Details</a>
-            <a class="collapse-item" href="/data_entry/school_details?status=notapproved">New School Details</a>
-            <a class="collapse-item" href="/data_entry/school_details?status=approved">Approved School Details</a>
-
-
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            School Details
         </div>
-    </div>
-</li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw  fa-school"></i>
+                <span>School Details</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">School Details</h6>
+                    <a class="collapse-item" href="/data_entry/school_details">School Details</a>
+                    <a class="collapse-item" href="/data_entry/school_details?status=notapproved">New School Details</a>
+                    <a class="collapse-item" href="/data_entry/school_details?status=approved">Approved School
+                        Details</a>
 
 
-<div class="sidebar-heading">
+                </div>
+            </div>
+        </li>
+
+
+        <div class="sidebar-heading">
             Email category
         </div>
 
@@ -368,10 +367,10 @@
                                     <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                     <div class="status-indicator bg-success"></div>
                                 </div>
-<!--                                <div class="font-weight-bold">-->
-<!--                                    <div class="text-truncate">{{row.notification_msg}}</div>-->
-<!--                                    <div class="small text-gray-500">{{row.admin_name}} · {{row.notification_timestamp}}</div>-->
-<!--                                </div>-->
+                                <!--                                <div class="font-weight-bold">-->
+                                <!--                                    <div class="text-truncate">{{row.notification_msg}}</div>-->
+                                <!--                                    <div class="small text-gray-500">{{row.admin_name}} · {{row.notification_timestamp}}</div>-->
+                                <!--                                </div>-->
                             </a>
                             {% endfor %}
                             <!-- <a class="dropdown-item d-flex align-items-center" href="#">
@@ -421,7 +420,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small"><b>{{admin_name}}</b></span>
-                            <img class="img-profile rounded-circle" src="{{url_for('static',filename='img/favicon.png')}}">
+                            <img class="img-profile rounded-circle"
+                                src="{{url_for('static',filename='img/favicon.png')}}">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -430,8 +430,7 @@
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
                             </a>
-                            <a class="dropdown-item"   data-toggle="modal"
-                            data-target="#change_password_Modal">
+                            <a class="dropdown-item" data-toggle="modal" data-target="#change_password_Modal">
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Change Password
                             </a>
@@ -475,74 +474,103 @@
 
 
             <div id="change_password_Modal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Change Password</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Change Password</h4>
+                            <button type="button" class="close" data-dismiss="modal">×</button>
 
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="{{url_for('change_dataentry_password')}}">
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="changepasswd">
 
-                        <!-- <input type="text" name="sname" id="name" class="form-control" /> -->
-
-
-                        <label>Enter New Password</label><i style="float:right;" toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" ></i>
-                        <input type="password" name="password" id="password" class="form-control" value="" required/>
-
-                        <br />
-
-                        <label>Confirm Password</label>
-                        <input type="password" name="confirm_password" id="confirm_password" onkeyup='check();' class="form-control" />
-                        <span id="message5"></span>
-                        <br />
+                                <!-- <input type="text" name="sname" id="name" class="form-control" /> -->
 
 
-                </div>
+                                <label>Enter New Password</label><i style="float:right;" toggle="#password"
+                                    class="fa fa-fw fa-eye field-icon toggle-password"></i>
+                                <input type="password" name="password" id="password" class="form-control" value=""
+                                    required />
 
-                <div class="modal-footer">
-                    <input type="submit" name="insert" id="btn btn-info" value="Submit" class="btn btn-success" />
-                    <button type="button" class="btn btn-default" onclick="fieldclear('insert_form')" data-dismiss="modal">Close</button>
-                    </form>
+                                <br />
+
+                                <label>Confirm Password</label>
+                                <input type="password" name="confirm_password" id="confirm_password" onkeyup='check();'
+                                    class="form-control" />
+                                <span id="message5"></span>
+                                <br />
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <input type="submit" name="update" id="updateid="btn btn-info" value="change Password"
+                                class="btn btn-success" />
+                            <button type="button" class="btn btn-default" onclick="fieldclear('changepasswd')"
+                                data-dismiss="modal">Close</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-<script>
-	$(".toggle-password").click(function() {
+            <script>
+                $(".toggle-password").click(function () {
 
-  $(this).toggleClass("fa-eye fa-eye-slash");
-  var input = $($(this).attr("toggle"));
-  if (input.attr("type") == "password") {
-    input.attr("type", "text");
-  } else {
-    input.attr("type", "password");
-  }
-});
-</script>
-  <script>
-    var check = function () {
+                    $(this).toggleClass("fa-eye fa-eye-slash");
+                    var input = $($(this).attr("toggle"));
+                    if (input.attr("type") == "password") {
+                        input.attr("type", "text");
+                    } else {
+                        input.attr("type", "password");
+                    }
+                });
+            </script>
+            <script>
+                var check = function () {
 
 
-      if (document.getElementById('password').value ==
-        document.getElementById('confirm_password').value    && document.getElementById('password').value!=null ) {
-        document.getElementById('message5').style.color = 'green';
-        document.getElementById('message5').innerHTML = 'Password matching';
-      } else {
-        document.getElementById('message5').style.color = 'red';
-        document.getElementById('message5').innerHTML = 'Password not matching';
-      }
-      if (document.getElementById('password').value ==
-        document.getElementById('confirm_password').value ) {
-        document.getElementById('btn btn-info').disabled = false;
-      } else {
-        document.getElementById('btn btn-info').disabled = true;
-      }
-    }
+                    if (document.getElementById('password').value ==
+                        document.getElementById('confirm_password').value && document.getElementById('password')
+                        .value != null) {
+                        document.getElementById('message5').style.color = 'green';
+                        document.getElementById('message5').innerHTML = 'Password matching';
+                    } else {
+                        document.getElementById('message5').style.color = 'red';
+                        document.getElementById('message5').innerHTML = 'Password not matching';
+                    }
+                    if (document.getElementById('password').value ==
+                        document.getElementById('confirm_password').value) {
+                        document.getElementById('btn btn-info').disabled = false;
+                    } else {
+                        document.getElementById('btn btn-info').disabled = true;
+                    }
+                }
+            </script>
 
 
-  </script>
+            <script>
+                $('#changepasswd').on("submit", function (event) {
+                    event.preventDefault();
+
+                    $.ajax({
+                        url: "/data_entry/password/change",
+                        method: "POST",
+                        data: $('#changepasswd').serialize(),
+                        beforeSend: function () {
+                            $('#update').val("Updating");
+                        },
+                        success: function (data) {
+                            $('#change_password_Modal').modal('hide').trigger('reset');
+                            if (data == 'success') {
+                                console.log('success')
+                                swal("Success", "Password updated successfully!!", "success");
+
+                            }
+                        }
+                    });
+
+                });
+            </script>
 
 
             <script src="{{url_for('static',filename='vendor/jquery/jquery.min.js')}}"></script>
@@ -568,17 +596,7 @@
             <script src="{{url_for('static',filename='js/demo/datatables-demo.js')}}"></script>
 
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-
-    {% for category, message in messages %}
-        <script>
-             swal("{{ message }}","Password updated successfully!!", "{{ category }}");
-        </script>
-
-    {% endfor %}
-  {% endif %}
-{% endwith %}
+         
 
 
 

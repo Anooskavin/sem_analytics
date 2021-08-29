@@ -425,7 +425,7 @@
                             var delayInMilliseconds = 6500; //1 second
 
                             setTimeout(function () {
-                                window.location.href = "/data_entry/course";
+                                window.location.reload();
                             }, delayInMilliseconds);
 
                         }
@@ -434,7 +434,7 @@
                             swal("Data is not Submitted!",
                                 "Error in submitting Data",
                                 "error");
-                            window.location.href = "/data_entry/course";
+                                window.location.reload();
                         }
                     }
                 });
