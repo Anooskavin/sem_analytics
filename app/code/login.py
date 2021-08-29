@@ -1,6 +1,6 @@
 from app import *
 
-@app.route("/", methods=["POST", "GET"])
+@app.route("/admin/login", methods=["POST", "GET"])
 def login():
     ip_address = flask.request.remote_addr
     print(ip_address)
@@ -53,7 +53,7 @@ def logout():
 @app.errorhandler(404)
 def page_not_found(e):
 
-    app.logger.info(f"Page not found: {request.url}")
+    app.logger.info("Page not found: {request.url}")
 
     return redirect(url_for('login'))
 
@@ -61,6 +61,6 @@ def page_not_found(e):
 @app.errorhandler(403)
 def page_not_founds(e):
 
-    app.logger.info(f"Page not found: {request.url}")
+    app.logger.info("Page not found: {request.url}")
 
     return redirect(url_for('login'))

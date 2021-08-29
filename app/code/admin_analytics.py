@@ -1,3 +1,6 @@
+#!/usr/local/bin/python
+# -*- coding: utf-8 -*-
+
 from re import sub
 
 from MySQLdb.cursors import Cursor
