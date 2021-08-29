@@ -142,7 +142,7 @@ def data_entry_course():
         cursor.execute('SELECT * FROM subject')
         subject = cursor.fetchall()
         for i in range(len(course)):
-            course[i]['course_description'] = html.unescape(course[i]['course_description'])
+            # course[i]['course_description'] = html.unescape(course[i]['course_description'])
             print(course[i]['course_description'], i)
 
         # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
@@ -465,7 +465,7 @@ def data_entry_session():
     
         for i in range(len(sess)):
             # print(sess)
-            sess[i]['session_discription'] = html.unescape(sess[i]['session_discription'])
+            # sess[i]['session_discription'] = html.unescape(sess[i]['session_discription'])
             print(sess[i]['session_discription'], i)
         # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         # notifi = cursor.fetchall()
@@ -501,7 +501,7 @@ def data_entry_session_select():
         rsemployee = cur.fetchall()
         for i in range(len(rsemployee)):
             # print(sess)
-            rsemployee[i]['session_discription'] = html.unescape(rsemployee[i]['session_discription'])
+            # rsemployee[i]['session_discription'] = html.unescape(rsemployee[i]['session_discription'])
             print(rsemployee[i]['session_discription'], i,"bye")
         employeearray = []
         for rs in rsemployee:
@@ -563,6 +563,7 @@ def data_entry_attendance():
         if session_ids:
             cursor.execute('select sa.*,sd.*,ssf.* from student_attendance sa left join student_details sd on sd.student_id = sa.student_id left join student_session_feedback ssf on ssf.student_id = sa.student_id where sa.session_id =%s',[session_ids,])
             attendance = cursor.fetchall()
+            
             cursor.execute('SELECT * FROM student_attendance,student_details WHERE student_attendance.student_id=student_details.student_id and student_attendance.session_id=%s',[session_ids,])
             count[0] = len(cursor.fetchall())      
             cursor.execute('SELECT * FROM student_attendance,student_details WHERE student_attendance.student_id=student_details.student_id and student_attendance.session_id=%s and student_attendance.satt_present="YES"',[session_ids,])
@@ -990,7 +991,7 @@ def data_entry_email_category():
         cursor.execute('select * from email_content')
         email=cursor.fetchall()
         for i in range(len(email)):
-            email[i]['email_message'] = html.unescape(email[i]['email_message'])
+            # email[i]['email_message'] = html.unescape(email[i]['email_message'])
             print(email[i]['email_message'], i)
 
 

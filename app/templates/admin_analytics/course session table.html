@@ -283,7 +283,7 @@ $('#update_form').on("submit", function (event) {
 
                     });
 
-
+                    var editor;
     $(document).on('click', '.view_data', function () {
                         var session_id = $(this).attr("id");
                         $.ajax({
@@ -305,24 +305,24 @@ $('#update_form').on("submit", function (event) {
                                 console.log(date);
                                 $('#session_date').val(data_rs[0]['session_date']);
 
-<!--                                if(data_rs[0]['course_approval_status']=="approved")-->
-<!--                                {   console.log(data_rs[0]['approval_status'])-->
+// <!--                                if(data_rs[0]['course_approval_status']=="approved")-->
+// <!--                                {   console.log(data_rs[0]['approval_status'])-->
 
 
-<!--                                    document.getElementById("coursenot").style.display = "none";-->
+// <!--                                    document.getElementById("coursenot").style.display = "none";-->
 
-<!--                                    document.getElementById("courseyes").style.display = "block";-->
+// <!--                                    document.getElementById("courseyes").style.display = "block";-->
 
 
-<!--                                }-->
-<!--                                else-->
-<!--                                    {-->
-<!--                                    console.log(data_rs[0]['course_approval_status'])-->
+// <!--                                }-->
+// <!--                                else-->
+// <!--                                    {-->
+// <!--                                    console.log(data_rs[0]['course_approval_status'])-->
 
-<!--                                    document.getElementById("courseyes").style.display = "none";-->
-<!--                                    document.getElementById("coursenot").style.display = "block";-->
+// <!--                                    document.getElementById("courseyes").style.display = "none";-->
+// <!--                                    document.getElementById("coursenot").style.display = "block";-->
 
-<!--                                }-->
+// <!--                                }-->
 
 
                                  var stime = data_rs[0]['session_starttime'];
@@ -332,7 +332,7 @@ $('#update_form').on("submit", function (event) {
                                 $('#session_starttime').val(stime);
                                  $('#session_endtime').val(data_rs[0]['session_endtime']);
                                 $('#session_discription').val(data_rs[0]['session_discription']);
-                                var editor = CKEDITOR.replace( 'session_discription' );
+                                 editor = CKEDITOR.replace( 'session_discription' );
             editor.setData($('#session_discription').val());
 editor.on( 'change', function(edittor) {
 
@@ -342,6 +342,9 @@ $('#test').val(edittor.editor.getData());
                             }
                         });
                     });
+                    $('#dataModal').on('hide.bs.modal', function () { 
+    editor.destroy()
+                                                        }); 
                    });
 
 

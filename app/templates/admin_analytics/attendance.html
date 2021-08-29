@@ -71,7 +71,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{attendance[0]['session_name']}}
+                <h6 class="m-0 font-weight-bold text-primary">{{course[0]['session_name']}}
 
                     <div class="my-2" style="float:right;">
 
@@ -104,6 +104,9 @@
             <th data-field="grade" data-sortable="True" data-filter-control="input">Grade</th>
             <th data-field="contact" data-sortable="True" data-filter-control="input">Contact</th>
             <th data-field="present"  data-sortable="True" class="col-sm-2" data-filter-control="select">Class attended</th>
+            <th data-field="will"  data-sortable="True" class="col-sm-2" data-filter-control="select">Willingness</th>
+            <th data-field="fd" data-sortable="True" data-filter-control="input">FeedBack</th>
+            <th data-field="time" data-sortable="True" data-filter-control="input">TimeStamp</th>
 
 
 
@@ -174,6 +177,10 @@
         {% else %}
         "present":  "Absent",
         {% endif %}
+
+        "will": "{{row.stu_session_willingness}}",
+        "fd": "{{row.stu_session_feedback}}",
+        "time": "{{row.stu_session_timestamp}}",
 
 
 
