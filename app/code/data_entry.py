@@ -260,7 +260,10 @@ def data_entry_course_registered():
         subject = cursor.fetchall()
         cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         notifi = cursor.fetchall()
-        print(course)
+        if course:
+            course=course
+        else:
+            course='error'
         return render_template('data_entry/course_registered.html',course=course,subject=subject,count=count,admin_name=admin_name,notifi=notifi,id=subject_id)
 
     else:
@@ -908,58 +911,6 @@ def data_entry_school_details_import():
         return json.dumps(employeearray)
 
 
-        ### import function ###
-
-@app.route('/data_entry/school_details/import_student', methods=['GET', 'POST'])
-def data_entry_school_details_import_student():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    if request.method == "POST":
-
-        school_id = request.form['import_school_id']
-        f = request.files['student_import']
-
-        basepath = os.path.dirname(__file__)
-        file_path = os.path.join(basepath, secure_filename(f.filename))
-
-        f.save('temp.csv')
-
-        cols=['student_name','student_contact','student_email','student_grade','student_whatsapp']
-        df = pd.read_csv('temp.csv')
-        result_cols = []
-
-        for col in df.columns:
-            print(col)
-            result_cols.append(col)
-
-        if collections.Counter(cols) == collections.Counter(result_cols):
-            student_name=df['student_name'].to_list()
-            student_contact = df['student_contact'].to_list()
-            student_email = df['student_email'].to_list()
-            student_grade = df['student_grade'].to_list()
-            student_whatsapp = df['student_whatsapp'].to_list()
-
-            for i in range(len(df.student_name)):
-                    cursor.execute("SELECT * FROM student_details where student_email = %s", [student_email[i],])
-                    data = cursor.fetchall()
-                    if(data):
-                        flash('Duplicate Data', 'error')
-
-                        return redirect(url_for('data_entry_school_details'))
-                    else:
-                        cursor.execute('insert into student_details (student_name,student_contact,student_email,student_grade,student_whatsapp,student_password,school_id,account_status) values(%s,%s,%s,%s,%s,%s,%s,%s)',(student_name[i].upper(),student_contact[i],student_email[i],student_grade[i],student_whatsapp[i],student_contact[i],school_id,'allow'))
-                        mysql.connection.commit()
-
-                
-            flash('Inserted success', 'success')
-
-            return redirect(url_for('data_entry_school_details'))
-            #return '''Success visit  <a href ="http://127.0.0.1:5000/data_entry/student">click here</a> to see changes'''
-
-        else:
-            flash('Invalid File', 'error')
-            return redirect(url_for('data_entry_school_details'))
-            #return '''Import failed check csv file fields and entry'''
-
 
 
 
@@ -977,10 +928,12 @@ def data_entry_school_change():
         school_state = request.form['school_state']
         school_district = request.form['school_district']
         school_pincode = request.form['school_pincode']
+        school_board=request.form['school_board']
         school_contact = request.form['school_contact']
         school_status = request.form['school_status']
+        print(school_status)
 
-        cursor.execute('update school_details set school_name=%s, school_state = %s ,school_district=%s,school_pincode=%s,school_contact=%s,school_status=%s where school_id=%s', [school_name,school_state,school_district,school_pincode,school_contact,school_status,school_id])
+        cursor.execute('update school_details set school_name=%s, school_state = %s ,school_district=%s,school_pincode=%s,school_contact=%s,school_status=%s,school_board=%s where school_id=%s', [school_name,school_state,school_district,school_pincode,school_contact,school_status,school_board,school_id])
         mysql.connection.commit()
     return jsonify('success')   
 
@@ -1015,7 +968,7 @@ def change_dataentry_password():
 def data_entry_email_category():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method=='POST':
-        print('123')
+
         cemail =request.form['cemail']
         subject = request.form['subject']
         message = request.form['test1']
@@ -1048,3 +1001,110 @@ def data_entry_email_category():
 
     else:
         return redirect(url_for('login'))
+
+############ import function school and student ###########################
+
+
+@app.route('/data_entry/school_details/import_student', methods=['GET', 'POST'])
+def data_entry_school_details_import_student():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":
+
+        school_id = request.form['import_school_id']
+        f = request.files['student_import']
+
+        basepath = os.path.dirname(__file__)
+        file_path = os.path.join(basepath, secure_filename(f.filename))
+
+        f.save('temp.csv')
+
+        cols = ['student_name', 'student_contact', 'student_email', 'student_grade', 'student_whatsapp']
+        df = pd.read_csv('temp.csv')
+        result_cols = []
+
+        for col in df.columns:
+            print(col)
+            result_cols.append(col)
+
+        if collections.Counter(cols) == collections.Counter(result_cols):
+            student_name = df['student_name'].to_list()
+            student_contact = df['student_contact'].to_list()
+            student_email = df['student_email'].to_list()
+            student_grade = df['student_grade'].to_list()
+            student_whatsapp = df['student_whatsapp'].to_list()
+
+            for i in range(len(df.student_name)):
+                cursor.execute("SELECT * FROM student_details where student_email = %s", [student_email[i], ])
+                data = cursor.fetchall()
+                if (data):
+                    flash('Duplicate Data', 'error')
+
+                    return redirect(url_for('data_entry_school_details'))
+                else:
+                    cursor.execute(
+                        'insert into student_details (student_name,student_contact,student_email,student_grade,student_whatsapp,student_password,school_id,account_status) values(%s,%s,%s,%s,%s,%s,%s,%s)',
+                        (student_name[i].upper(), student_contact[i], student_email[i], student_grade[i],
+                         student_whatsapp[i], student_contact[i], school_id, 'allow'))
+                    mysql.connection.commit()
+
+            flash('Inserted success', 'success')
+
+            return redirect(url_for('data_entry_school_details'))
+            # return '''Success visit  <a href ="http://127.0.0.1:5000/data_entry/student">click here</a> to see changes'''
+
+        else:
+            flash('Invalid File', 'error')
+            return redirect(url_for('data_entry_school_details'))
+            # return '''Import failed check csv file fields and entry'''
+
+
+@app.route('/data_entry/school_details/import_school', methods=['GET', 'POST'])
+def data_entry_school_details_import_school():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":
+
+        f = request.files['school_import']
+
+        basepath = os.path.dirname(__file__)
+        file_path = os.path.join(basepath, secure_filename(f.filename))
+
+        f.save('temp_school.csv')
+
+        cols = ['school_name', 'school_state', 'school_district', 'school_pincode', 'school_board', 'school_contact']
+        df = pd.read_csv('temp_school.csv')
+        result_cols = []
+
+        for col in df.columns:
+            print(col)
+            result_cols.append(col)
+
+        if collections.Counter(cols) == collections.Counter(result_cols):
+            school_name = df['school_name'].to_list()
+            school_state = df['school_state'].to_list()
+            school_district = df['school_district'].to_list()
+            school_pincode = df['school_pincode'].to_list()
+            school_board = df['school_board'].to_list()
+            school_contact = df['school_contact'].to_list()
+
+            for i in range(len(df.school_contact)):
+                cursor.execute("SELECT * FROM school_details where school_contact = %s", [school_contact[i], ])
+                data = cursor.fetchall()
+                if (data):
+                    flash('Duplicate Data', 'error')
+
+                    return redirect(url_for('data_entry_school_details'))
+                else:
+                    cursor.execute(
+                        'insert into school_details (school_name,school_state,school_district,school_pincode,school_board,school_contact) values(%s,%s,%s,%s,%s,%s)',
+                        (school_name[i].upper(), school_state[i], school_district[i], school_pincode[i],
+                         school_board[i].upper(), school_contact[i]))
+                    mysql.connection.commit()
+
+            flash('Inserted success', 'success')
+
+            return redirect(url_for('data_entry_school_details'))
+            # return '''Success visit  <a href ="http://127.0.0.1:5000/data_entry/student">click here</a> to see changes'''
+
+        else:
+            flash('Invalid File', 'error')
+            return redirect(url_for('data_entry_school_details'))

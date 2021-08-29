@@ -133,7 +133,7 @@
                             </thead>
 
                             <tbody>
-
+                               {% if course!= 'error' %}
                                 {% for row in course %}
                                 <tr>
 
@@ -150,6 +150,7 @@
                                             class="btn btn-success btn-xs view_sms"><i class="fas fa-sms"></i></a></td>
                                 </tr>
                                 {% endfor %}
+                            {% endif %}
 
                                 
                             </tbody>
@@ -277,7 +278,9 @@
                         <label>Subject</label>
                         <input type="text" name="subject1" id="subject1" class="form-control" />
                         <br />
+                        {% if course!= 'error' %}
                         <input type="text" name="course_id" id="course_id" value={{course[0]['course_id']}}  class="form-control" hidden />
+                        {% endif %}
 
 
 

@@ -127,7 +127,21 @@
                                         </span>
                                         <span class="text">Add</span>
                                     </button>
-                                    </div></h6>
+                                    </div>
+
+                                    <div class="my-2" style="float:right;">
+
+                                    &nbsp;
+                                    <button href="#" class="btn btn-success btn-icon-split" data-toggle="modal" data-target="#import_school_Modal">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <span class="text">Import school</span>
+                                    </button>
+                                    </div>
+
+
+                            </h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -254,12 +268,8 @@
     <br />
 
     <label>Enter School board</label>
-    <select name="board" id="mySelect" class="form-control">
-        <option value="CBSE">CBSE</option>
-        <option value="STATE BOARD">STATE BOARD</option>
-        <option value="ICIC">ICIC</option>
+        <input type="text" name="school_board" id="board" class="form-control"/>
 
-    </select>
      <br />
 
      <label>Enter School contact</label>
@@ -278,12 +288,12 @@
 </div>
 
 
-		<!-- import modal-->
+		<!-- import school_student modal-->
         <div id="import_data_Modal" class="modal fade">
             <div class="modal-dialog">
              <div class="modal-content">
               <div class="modal-header">
-               <h4 class="modal-title">import School Details</h4>
+               <h4 class="modal-title">Import School Student Details</h4>
                <button type="button" class="close"  data-dismiss="modal">×</button>
 
               </div>
@@ -295,6 +305,9 @@
 
 
                    <input type="text" name="import_school_id" id="import_school_id" hidden /><br>
+                   <label>Required columns: student_name,	student_contact	student_email,	student_grade,	student_whatsapp</label>
+                   <span style="color:red">Note: Order and name should be same</span>
+                   <br><br>
                 <label>Import file:</label>
                 <input type="file"  name="student_import" id="student_import" class="" accept=".csv"  required/>
 
@@ -310,13 +323,43 @@
             </div>
         </div>
 
+<!-- import school modal-->
+        <div id="import_school_Modal" class="modal fade">
+            <div class="modal-dialog">
+             <div class="modal-content">
+              <div class="modal-header">
+               <h4 class="modal-title">Import School Student Details</h4>
+               <button type="button" class="close"  data-dismiss="modal">×</button>
+
+              </div>
+              <div class="modal-body">
+               <form method="post" action="{{url_for('data_entry_school_details_import_school')}}" enctype = 'multipart/form-data'>
+
+
+                   <label>Required columns: school_name,school_state,school_state,school_pincode,school_board,school_contact</label>
+                   <span style="color:red">Note: Order and name should be same</span>
+                   <br><br>
+                <label>Import file:</label>
+                <input type="file"  name="school_import" id="school_import" class="" accept=".csv"  required/>
+
+                <br />
+
+              <div class="modal-footer">
+              <input type="submit" name="insert_import" id="inserts_import" value="Insert" class="btn btn-success" />
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+               </form>
+              </div>
+             </div>
+            </div>
+        </div>
 
 
 
     <!--Update table modal-->
 
 	<div id="dataModal" class="modal fade">
- <div class="modal-dialog">
+        <div class="modal-dialog">
   <div class="modal-content">
    <div class="modal-header">
    <h4 class="modal-title">School Details</h4>
@@ -464,6 +507,7 @@
                     {
                         document.getElementById("statuss").style.visibility = "hidden";
                         document.getElementById("schoolyes").style.display = "block";
+                        document.getElementById("statuss").value = "approved"
                     }
                     else{
                         document.getElementById("schoolyes").style.display = "none";

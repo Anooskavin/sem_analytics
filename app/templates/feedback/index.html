@@ -39,6 +39,10 @@
                     <center>Attendance</center>
                 </span>
                 <br>
+                <div class="wrap-input100">
+                    <h5>Not registered in bit student portal yet?: <u><a target="_blank" href="/student/login">click here</a></u> </h5>
+
+                </div>
                 <input type="hidden" id='student_id' name="student_id">
                 <input type="hidden" name="session_id" value="{{feedback.session_id}}" />
                 <div class="wrap-input100 rs1-wrap-input100 validate-input">
@@ -587,7 +591,7 @@
                     document.getElementById('message').innerHTML = '';
                     document.getElementById('submit-btn').disabled = true;
                     document.getElementById('message').style.color = 'red';
-                    document.getElementById('message').innerHTML = 'Mail id not found';
+                    document.getElementById('message').innerHTML = 'This id not registered for this course';
 
 
                 }

@@ -11,7 +11,7 @@ def feedback():
     feedback = cursor.fetchone()
 
     if feedback['session_status']=='open':
-        cursor.execute('select student_details.student_name,student_details.student_email,student_details.student_id,student_details.student_contact,school_details.school_name,school_details.school_pincode  from student_details,school_details where student_details.school_id= school_details.school_id')
+        cursor.execute('SELECT * FROM student_details,school_details,course_enroll_details,course_session_details WHERE student_details.student_id=course_enroll_details.student_id AND student_details.school_id = school_details.school_id AND course_session_details.course_id=course_enroll_details.course_id AND course_session_details.session_id = %s',[id])
         student = cursor.fetchall()
 
         return render_template('feedback/index.html',feedback=feedback,student=student)
