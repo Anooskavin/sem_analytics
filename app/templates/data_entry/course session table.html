@@ -556,8 +556,7 @@ $("#dataTable").tableHTMLExport({
                                     var delayInMilliseconds = 6500; //1 second
 
                                     setTimeout(function () {
-                                        window.location.href =
-                                            "/data_entry/session";
+                                        window.location.reload();
                                     }, delayInMilliseconds);
 
                                 }
@@ -566,7 +565,7 @@ $("#dataTable").tableHTMLExport({
                                     swal("Data is not Submitted!",
                                         "Error in submitting Data",
                                         "error");
-                                    window.location.href = "/data_entry/course";
+                                        window.location.reload();
                                 }
                             }
                         });
@@ -588,7 +587,7 @@ $("#dataTable").tableHTMLExport({
                                 $('#add_data_Modal').modal('hide');
                                 if (data == 'success') {
                                     console.log('success')
-                                    window.location.href = "/data_entry/session";
+                                    window.location.reload();
                                 }
                             }
                         });

@@ -44,7 +44,7 @@
             <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
           </ul>
 
-          <a  class="navbar-brand" href="#"><img src="{{url_for('static',filename='img/banner.png')}}" alt="" height="35" ></a>
+          <a  class="navbar-brand" href="/"><img src="{{url_for('static',filename='img/banner.png')}}" alt="" height="35" ></a>
 
 
           <div class="main-nav-wrap">
@@ -283,7 +283,7 @@
  <script>
     {% if msg != '' %}
 
-        alert("{{msg}}");
+    swal("Scool registered !!", "Soon It will be approved !", "success");
      {% endif %}
     </script>
 <script>

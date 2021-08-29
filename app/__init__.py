@@ -70,12 +70,11 @@ def email(sender,subject,messages):
 
     # Create secure connection with server and send email
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-        server.login('ssig432@gmail.com', 'sSig432*gmail&user')
-        server.sendmail(
-            'ssig432@gmail.com', sender, message.as_string()
-        )
+    server= smtplib.SMTP_SSL("smtp.gmail.com", 465)
+    server.login('ssig432@gmail.com', 'sSig432*gmail&user')
+    server.sendmail('ssig432@gmail.com', sender, message.as_string())
     print('mail sent')
+    server.quit()
     return
 
 
@@ -96,12 +95,11 @@ def email_group(sender, subject, messages):
 
         # Create secure connection with server and send email
         context = ssl.create_default_context()
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-            server.login('ssig432@gmail.com', 'sSig432*gmail&user')
-            server.sendmail(
-                'ssig432@gmail.com', sender, message.as_string()
-            )
+        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+        server.login('ssig432@gmail.com', 'sSig432*gmail&user')
+        server.sendmail('ssig432@gmail.com', sender, message.as_string())
         print('mail sent')
+        server.quit()
     return
 
 from app.code import login,data_entry,feedback,admin_analytics,students
