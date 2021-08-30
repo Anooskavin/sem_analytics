@@ -1,5 +1,5 @@
 <html><head>
-    <title>Active Courses | Learning Management System Online</title>
+    <title>Courses | BIT Portal</title>
     <!-- all the meta tags -->
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
 <meta charset="utf-8">
@@ -9,6 +9,7 @@
     <!-- all the css files -->
 
 <!-- third party css -->
+    <link name="favicon" type="image/x-icon" href="{{url_for('static',filename='img/favicon.png')}}" rel="shortcut icon">
 <link href="{{url_for('static',filename='assets/backend/css/vendor/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css">
 <link href="{{url_for('static',filename='assets/backend/css/vendor/dataTables.bootstrap4.css')}}" rel="stylesheet" type="text/css">
 <link href="{{url_for('static',filename='assets/backend/css/vendor/responsive.bootstrap4.css')}}" rel="stylesheet" type="text/css">
@@ -53,7 +54,7 @@
 <link rel="stylesheet" href="{{url_for('static',filename='assets/global/toastr/toastr.css')}}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.css')}}" />
 <script src="{{url_for('static',filename='assets/backend/js/jquery-3.3.1.min.js')}}"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 <style type="text/css">/* Chart.js */
@@ -89,7 +90,7 @@
 
                 </span>
                 <span style="color: #fff;">
-                                        <span class="account-user-name">{{student.student_name}}</span>
+                                        <span class="account-user-name" style="text-transform: uppercase;">{{student.student_name}}</span>
                     <span class="account-position">{{student.student_email}}</span>
                 </span>
             </p>
@@ -131,7 +132,7 @@
 
                           <input type="file"  id="file" accept="image/*" name="change_profile"  onchange="javascript:this.form.submit();" hidden/>
                 <label for ="file" type="button" class="btn btn-primary"  style="height:40px;background-color:SlateBlue;border-color:SlateBlue;" ><h6>Change Photo</h6></label></form>
-						<span class="leftbar-user-name">{{student.student_name}}</span>
+						<span class="leftbar-user-name" style="text-transform: uppercase;">{{student.student_name}}</span>
 		</a>
 	</div>
 

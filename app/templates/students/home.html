@@ -7,7 +7,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="page-title"> <i class="mdi mdi-apple-keyboard-command title_icon"></i> Courses
+                <h4 class="page-title"> Courses
                 </h4>
             </div> <!-- end card body-->
         </div> <!-- end card -->
@@ -132,8 +132,8 @@
                     <button type="submit" class="btn btn-primary btn-block">Filter</button>
                 </div>
             </form>
-<h4 class="page-title"> <i class="mdi mdi-apple-keyboard-command title_icon"></i> Subject : {{current[0]}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    Status: {{current[1]}}
-                </h4>
+<h5 class="page-title">  Subject : {{current[0]}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    Status: {{current[1]}}
+                </h5>
             <div class="table-responsive-sm mt-4">
                                                     <div class="col-lg-9">
                 <div class="category-course-list">
@@ -142,35 +142,45 @@
                     <center>No data Found</center>
                     {% else %}
 {%for i in courses %}
-        <div class="course-box-2">
+        <div class="course-box-2" >
             <div class="course-image">
 
                     <img src="{{url_for('static',filename='img/course.jpg')}}"  alt="" class="img-fluid" style="float:left">
 
             </div>
             <div class="course-details">
-                <p class="course-title">{{i.course_name}}</p>
-                <p class="course-instructor">
-                    <span class="instructor-name">{{i.subject_name}}</span>
+                <p class="course-title" style="width:200%;text-transform: uppercase;">{{i.course_name}}</p>
+                <p class="course-instructor" style="width:200%">
+
+                    <span class="instructor-name" >{{i.subject_name}}</span>
                 </p>
                 <div class="course-subtitle">
                     Status :
                     {% if i.course_status == 'open' %}<span style="color:green;">{{i.course_status}}</span>
                     {% else %}<span style="color:red;">{{i.course_status}}</span> {% endif %}
                 </div>
-                <div class="course-meta">
+                <div class="course-meta"  style="width:170%">
                     <span class=""><i class="fas fa-play-circle"></i>
                         {{i.no_of_session}} Sessions                    </span>
                     <span class=""><i class="far fa-clock"></i>
                         {{i.course_duration}} Minutes                   </span>
                     <span class=""><i class="fas fa-closed-captioning"></i>English</span>
+                    <br>
 
-                    <br><br>
-                    {% if i.course_id in my_course %}
-                            <p><a href="" class="btn btn-success rounded-0 px-4" style="background-color:green">Enrolled</a></p>
-                            {% else %}
-                    <a href="{{url_for('add_courses',a=i.course_id)}}"  class="btn btn-primary rounded-0 px-4">Enroll</a>
+                        {% for j in my_course%}
+                    {% if j == i.course_id %}
+                   <span class="instructor-name" style="color:green;"> <i class="fa fa-paperclip"></i>Enrolled</span><br>
+
+
                     {% endif %}
+                    {% endfor %}<br>
+
+
+
+
+
+                    <a href="{{url_for('view_courses',a=i.course_id)}}"  class="btn btn-primary rounded-0 px-4">view</a>
+
 
                 </div>
 
@@ -360,29 +370,11 @@
 </script>
 
 <!-- Toastr and alert notifications scripts -->
-<script type="text/javascript">
-function notify(message) {
-  $.NotificationApp.send("Heads Up!", message ,"top-right","rgba(0,0,0,0.2)","info");
-}
-
-function success_notify(message) {
-  $.NotificationApp.send("Congratulations!", message ,"top-right","rgba(0,0,0,0.2)","success");
-}
-
-function error_notify(message) {
-  $.NotificationApp.send("Oh Snap!", message ,"top-right","rgba(0,0,0,0.2)","error");
-}
-
-function error_required_field() {
-  $.NotificationApp.send("Oh Snap!", "Please Fill All The Required Fields" ,"top-right","rgba(0,0,0,0.2)","error");
-}
-</script>
 
 
 
-<script type="text/javascript">
-  $.NotificationApp.send("Hi!", 'Welcome Student' ,"top-right","rgba(0,0,0,0.2)","success");
-</script><div class="jq-toast-wrap top-right"><div class="jq-toast-single jq-has-icon jq-icon-success" style="text-align: left; display: none;"><span class="jq-toast-loader jq-toast-loaded" style="-webkit-transition: width 2.6s ease-in;                       -o-transition: width 2.6s ease-in;                       transition: width 2.6s ease-in;                       background-color: rgba(0,0,0,0.2);"></span><span class="close-jq-toast-single">×</span><h2 class="jq-toast-heading">Congratulations!</h2>Welcom admin admin</div></div>
+
+><div class="jq-toast-wrap top-right"><div class="jq-toast-single jq-has-icon jq-icon-success" style="text-align: left; display: none;"><span class="jq-toast-loader jq-toast-loaded" style="-webkit-transition: width 2.6s ease-in;                       -o-transition: width 2.6s ease-in;                       transition: width 2.6s ease-in;                       background-color: rgba(0,0,0,0.2);"></span><span class="close-jq-toast-single">×</span><h2 class="jq-toast-heading">Congratulations!</h2>Welcom admin admin</div></div>
     <script type="text/javascript">
 function showAjaxModal(url, header)
 {

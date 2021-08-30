@@ -13,7 +13,7 @@ import pandas as pd
 import collections
 import html
 import base64
-
+from bs4 import BeautifulSoup
 #csv export 
 import io
 import csv

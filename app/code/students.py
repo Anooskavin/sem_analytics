@@ -29,7 +29,7 @@ def student_login():
             print(results)
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
-            cursor.execute('select * from student_details where student_password=%s and account_status =%s and student_contact =%s or student_email =%s',(pwd,'allow',username,username))
+            cursor.execute('select * from student_details where student_password=%s and account_status ="allow" and student_email =%s',[pwd,username,])
             student = cursor.fetchone()
             print(student)
             if student:
@@ -42,7 +42,7 @@ def student_login():
         else:
 
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('select * from student_details where student_password=%s  and account_status =%s and student_contact =%s',(pwd, 'allow', username))
+            cursor.execute('select * from student_details where student_password=%s  and account_status ="allow" and student_contact =%s',[pwd,username])
             student = cursor.fetchone()
             if student:
                 session['student_id'] = student['student_id']
@@ -300,7 +300,7 @@ def my_courses():
     else:
         return redirect(url_for('student_login'))
 
-############################## Add courses ############################################
+############################# Add courses ############################################
 @app.route("/student/add_courses",methods=["POST", "GET"])
 def add_courses():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -311,10 +311,59 @@ def add_courses():
         print(course_id)
         cursor.execute('insert into course_enroll_details (course_id,student_id) values(%s,%s)', (course_id, id))
         mysql.connection.commit()
-        return redirect(url_for('home'))
+        flash("Enrolled Successfully !!!!!")
+        return redirect(url_for('view_courses',a=course_id))
     else:
         return redirect(url_for('student_login'))
 
+############################## view courses ############################################
+@app.route("/student/view_courses",methods=["POST", "GET"])
+def view_courses():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'student_id' in session and session.get("user_type") == 'student':
+        id = session.get('student_id')
+
+
+        course_id = request.args.get('a')
+
+        cursor.execute('SELECT * FROM course_details WHERE course_details.course_id=%s ',[course_id])
+        course = cursor.fetchall()
+
+
+        cursor.execute('SELECT * FROM course_session_details,session_content,faculty_details WHERE course_session_details.session_id=session_content.session_id AND course_session_details.faculty_id=faculty_details.faculty_id AND course_session_details.course_id=%s', [course_id])
+        session_details=cursor.fetchall()
+        # cursor.execute('select * from faculty_details where faculty_id=%s',[course[0]['faculty_id']])
+        # faculty=cursor.fetchone()
+        cursor.execute('select * from student_details where student_id=%s ', [id])
+        student=cursor.fetchone()
+        cursor.execute('select * from course_enroll_details where course_id=%s',[course_id])
+        count=cursor.fetchall()
+        if count==():
+            count=0
+        else:
+            count=len(count)
+
+        cursor.execute('select * from course_enroll_details where course_id=%s and student_id =%s',(course_id,id))
+        mycourse=cursor.fetchone()
+        if mycourse:
+            mycourse=True
+        else:
+            mycourse=False
+
+
+
+
+
+        for i in range(len(course)):
+            a=course[i]['course_description']
+            soup = BeautifulSoup(a)
+            a=soup.get_text()
+            course[i]['course_description'] = a
+
+
+        return render_template('students/course.html', course=course,student=student,mycourse=mycourse,count=count,session=session_details)
+    else:
+        return redirect(url_for('student_login'))
 
 
 ######################################## student_forget_password #######################################################
@@ -420,5 +469,27 @@ def student_logout():
 
 
 
+@app.route('/test')
+def test():
+    id=1
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute(
+        'select subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where subject.subject_id=course_details.subject_id and course_details.course_approval_status="approved" ')
+    courses = cursor.fetchall()
 
+    cursor.execute('select * from subject')
+    subject = cursor.fetchall()
+
+    cursor.execute('select * from student_details where student_id=%s ', [id])
+    student = cursor.fetchone()
+
+    cursor.execute('select * from course_enroll_details where student_id=%s', [id])
+    mycourse = cursor.fetchall()
+    my_course = []
+    for i in range(len(mycourse)):
+        my_course.append(mycourse[i]['course_id'])
+    current = ['All', 'All']  # subject and enrollement status
+
+    return render_template('students/course.html', courses=courses, len=len(courses), subject=subject, student=student,
+                           current=current, my_course=my_course)
 

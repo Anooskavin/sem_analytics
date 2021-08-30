@@ -34,7 +34,9 @@ def feedback_submit():
         if feedback['session_status']=='open':
             print("enter")
 
-            cursor.execute('SELECT * FROM student_details where student_id=%s and account_status="allow"', [student_id])
+
+            cursor.execute('SELECT * FROM student_details where student_id=%s and account_status=%s', (student_id,'allow'))
+
             student = cursor.fetchone()
             if student:
                 cursor.execute('SELECT * FROM student_attendance where student_id=%s and session_id=%s and satt_present="YES"',
