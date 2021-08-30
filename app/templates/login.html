@@ -75,11 +75,11 @@
       .done(function(data) {
         if (data.success=='admin') {
                   console.log("admin")
-                  window.location.href = "admin_analytics/home";
+                  window.location.href = "/admin_analytics/home";
 			      }
 
 			else if (data.success=='data_entry') {
-                  window.location.href = "data_entry/home";
+                  window.location.href = "/data_entry/home";
 			      }
 
 			else if(data.success=='error') {

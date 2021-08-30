@@ -233,6 +233,27 @@ def admin_approval_course():
 ####################################### Course table end ############################################
 
 
+
+######################################  Session And Attendance end ##################################
+
+@app.route("/admin_analytics/analysis_attendance", methods=["POST", "GET"])
+def admin_analytics_sess_attd():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if 'id' in session and session.get("user_type") == 'admin':
+        admin_name = session.get('name')
+        course_id = request.args.get('a')
+        print(course_id)
+        course_name = request.args.get('b')
+        cursor.execute('SELECT  sd.student_name,sd.student_contact,sd.student_email,cd.course_name,cd.course_id,csd.session_name,sa.satt_present FROM student_details sd LEFT JOIN student_attendance sa ON sd.student_id = sa.student_id LEFT JOIN course_session_details csd ON csd.session_id = sa.session_id LEFT JOIN course_details cd ON cd.course_id=csd.course_id WHERE cd.course_id=%s',[course_id])
+        course = cursor.fetchall()
+        return render_template('admin_analytics/analysis_attendance.html', course=course)
+    else:
+        return redirect(url_for('login'))
+
+
+
+
+
 #########################################  session Table ###############################################
 
 
@@ -489,10 +510,11 @@ def admin_entry_school_details():
         count[0] = len(cursor.fetchall())
         cursor.execute('SELECT * FROM school_details where school_status="approved"')
         count[1] = len(cursor.fetchall())
-        cursor.execute('SELECT * FROM school_details where school_status="rejected"')
+        cursor.execute('SELECT * FROM school_details where school_status="decline"')
         count[2] = len(cursor.fetchall())
         cursor.execute('SELECT * FROM school_details where school_status="notapproved"')
         count[3] = len(cursor.fetchall())
+        print(count[2])
         # cursor.execute('SELECT * FROM notification,admin where notification_from=admin.admin_id and notification.admin_id=%s and notification_status="unread" LIMIT 4',[id])
         # notifi = cursor.fetchall()
         return render_template('admin_analytics/school_details.html', school=school, count=count, admin_name=admin_name)
@@ -551,8 +573,7 @@ def attendance():
         admin_name = session.get('name')
 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute(
-            'select sa.*,sd.*,ssf.* from student_attendance sa left join student_details sd on sd.student_id = sa.student_id left join student_session_feedback ssf on ssf.student_id = sa.student_id where sa.session_id =%s',
+        cursor.execute('SELECT sd.student_name,sd.student_grade,sd.student_contact,sa.satt_present,ssf.stu_session_willingness,ssf.stu_session_feedback,ssf.stu_session_timestamp FROM student_attendance sa LEFT JOIN student_details sd ON sd.student_id = sa.student_id LEFT JOIN student_session_feedback ssf ON ssf.student_id = sa.student_id AND ssf.satt_id = sa.satt_id WHERE sa.session_id =%s ',
             [session_id])
         attendance = cursor.fetchall()
         cursor.execute("SELECT  sd.session_name from course_session_details sd  where  session_id=%s",[session_id])

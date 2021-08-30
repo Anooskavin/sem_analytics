@@ -34,7 +34,7 @@ def feedback_submit():
         if feedback['session_status']=='open':
             print("enter")
 
-            cursor.execute('SELECT * FROM student_details where student_id=%s and account_status="allow"', (student_id))
+            cursor.execute('SELECT * FROM student_details where student_id=%s and account_status="allow"', [student_id])
             student = cursor.fetchone()
             if student:
                 cursor.execute('SELECT * FROM student_attendance where student_id=%s and session_id=%s and satt_present="YES"',
@@ -44,14 +44,16 @@ def feedback_submit():
                 if attendance:
                     return jsonify('responded')
                 else:
+                    cursor.execute('SELECT * FROM student_attendance where student_id=%s and session_id=%s',(student_id,session_id))
+                    ass = cursor.fetchone()
 
                     try:
 
                         cursor.execute('update student_attendance set satt_present="YES" where student_id =%s and session_id =%s ',(student['student_id'],session_id))
                         mysql.connection.commit()
 
-                        cursor.execute('insert into student_session_feedback (student_id,session_id,stu_session_feedback,stu_session_willingness) values(%s,%s,%s,%s) ',
-                                       (student['student_id'], session_id,student_feedback,choice))
+                        cursor.execute('insert into student_session_feedback (student_id,session_id,stu_session_feedback,stu_session_willingness,satt_id) values(%s,%s,%s,%s,%s) ',
+                                       (student['student_id'], session_id,student_feedback,choice,ass['satt_id']))
                         mysql.connection.commit()
 
                         return jsonify('submit')

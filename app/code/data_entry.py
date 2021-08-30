@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from re import sub
-
+import html
 from MySQLdb.cursors import Cursor
 from app import *
 @app.route("/data_entry/home", methods=["POST", "GET"])
@@ -440,7 +440,7 @@ def data_entry_session():
                 return jsonify('error')
 
         if session_ids:
-            cursor.execute('SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id and course_details.course_id=%s',[session_ids,])
+            cursor.execute('SELECT * FROM course_session_details,faculty_details,course_details,session_content WHERE course_session_details.session_id=session_content.session_id and course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id and course_details.course_id=%s',[session_ids,])
             sess = cursor.fetchall()
             cursor.execute('SELECT * FROM course_session_details,course_details where course_details.course_id=course_session_details.course_id and course_details.course_id=%s',[session_ids,])
             count[0] = len(cursor.fetchall())      
@@ -450,7 +450,7 @@ def data_entry_session():
             count[2] = len(cursor.fetchall())
        
         else:
-            cursor.execute('SELECT * FROM course_session_details,faculty_details,course_details WHERE course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id')
+            cursor.execute('SELECT * FROM course_session_details,faculty_details,course_details,session_content WHERE course_session_details.session_id=session_content.session_id and course_session_details.faculty_id=faculty_details.faculty_id and course_details.course_id=course_session_details.course_id')
             sess = cursor.fetchall()
             cursor.execute('SELECT * FROM course_session_details,course_details where course_details.course_id=course_session_details.course_id')
             count[0] = len(cursor.fetchall())      
@@ -491,6 +491,55 @@ def data_entry_session_update():
 
 
 
+@app.route('/data_entry/session/video/select', methods=['GET', 'POST'])
+def data_entry_session_video_select():   
+    cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == 'POST': 
+        sessio_id = request.form['sessio_id1']
+        print(sessio_id)      
+        cur.execute("SELECT sc.*,csd.*,cd.* from course_details cd left join course_session_details csd on cd.course_id = csd.course_id left join session_content sc on sc.session_id = csd.session_id where csd.session_id =  %s", [sessio_id])
+        rsemployee = cur.fetchall()
+        employeearray = []
+        for rs in rsemployee:
+            employee_dict = {
+                    'session_id': rs['session_id'],
+                    'course_name': rs['course_name'],
+                    'session_name': rs['session_name'],
+                    'video_content': rs['video_content'],
+                    'material_content': rs['material_content'],
+                    'content_descritpion': rs['content_descritpion'],
+                    'online_mode': rs['online_mode'],
+                    'online_link': rs['online_link']}
+            employeearray.append(employee_dict)
+        print(employeearray)
+        return json.dumps(employeearray)
+
+
+
+
+
+@app.route("/data_entry/session/video/change", methods=["POST", "GET"])
+def data_entry_session_video_change():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    if request.method == "POST":        
+        session_id = request.form['session_id1']
+        print("session"+ session_id)
+        # session_name = request.form['session_name1']
+        # course_name = request.form['course_name1']
+        video_content = request.form['video_content']
+        material_content = request.form['material_content']
+        content_descritpion = request.form['content_descritpion']
+        online_mode= request.form['online_mode']
+        online_link = request.form['online_link']
+        # print(session_discription)
+        cursor.execute('update session_content set video_content=%s, material_content = %s ,content_descritpion=%s , online_mode=%s ,online_link=%s  where session_id=%s', [video_content,material_content,content_descritpion,online_mode,online_link,session_id])
+        mysql.connection.commit()
+    return jsonify('success')   
+
+
+
+
+
 @app.route('/data_entry/session/select', methods=['GET', 'POST'])
 def data_entry_session_select():   
     cur = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -518,6 +567,8 @@ def data_entry_session_select():
             employeearray.append(employee_dict)
         print(employeearray)
         return json.dumps(employeearray)
+
+
 
 @app.route("/data_entry/session/change", methods=["POST", "GET"])
 def data_entry_session_change():
@@ -971,9 +1022,9 @@ def data_entry_email_category():
 
         cemail =request.form['cemail']
         subject = request.form['subject']
-        message = request.form['test1']
+        message = request.form['message']
         # message=html.unescape(message)
-
+        print(message)
         cursor.execute('update email_content set email_subject =%s , email_message =%s where emailc_id=%s',(subject,message,cemail))
         mysql.connection.commit()
         return jsonify('success')
