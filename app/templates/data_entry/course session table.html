@@ -133,6 +133,7 @@ window.location.href =link;
                                     <th>Faculty Name</th>
                                     <th>Status</th>
                                     <th class="link">link</th>
+                                    <th >Video</th>
                                     <!-- <th>desc</th> -->
                                     <th style="width: fit-content;" class="action">Action</th>
 
@@ -159,6 +160,13 @@ window.location.href =link;
                                                 class="fas fa-copy"></i></a>
                                     </td>
                                     <!-- <td>{{row.session_discription}}</td> -->
+
+                                    <td>
+                                       
+                                        <a type="button" name="view_video" value="view_video" id="{{row.session_id}}"
+                                            class="btn btn-primary btn-xs view_data_video"><i
+                                                class="fas fa-upload"></i></a>                                   
+                                    </td>
                                     <td class="action">
                                         <a type="button" name="view" value="view" id="{{row.session_id}}"
                                             class="btn btn-primary btn-xs view_data"><i
@@ -184,7 +192,78 @@ window.location.href =link;
 
     </div>
     <!-- /.container-fluid -->
-
+    <div id="video_modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Course Video Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+    
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <form method="post" id="video_update_form">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <input type="hidden" name="session_id1" class="form-control" id="sessio_id1">
+                                    <td width="30%"><label>Course Name</label>
+                                    <td width="70%"><input type="text" name="course_name1" class="form-control"
+                                            id="course_name1" disabled></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label> Session Name</label>
+                                    <td width="70%"><input type="text" name="session_name1" class="form-control"
+                                            id="session_name1" disabled></td>
+                                </tr>
+    
+                                <tr>
+                                    <td width="30%"><label> Video Content</label>
+                                    <td width="70%"><input type="url" name="video_content" class="form-control"
+                                            id="video_content"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label> Material Content</label>
+                                    <td width="70%"><input type="url" name="material_content" class="form-control"
+                                            id="material_content"></td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label> Content Description</label>
+                                    <td width="70%"><textarea type="text" name="content_descritpion" class="form-control" id="content_descritpion"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label hidden >test ..!</label></td>
+                                    <td width="70%"><input type="hidden" class="form-control" name="test2" id="test2"></input>
+                                    </td>
+    <!--                                    <textarea id="demo"></textarea>-->
+                                </tr>
+                                <tr>
+                                    <td width="30%"> <label> Online Platform</label>
+                                    <td width="70%"><select  class="form-control" name="online_mode" id="online_mode">
+                                        <option></option>
+                                        <option>Meet</option>
+                                        <option>Zoom</option>
+                                        <option>Teams</option>
+                                        <option>Others</option>
+                                         </select>
+                                </tr>
+                                <tr>
+                                    <td width="30%"><label> <label>Link</label> </label></td>
+                                    <td width="70%"><input type="url" name="online_link" class="form-control"
+                                            id="online_link" ></td>
+                                </tr>
+                                
+                            </table>
+                            <div class="modal-footer">
+                                <input type="submit" name="update1" id="update1" value="Update" class="btn btn-success" />
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </form>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
     <!-- End of Main Content -->
 
@@ -210,7 +289,7 @@ window.location.href =link;
     </a>
 
 
-
+  
 
     <!-- Add Modal-->
     <div id="add_data_Modal" class="modal fade">
@@ -368,8 +447,6 @@ window.location.href =link;
     </div>
 
 
-    <!--Update table modal-->
-
     <div id="dataModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -517,6 +594,52 @@ window.location.href =link;
 
                 </div>
             </div>
+        </div>
+    </div>
+
+    
+    <!--Update table modal-->
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <script src="https://gitcdn.xyz/repo/FuriosoJack/TableHTMLExport/v1.0.0/src/tableHTMLExport.js"></script>
 
@@ -595,6 +718,64 @@ $("#dataTable").tableHTMLExport({
                     });
 
 
+                    $(document).on('click', '.view_data_video', function () {
+                        var sessio_id1 = $(this).attr("id");
+                        $.ajax({
+                            url: "/data_entry/session/video/select",
+                            method: "POST",
+                            data: {
+                                sessio_id1: sessio_id1
+                            },
+                            success: function (data) {
+                                $('#video_modal').modal('show');
+                                console.log('hi');
+                                var data_rs = JSON.parse(data);
+                                console.log(data_rs);
+                                $('#sessio_id1').val(data_rs[0]['session_id']);
+                                $('#course_name1').val(data_rs[0]['course_name']);
+                                $('#session_name1').val(data_rs[0]['session_name']);
+                                $('#video_content').val(data_rs[0]['video_content']);
+                                $('#material_content').val(data_rs[0]['material_content']);
+                                $('#content_descritpion').val(data_rs[0]['content_descritpion']);
+                                $('#online_mode').val(data_rs[0]['online_mode']);
+                                $('#online_link').val(data_rs[0]['online_link']);
+                                // console.log($('#session_discription').val(data_rs[0]['session_discription']));
+                    //             editor = CKEDITOR.replace( 'session_discription' );
+                                
+                    //             editor.setData(data_rs[0]['session_discription']);
+                    // editor.on( 'change', function(edittor) {
+                    
+                    // $('#test').val(edittor.editor.getData());
+                    // });
+
+                            }
+                        });
+                    });
+              
+                    $('#video_update_form').on("submit", function (event) {
+                        event.preventDefault();
+
+                        $.ajax({
+                            url: "/data_entry/session/video/change",
+                            method: "POST",
+                            data: $('#video_update_form').serialize(),
+                            beforeSend: function () {
+                                $('#update1').val("Updating");
+                            },
+                            success: function (data) {
+                                $('#video_modal').modal('hide');
+                                if (data == 'success') {
+                                    console.log('success')
+                                    window.location.reload();
+                                }
+                            }
+                        });
+                       
+                    });
+
+
+
+
 
 var editor;
 
@@ -667,6 +848,7 @@ edit.on( 'change', function(evt) {
 $('#test1').val(evt.editor.getData());
 });
             </script>
+
 
 
 
