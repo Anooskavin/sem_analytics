@@ -561,7 +561,7 @@ def data_entry_attendance():
 
         print(session_name)
         if session_ids:
-            cursor.execute('select sa.*,sd.*,ssf.* from student_attendance sa left join student_details sd on sd.student_id = sa.student_id left join student_session_feedback ssf on ssf.student_id = sa.student_id where sa.session_id =%s',[session_ids,])
+            cursor.execute('select distinct sa.*,sd.*,ssf.* from student_attendance sa left join student_details sd on sd.student_id = sa.student_id left join student_session_feedback ssf on ssf.student_id = sa.student_id where sa.session_id =%s',[session_ids,])
             attendance = cursor.fetchall()
             
             cursor.execute('SELECT * FROM student_attendance,student_details WHERE student_attendance.student_id=student_details.student_id and student_attendance.session_id=%s',[session_ids,])
