@@ -157,16 +157,20 @@ def home():
            status=request.form['status']
            print(filter_subject)
            print(status)
-           if status =='all' and filter_subject =='all':
-               cursor.execute('select subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where subject.subject_id=course_details.subject_id and course_details.course_approval_status="approved"')
+           cursor.execute("SELECT (course_name) FROM subject,course_details where subject.subject_id and course_details.subject_id = %s ",[filter_subject])
+           count=cursor.fetchall()
+           print(count)
+           if status =='all' and filter_subject =='all' :
+
+               cursor.execute('select subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where subject.subject_id=course_details.subject_id and course_details.course_approval_status="approved" and ')
                courses = cursor.fetchall()
                current=['All','All']
-           elif status =='all' and filter_subject!='all':
-               print('hi')
+           elif status =='all' and filter_subject!='all' and count!=():
+               print('hi'),
                cursor.execute('select distinct subject.subject_name,subject.subject_id ,course_details.course_id,course_details.course_duration,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status from subject,course_details where course_details.subject_id and subject.subject_id = %s and course_details.subject_id=subject.subject_id  and course_details.course_approval_status="approved"',[filter_subject])
                courses = cursor.fetchall()
                current = [courses[0]['subject_name'], 'All']
-           elif status !='all' and filter_subject=='all':
+           elif status !='all' and filter_subject=='all' :
                cursor.execute('select subject.subject_name,subject.subject_id,course_details.course_id,course_details.course_name,course_details.course_description,course_details.no_of_session,course_details.course_status,course_enroll_details.course_id from course_details, course_enroll_details,subject where course_details.course_id=course_enroll_details.course_id and subject.subject_id=course_details.subject_id and  course_enroll_details.student_id=%s',[id])
                courses = cursor.fetchall()
                current = ['All', 'Enrolled']
@@ -236,6 +240,7 @@ def student_profile():
 
             cursor.execute('update student_details set student_name=%s,student_contact=%s,student_whatsapp=%s where student_id=%s',(username,mobile,whatsapp,id))
             mysql.connection.commit()
+            flash('Success')
             return redirect(url_for('student_profile'))
 
 

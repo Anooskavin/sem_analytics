@@ -217,7 +217,7 @@
                     <form method="post" id="insert_form">
                         <label>select Subject Name</label>
                         <!-- <input type="text" name="sname" id="name" class="form-control" /> -->
-                        <select name="subjectid" id="status" class="form-control">
+                        <select name="subjectid" id="status" class="form-control" required>
                             {% for rows in subject %}
                             <option value="{{rows.subject_id}}">{{rows.subject_name}}</option>
                             {% endfor %}
@@ -226,11 +226,11 @@
                         <br />
 
                         <label>Enter Course Name</label>
-                        <input type="text" name="cname" id="name" class="form-control" />
+                        <input type="text" name="cname" id="name" class="form-control"  required />
                         <br />
 
                         <label>select Course Grade</label>
-                        <select name="grade" id="status" class="form-control">
+                        <select name="grade" id="status" class="form-control" required>
                             <option value="1">I</option>
                             <option value="2">II</option>
                             <option value="3">III</option>
@@ -247,11 +247,11 @@
                         <br />
 
                         <label>Enter Course Duration(in Min)</label>
-                        <input type="number" name="duration" id="name" class="form-control" />
+                        <input type="number" name="duration" id="name" class="form-control" required />
                         <br />
 
                         <label>Enter No of Sessions</label>
-                        <input type="number" name="session" id="name" class="form-control" />
+                        <input type="number" name="session" id="name" class="form-control" required />
                         <br />
 
                         <!-- <label>Status</label> 
@@ -262,7 +262,7 @@
      <br /> -->
 
                         <label>Enter Course Description</label>
-                        <textarea name="coursedes" id="address" class="form-control"></textarea>
+                        <textarea name="coursedes" id="address" class="form-control"required></textarea>
                         <br />
 
                         <input type="hidden" class="form-control" name="test1" id="test1"></input>

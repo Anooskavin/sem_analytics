@@ -94,12 +94,18 @@ def admin_entry_course_change():
         #status = request.form['status']
         course_approval_status = request.form['course_approval_status']
         print(course_approval_status)
-        course_description = request.form['test']
-        cursor.execute(
+        if request.form['test']!="":
+            course_description = request.form['test']
+            cursor.execute(
             'update course_details set course_name=%s, course_duration = %s ,course_grade=%s,no_of_session=%s , course_approval_status=%s ,course_description=%s where course_id=%s',
             [course_name, course_duration,course_grade, no_of_session, course_approval_status, course_description, course_id])
+            mysql.connection.commit()
+            return jsonify('success')
+        cursor.execute(
+            'update course_details set course_name=%s, course_duration = %s ,course_grade=%s,no_of_session=%s , course_approval_status=%s where course_id=%s',
+            [course_name, course_duration,course_grade, no_of_session, course_approval_status,  course_id])
         mysql.connection.commit()
-    return jsonify('success')
+        return jsonify('success')
 
 
 #########################################  Course Table ###############################################

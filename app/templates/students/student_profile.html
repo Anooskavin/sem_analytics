@@ -16,9 +16,14 @@
         </div> <!-- end card -->
     </div><!-- end col-->
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 
-
-
+<script>
+{% for mesg in get_flashed_messages() %}
+      Swal.fire("{{ mesg }}");
+      {% endfor %}
+</script>
 <div class="row ">
 	<div class="col-xl-7">
 		<div class="card">
